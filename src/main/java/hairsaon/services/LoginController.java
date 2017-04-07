@@ -54,10 +54,14 @@ public class LoginController {
         String jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
 
-        return new ResponseEntity<>("{\"toketn\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
 
 
     }
+//    @PostMapping("images")
+//    public ResponseEntity<byte[]> getImages(@RequestBody byte[] images){
+//
+//    }
 
     @PostMapping("/client")
     public ResponseEntity<String> liginClient(@RequestBody ClientAuthType authType) {
@@ -69,9 +73,11 @@ public class LoginController {
         if (client == null) {
             return new ResponseEntity<>("User name not found.", HttpStatus.CONFLICT);
         }
+        Date date = new Date();
+
         String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
-        return new ResponseEntity<>("{\"toketn\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 
 }

@@ -10,8 +10,6 @@ import java.io.Serializable;
 @Entity
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556l;
-//    @GeneratedValue
-//    Long id;
 
     @Id
     @NotNull
@@ -48,14 +46,6 @@ public class Master implements Serializable {
         this.masterType = masterType;
     }
 
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
     public String getMasterType() {
         return masterType;

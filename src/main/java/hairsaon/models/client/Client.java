@@ -12,7 +12,6 @@ import javax.persistence.Table;
 public class Client {
     private static final long serialVersionUID = 112234557L;
     private String clientPhoneNumber;
-
     @Id
     @Column(name = "email")
     private String clientEmail;
