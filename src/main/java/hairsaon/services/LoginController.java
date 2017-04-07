@@ -35,7 +35,6 @@ public class LoginController {
         if (authType.getEmail() == null || authType.getPassword() == null) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
         }
-
         String email = authType.getEmail();
         String password = authType.getPassword();
 
