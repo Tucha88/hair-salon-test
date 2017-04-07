@@ -18,6 +18,9 @@ public class Utils implements IUtils {
             }
         }else if (obj instanceof Client){
             Client client = (Client) obj;
+            if (client.getClientEmail().equals("") || client.getClientPassword().equals("") || client.getClientEmail() == null || client.getClientPassword() == null) {
+                return true;
+            }
         }
         return false;
     }

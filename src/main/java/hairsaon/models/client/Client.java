@@ -9,20 +9,19 @@ import javax.persistence.Table;
  * Created by Boris on 01.04.2017.
  */
 @Entity
-@Table(name = "clientNew")
 public class Client {
-    private static final long serialVersionUID = 112234557l;
-    protected String clientPhoneNumber;
+    private static final long serialVersionUID = 112234557L;
+    private String clientPhoneNumber;
 
     @Id
     @Column(name = "email")
-    protected String clientEmail;
+    private String clientEmail;
     @Column(name = "password")
-    protected String clientPassword;
+    private String clientPassword;
     @Column(name = "name")
-    protected String clientName;
-    @Column(name = "lastName")
-    protected String clientLastName;
+    private String clientName;
+    @Column(name = "lastname")
+    private String clientLastName;
 
     public Client() {
     }

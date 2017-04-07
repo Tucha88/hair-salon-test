@@ -1,6 +1,7 @@
 package hairsaon.services;
 
 import hairsaon.models.client.Client;
+import hairsaon.repository.client.ClientRepository;
 import hairsaon.repository.client.IClientRepo;
 import hairsaon.models.master.Master;
 import hairsaon.repository.master.IMasterRepo;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Boris on 06.04.2017.
@@ -24,58 +26,48 @@ import java.util.Date;
 @CrossOrigin
 @RequestMapping("/register")
 public class RegisterServise{
+
     @Autowired
-    private IClientRepo clientRepo;
+    private ClientRepository clientRepository;
     @Autowired
     private IUtils utils;
+
     @Autowired
-    private IMasterRepo masterRepo;
-    @Autowired
-    MasterRepository masterRepository;
+    private MasterRepository masterRepository;
 
 
     @PostMapping("/master")
-    public String registerMaster(@RequestBody Master master) throws ServletException {
-//        if (utils.isLoginInfoExist(master)){
-//            return new ResponseEntity<Master>(HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
-//        }
-//        Master master1 = masterRepo.registerMaster(master);
-//        if (master1 == null) {
-//            return new ResponseEntity<Master>(HttpStatus.BAD_REQUEST); // Found same login
-//        }
-//
-//        return new ResponseEntity<Master>(master1, HttpStatus.OK);
-//        if (masterRepository.findByEmail(master.getEmail())!=null){
-//            return new ResponseEntity<Master>(HttpStatus.BAD_REQUEST);
-//        }
-//        return  new ResponseEntity<Master>(masterRepository.save(master),HttpStatus.OK);
+    public ResponseEntity<String> registerMaster(@RequestBody Master master) throws ServletException {
 
-        if (master.getEmail() == null || master.getPassword() == null) {
-            throw new ServletException("Please fill in username and password");
+        if (utils.isLoginInfoExist(master)) {
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }
 
 
         if (masterRepository.findByEmail(master.getEmail())!=null){
-            throw new ServletException("This user already exists");
+            return new ResponseEntity<>("This user already exists", HttpStatus.UNAUTHORIZED);
+
         }
+        masterRepository.save(master);
 
         String jwtToken = Jwts.builder().setSubject(master.getEmail() + master.getPassword()).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
-
-        return "{\"toketn\":" + "\"" + jwtToken + "\"}";
+        return new ResponseEntity<>("{\"toketn\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 
     @PostMapping("client")
-    public ResponseEntity<Client> registerClient(@RequestBody Client client){
+    public ResponseEntity<String> registerClient(@RequestBody Client client) {
         if (utils.isLoginInfoExist(client)){
-            return new ResponseEntity<Client>(HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
-        }
-        Client clientNew = clientRepo.registerClient(client);
-        if (clientNew == null) {
-            return new ResponseEntity<Client>(HttpStatus.BAD_REQUEST); // Found same login
+            return new ResponseEntity<>("enter correct login or password", HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
         }
 
-        return new ResponseEntity<Client>(clientNew, HttpStatus.OK);
+        if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
+            return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST); // Found same login
+        }
+        clientRepository.save(client);
+        String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
+        return new ResponseEntity<>("{\"toketn\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 
 }

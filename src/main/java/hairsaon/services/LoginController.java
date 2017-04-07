@@ -2,17 +2,15 @@ package hairsaon.services;
 
 import hairsaon.models.client.Client;
 import hairsaon.models.client.ClientAuthType;
-import hairsaon.repository.client.IClientRepo;
+import hairsaon.repository.client.ClientRepository;
 import hairsaon.models.master.Master;
 import hairsaon.models.master.MasterAuthType;
-import hairsaon.repository.master.IMasterRepo;
 import hairsaon.repository.master.MasterRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -25,31 +23,17 @@ import java.util.Date;
 @CrossOrigin
 @RequestMapping("/login")
 public class LoginController {
+
     @Autowired
-    private IClientRepo clientRepo;
+    private ClientRepository clientRepository;
     @Autowired
-    private IMasterRepo masterRepo;
-    @Autowired
-    MasterRepository masterRepository;
+    private MasterRepository masterRepository;
 
 
     @PostMapping("/master")
-    public String loginMaster(@RequestBody MasterAuthType authType) throws ServletException {
-//
-//        if (authType.getEmail().equals("") || authType.getEmail() == null || authType.getPassword().equals("") || authType.getPassword() == null){
-//            return new ResponseEntity<Master>(HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
-//        }
-//        Master master = masterRepo.loginMaster(authType);
-//        if (master == null) {
-//            return new ResponseEntity<Master>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//
-//        return new ResponseEntity<Master>(master, HttpStatus.OK);
-
-        String jwtToken = "";
-
+    public ResponseEntity<String> loginMaster(@RequestBody MasterAuthType authType) throws ServletException {
         if (authType.getEmail() == null || authType.getPassword() == null) {
-            throw new ServletException("Please fill in username and password");
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
         }
 
         String email = authType.getEmail();
@@ -58,33 +42,36 @@ public class LoginController {
         Master master = masterRepository.findByEmail(email);
 
         if (master == null) {
-            throw new ServletException("User name not found.");
+            return new ResponseEntity<>("User name not found.", HttpStatus.CONFLICT);
         }
 
         String pwd = master.getPassword();
 
         if (!password.equals(pwd)) {
-            throw new ServletException("Invalid login. Please check your name and password.");
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
         }
 
-        jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
+        String jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
 
-        return jwtToken;
+        return new ResponseEntity<>("{\"toketn\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
 
 
     }
+
     @PostMapping("/client")
-    public ResponseEntity<Client> liginClient(@RequestBody ClientAuthType authType){
+    public ResponseEntity<String> liginClient(@RequestBody ClientAuthType authType) {
         if (authType.getClientEmail().equals("") || authType.getClientEmail() == null || authType.getClientPassword().
-                equals("") || authType.getClientPassword() == null){
-            return new ResponseEntity<Client>(HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
+                equals("") || authType.getClientPassword() == null) {
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);// Wrong login or password
         }
-        Client client = clientRepo.loginClient(authType);
+        Client client = clientRepository.findClientByClientEmail(authType.getClientEmail());
         if (client == null) {
-            return new ResponseEntity<Client>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("User name not found.", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Client>(client, HttpStatus.OK);
+        String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
+        return new ResponseEntity<>("{\"toketn\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 
 }
