@@ -1,9 +1,9 @@
 package hairsaon.services;
 
-import hairsaon.models.client.Client;
-import hairsaon.repository.client.ClientRepository;
-import hairsaon.models.master.Master;
-import hairsaon.repository.master.MasterRepository;
+import hairsaon.models.Client;
+import hairsaon.repository.ClientRepository;
+import hairsaon.models.Master;
+import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +17,7 @@ import java.util.Date;
 
 /**
  * Created by Boris on 06.04.2017.
+ * Класс контроллер для регистрации мастера и клиента
  */
 @RestController
 @CrossOrigin

@@ -1,11 +1,12 @@
-package hairsaon.models.client;
+package hairsaon.models;
 
 /**
  * Created by Boris on 06.04.2017.
+ * Класс для проверки при логине Клиента
  */
 public class ClientAuthType {
-    protected String clientEmail;
-    protected String clientPassword;
+    private String clientEmail;
+    private String clientPassword;
 
     public ClientAuthType() {
     }

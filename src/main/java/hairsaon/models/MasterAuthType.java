@@ -1,11 +1,12 @@
-package hairsaon.models.master;
+package hairsaon.models;
 
 /**
  * Created by Boris on 01.04.2017.
+ * Класс для проверки при логине Мастера
  */
 public class MasterAuthType {
-    String email;
-    String password;
+    private String email;
+    private String password;
 
     public MasterAuthType() {
     }

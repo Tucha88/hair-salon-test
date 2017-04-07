@@ -1,4 +1,4 @@
-package hairsaon.models.client;
+package hairsaon.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +7,8 @@ import javax.persistence.Table;
 
 /**
  * Created by Boris on 01.04.2017.
+ * Client entity
+ * Класс для записи в базу данных
  */
 @Entity
 public class Client {

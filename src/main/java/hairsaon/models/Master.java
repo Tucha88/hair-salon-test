@@ -1,4 +1,4 @@
-package hairsaon.models.master;
+package hairsaon.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -6,10 +6,13 @@ import java.io.Serializable;
 
 /**
  * Created by Boris on 01.04.2017.
+ * Класс Мастер для записи в базу банных
  */
+
+//TODO добавить масив с услугами и календарь расписание
 @Entity
 public class Master implements Serializable {
-    private static final long serialVersionUID = 112234556l;
+    private static final long serialVersionUID = 112234556L;
 
     @Id
     @NotNull

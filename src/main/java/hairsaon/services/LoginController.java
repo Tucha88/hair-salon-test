@@ -1,11 +1,11 @@
 package hairsaon.services;
 
-import hairsaon.models.client.Client;
-import hairsaon.models.client.ClientAuthType;
-import hairsaon.repository.client.ClientRepository;
-import hairsaon.models.master.Master;
-import hairsaon.models.master.MasterAuthType;
-import hairsaon.repository.master.MasterRepository;
+import hairsaon.models.Client;
+import hairsaon.models.ClientAuthType;
+import hairsaon.repository.ClientRepository;
+import hairsaon.models.Master;
+import hairsaon.models.MasterAuthType;
+import hairsaon.repository.MasterRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import java.util.Date;
 
 /**
  * Created by Boris on 05.04.2017.
+ * Класс контролер Логина мастера и клиента
  */
 @RestController
 @CrossOrigin
@@ -57,10 +58,6 @@ public class LoginController {
 
 
     }
-//    @PostMapping("images")
-//    public ResponseEntity<byte[]> getImages(@RequestBody byte[] images){
-//
-//    }
 
     @PostMapping("/client")
     public ResponseEntity<String> liginClient(@RequestBody ClientAuthType authType) {

@@ -16,7 +16,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 /**
  * Created by Boris on 06.04.2017.
+ *Класс для проверки наличия в хедере токена
  */
+//TODO разобраться как улучить методы с токенами
 public class JwtFilter extends GenericFilterBean {
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
             throws IOException, ServletException {

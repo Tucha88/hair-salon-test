@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * Created by Boris on 07.04.2017.
+ * Класс для конфигурации CORS (кросс доменные запросы)
  */
 public class CorsConfig {
     @Bean

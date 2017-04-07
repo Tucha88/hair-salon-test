@@ -1,11 +1,12 @@
 package hairsaon.utils;
 
-import hairsaon.models.client.Client;
-import hairsaon.models.master.Master;
+import hairsaon.models.Client;
+import hairsaon.models.Master;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by Boris on 06.04.2017.
+ * Класс для создание методов утилит, упрощения проверок
  */
 @Service
 public class Utils implements IUtils {

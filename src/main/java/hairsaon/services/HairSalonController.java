@@ -1,9 +1,9 @@
 package hairsaon.services;
 
-import hairsaon.models.client.Client;
-import hairsaon.models.master.Master;
-import hairsaon.repository.client.ClientRepository;
-import hairsaon.repository.master.MasterRepository;
+import hairsaon.models.Client;
+import hairsaon.models.Master;
+import hairsaon.repository.ClientRepository;
+import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,11 @@ import java.util.List;
 
 /**
  * Created by Boris on 01.04.2017.
+ * Класс контроллера для изменения или удаления клиента или мастера
+ * так же для получения полного списка мастеров и клиентов
  */
+
+//TODO добавить метод для получаения всех клиентов
 
 @RestController
 @CrossOrigin
