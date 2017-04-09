@@ -3,6 +3,7 @@ package hairsaon.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Boris on 01.04.2017.
@@ -33,29 +34,37 @@ public class Master implements Serializable {
     private String lastName;
 
     @Column(name = "lang")
-    private String lang;
+    private ArrayList<String> lang;
 
     @Column(name = "masterType")
     private String masterType;
 
+    @Column(columnDefinition = "LONGBLOB")
+    private ArrayList<Services> serivce = new ArrayList<Services>();
 
-    public Master(String email, String phoneNumber, String password, String name, String lastName, String lang, String masterType) {
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.name = name;
-        this.lastName = lastName;
-        this.lang = lang;
-        this.masterType = masterType;
+    @Column(columnDefinition = "LONGBLOB")
+    private ArrayList<Adress> adress = new ArrayList<Adress>();
+
+    public ArrayList<Services> getSerivce() {
+        return serivce;
     }
 
-
-    public String getMasterType() {
-        return masterType;
+    public void setSerivce(ArrayList<Services> serivce) {
+        this.serivce = serivce;
+//        for (int i = 0; i < serivce.size() -1; i++) {
+//            this.serivce.add(serivce.get(i));
+//        }
     }
 
-    public void setMasterType(String masterType) {
-        this.masterType = masterType;
+    public ArrayList<Adress> getAdress() {
+        return adress;
+    }
+
+    public void setAdress(ArrayList<Adress> adress) {
+        this.adress = adress;
+//        for (int i = 0; i < adress.size()-1; i++) {
+//            this.adress.add(adress.get(i));
+//        }
     }
 
     public Master() {
@@ -101,11 +110,32 @@ public class Master implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getLang() {
+    public ArrayList<String> getLang() {
         return lang;
     }
 
-    public void setLang(String lang) {
+    public void setLang(ArrayList<String> lang) {
         this.lang = lang;
     }
+
+    public String getMasterType() {
+        return masterType;
+    }
+
+    public void setMasterType(String masterType) {
+        this.masterType = masterType;
+    }
+
+//
+//    public void addServise(ArrayList<Services> serivce) {
+//        for (int i = 0; i < serivce.size(); i++) {
+//            this.serivce.add(serivce.get(i));
+//        }
+//    }
+//
+//    public void addAdress(ArrayList<Adress> adress) {
+//        for (int i = 0; i < adress.size() -1; i++) {
+//            this.adress.add(adress.get(i));
+//        }
+//    }
 }

@@ -6,11 +6,18 @@ import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.PathParam;
+import java.awt.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -26,6 +33,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("service")
 public class HairSalonController {
+    private static String UPLOAD_PATH = "F://upload//";
     @Autowired
     private IUtils utils;
     @Autowired
@@ -35,13 +43,25 @@ public class HairSalonController {
 
     @PutMapping("updatemaster")
     public ResponseEntity<Master> updateMuster(@RequestBody Master master) {
+
+
         Master updatedMaster = masterRepositoryr.findByEmail(master.getEmail());
+
+
         if (updatedMaster == null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         if (!master.getPassword().equals(updatedMaster.getPassword())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+//        updatedMaster.setLang(master.getLang());
+//        updatedMaster.setName(master.getName());
+//        updatedMaster.setMasterType(master.getMasterType());
+//        updatedMaster.setLastName(master.getLastName());
+//        updatedMaster.setPhoneNumber(master.getPhoneNumber());
+//        updatedMaster.addServise(master.getSerivce());
+//        updatedMaster.addAdress(master.getAdress());
+
         updatedMaster = master;
         masterRepositoryr.saveAndFlush(updatedMaster);
         return new ResponseEntity<>(updatedMaster, HttpStatus.OK);
@@ -74,6 +94,7 @@ public class HairSalonController {
         }
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
+
     @PutMapping("updateclient")
     public ResponseEntity<Client> updateClietn(@RequestBody Client client) {
         Client updatedClient = clientRepository.findClientByClientEmail(client.getClientEmail());
@@ -86,6 +107,20 @@ public class HairSalonController {
         updatedClient = client;
         clientRepository.saveAndFlush(updatedClient);
         return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+    }
+
+    @PostMapping("uploadfile")
+    public ResponseEntity<String> uploadFile(MultipartFile file) {
+
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOAD_PATH + file.getOriginalFilename());
+            Files.write(path, bytes);
+            return new ResponseEntity<String>("Thanks for a upload", HttpStatus.OK);
+        } catch (IOException e) {
+            String str = e.getMessage();
+            return new ResponseEntity<String>(str, HttpStatus.CONFLICT);
+        }
     }
 
 
