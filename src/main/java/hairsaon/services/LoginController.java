@@ -69,6 +69,9 @@ public class LoginController {
         if (client == null) {
             return new ResponseEntity<>("User name not found.", HttpStatus.CONFLICT);
         }
+        if (!client.getClientPassword().equals(authType.getClientPassword())) {
+            return new ResponseEntity<>("Password is incorrect.", HttpStatus.CONFLICT);
+        }
         Date date = new Date();
 
         String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
