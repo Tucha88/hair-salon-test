@@ -24,6 +24,7 @@ public class Client {
     @Column(name = "lastname")
     private String clientLastName;
 
+
     public Client() {
     }
 

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 @Entity
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556L;
-
     @Id
     @NotNull
     @Column(name = "email")
@@ -41,14 +40,11 @@ public class Master implements Serializable {
 
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
-
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Adress> adress = new ArrayList<Adress>();
-
     public ArrayList<Services> getSerivce() {
         return serivce;
     }
-
     public void setSerivce(ArrayList<Services> serivce) {
         this.serivce = serivce;
 //        for (int i = 0; i < serivce.size() -1; i++) {

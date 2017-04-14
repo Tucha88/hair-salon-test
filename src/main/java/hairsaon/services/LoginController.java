@@ -48,7 +48,7 @@ public class LoginController {
         String pwd = master.getPassword();
 
         if (!password.equals(pwd)) {
-            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Please fillin username and password", HttpStatus.CONFLICT);
         }
 
         String jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
