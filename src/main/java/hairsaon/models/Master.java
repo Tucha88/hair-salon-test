@@ -40,8 +40,11 @@ public class Master implements Serializable {
 
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
+
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Adress> adress = new ArrayList<Adress>();
+
+
     public ArrayList<Services> getSerivce() {
         return serivce;
     }
