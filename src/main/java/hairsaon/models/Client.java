@@ -23,7 +23,16 @@ public class Client {
     private String clientName;
     @Column(name = "lastname")
     private String clientLastName;
+    @Column(name = "token")
+    private String token;
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Client() {
     }
