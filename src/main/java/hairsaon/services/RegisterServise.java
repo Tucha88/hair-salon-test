@@ -34,7 +34,7 @@ public class RegisterServise{
 
 
     @PostMapping("/master")
-    public ResponseEntity<String> registerMaster(@RequestBody Master master) throws ServletException {
+    public ResponseEntity<Object> registerMaster(@RequestBody Master master) throws ServletException {
 
         if (utils.isLoginInfoExist(master)) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
@@ -45,15 +45,17 @@ public class RegisterServise{
             return new ResponseEntity<>("This user already exists", HttpStatus.UNAUTHORIZED);
 
         }
-        masterRepository.save(master);
 
         String jwtToken = Jwts.builder().setSubject(master.getEmail() + master.getPassword()).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
+        master.setToken("Bearer " + jwtToken);
+        masterRepository.save(master);
+
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 
     @PostMapping("client")
-    public ResponseEntity<String> registerClient(@RequestBody Client client) {
+    public ResponseEntity<Object> registerClient(@RequestBody Client client) {
         if (utils.isLoginInfoExist(client)){
             return new ResponseEntity<>("enter correct login or password", HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
         }
@@ -61,9 +63,11 @@ public class RegisterServise{
         if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
             return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST); // Found same login
         }
-        clientRepository.save(client);
         String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
+        client.setToken("Bearer " + jwtToken);
+        clientRepository.save(client);
+
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 

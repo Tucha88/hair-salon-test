@@ -44,15 +44,22 @@ public class Master implements Serializable {
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Adress> adress = new ArrayList<Adress>();
 
+    @Column
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public ArrayList<Services> getSerivce() {
         return serivce;
     }
     public void setSerivce(ArrayList<Services> serivce) {
         this.serivce = serivce;
-//        for (int i = 0; i < serivce.size() -1; i++) {
-//            this.serivce.add(serivce.get(i));
-//        }
     }
 
     public ArrayList<Adress> getAdress() {
@@ -61,9 +68,6 @@ public class Master implements Serializable {
 
     public void setAdress(ArrayList<Adress> adress) {
         this.adress = adress;
-//        for (int i = 0; i < adress.size()-1; i++) {
-//            this.adress.add(adress.get(i));
-//        }
     }
 
     public Master() {

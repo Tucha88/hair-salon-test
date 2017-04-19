@@ -15,4 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface MasterRepository extends JpaRepository<Master, String> {
     Master findByEmail(String email);
+
+    Master findMasterByToken(String token);
 }

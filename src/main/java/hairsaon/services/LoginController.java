@@ -32,7 +32,7 @@ public class LoginController {
 
 
     @PostMapping("/master")
-    public ResponseEntity<String> loginMaster(@RequestBody MasterAuthType authType) throws ServletException {
+    public ResponseEntity<Object> loginMaster(@RequestBody MasterAuthType authType) throws ServletException {
         if (authType.getEmail() == null || authType.getPassword() == null) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
         }
@@ -53,7 +53,7 @@ public class LoginController {
 
         String jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
-
+        master.setToken("Bearer " + jwtToken);
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
 
@@ -78,7 +78,7 @@ public class LoginController {
         String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
 
-        client.setToken(jwtToken);
+        client.setToken("Bearer " + jwtToken);
         clientRepository.saveAndFlush(client);
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }

@@ -73,21 +73,21 @@ public class HairSalonController {
     }
 
     @RequestMapping(value = "masters/{id:.+}", method = RequestMethod.GET)
-    public ResponseEntity<Master> getMaster(@PathVariable("id") String id) {
+    public ResponseEntity<Object> getMaster(@PathVariable("id") String id) {
         Master master = masterRepositoryr.findByEmail(id);
         if (master == null) {
-            return new ResponseEntity<Master>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(master, HttpStatus.OK);
     }
 
     @RequestMapping(value = "clients", method = RequestMethod.GET)
-    public ResponseEntity<List<Client>> getAllClients() {
+    public ResponseEntity<Object> getAllClients() {
         return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "clients/{id:.+}", method = RequestMethod.GET)
-    public ResponseEntity<Client> getClient(@PathVariable("id") String id) {
+    public ResponseEntity<Object> getClient(@PathVariable("id") String id) {
         Client client = clientRepository.findClientByClientEmail(id);
         if (client == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -96,13 +96,13 @@ public class HairSalonController {
     }
 
     @PutMapping("updateclient")
-    public ResponseEntity<Client> updateClietn(@RequestBody Client client) {
+    public ResponseEntity<Object> updateClietn(@RequestBody Client client) {
         Client updatedClient = clientRepository.findClientByClientEmail(client.getClientEmail());
         if (updatedClient == null) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Such user does not exist", HttpStatus.CONFLICT);
         }
         if (!client.getClientPassword().equals(updatedClient.getClientPassword())) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
         }
         updatedClient = client;
         clientRepository.saveAndFlush(updatedClient);
@@ -110,16 +110,16 @@ public class HairSalonController {
     }
 
     @PostMapping("uploadfile")
-    public ResponseEntity<String> uploadFile(MultipartFile file) {
+    public ResponseEntity<Object> uploadFile(MultipartFile file) {
 
         try {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOAD_PATH + file.getOriginalFilename());
             Files.write(path, bytes);
-            return new ResponseEntity<String>("Thanks for a upload", HttpStatus.OK);
+            return new ResponseEntity<>("Thanks for a upload", HttpStatus.OK);
         } catch (IOException e) {
             String str = e.getMessage();
-            return new ResponseEntity<String>(str, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(str, HttpStatus.CONFLICT);
         }
     }
 
