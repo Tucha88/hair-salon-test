@@ -46,10 +46,11 @@ public class RegisterService {
 
         }
 
-        String jwtToken = Jwts.builder().setSubject(master.getEmail() + master.getPassword()).claim("roles", "user").setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
-        master.setToken("Bearer " + jwtToken);
-        masterRepository.save(master);
+        String jwtToken = Jwts.builder().setSubject(master.getEmail())
+                .claim("roles", "user")
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG")
+                .compact();
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
@@ -63,10 +64,12 @@ public class RegisterService {
         if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
             return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST); // Found same login
         }
-        String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
-        client.setToken("Bearer " + jwtToken);
-        clientRepository.save(client);
+        String jwtToken = Jwts.builder()
+                .setSubject(client.getClientEmail())
+                .claim("roles", "user")
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG")
+                .compact();
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }

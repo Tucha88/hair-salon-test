@@ -33,7 +33,7 @@ public class JwtFilter extends GenericFilterBean {
             chain.doFilter(req, res);
         } else {
 
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            if (authHeader == null /*|| !authHeader.startsWith("Bearer ")*/) {
                 throw new ServletException("Missing or invalid Authorization header");
             }
 

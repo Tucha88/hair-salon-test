@@ -4,6 +4,7 @@ import hairsaon.models.Adress;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
 import hairsaon.repository.MasterRepository;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,14 @@ public class MasterController {
 
     @GetMapping("services")
     public ResponseEntity<Object> getMasterServices(@RequestHeader("authorization") String token) {
-        Master master = masterRepository.findMasterByToken(token);
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+
+        Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
@@ -33,7 +41,14 @@ public class MasterController {
 
     @PostMapping("services")
     public ResponseEntity<Object> setMasterServices(@RequestHeader("authorization") String token, @RequestBody ArrayList<Services> services) {
-        Master master = masterRepository.findMasterByToken(token);
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+
+        Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
@@ -45,7 +60,14 @@ public class MasterController {
 
     @GetMapping("address")
     public ResponseEntity<Object> getMasterAddresses(@RequestHeader("authorization") String token) {
-        Master master = masterRepository.findMasterByToken(token);
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+
+        Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
@@ -56,7 +78,13 @@ public class MasterController {
 
     @PostMapping("address")
     public ResponseEntity<Object> setMasterAddresses(@RequestHeader("authorization") String token, @RequestBody ArrayList<Adress> adresses) {
-        Master master = masterRepository.findMasterByToken(token);
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+        Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
@@ -67,7 +95,14 @@ public class MasterController {
 
     @PostMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("authorization") String token) {
-        Master master = masterRepository.findMasterByToken(token);
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+
+        Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }

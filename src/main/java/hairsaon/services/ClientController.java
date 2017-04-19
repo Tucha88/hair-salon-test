@@ -2,6 +2,7 @@ package hairsaon.services;
 
 import hairsaon.models.Client;
 import hairsaon.repository.ClientRepository;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,14 @@ public class ClientController {
 
     @GetMapping("info")
     public ResponseEntity<Object> getClientInfo(@RequestHeader("authorization") String token) {
-        Client client = clientRepository.findClientByToken(token);
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+
+        Client client = clientRepository.findClientByClientEmail(email);
 
         System.out.println(token + client);
         if (client == null) {

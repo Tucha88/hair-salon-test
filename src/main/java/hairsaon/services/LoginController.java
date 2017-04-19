@@ -51,10 +51,11 @@ public class LoginController {
             return new ResponseEntity<>("Please fillin username and password", HttpStatus.CONFLICT);
         }
 
-        String jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
+        String jwtToken = Jwts.builder()
+                .setSubject(email)
+                .claim("roles", "user")
+                .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
-        master.setToken("Bearer " + jwtToken);
-        masterRepository.saveAndFlush(master);
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
 
@@ -75,11 +76,12 @@ public class LoginController {
             return new ResponseEntity<>("Password is incorrect.", HttpStatus.CONFLICT);
         }
 
-        String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
+        String jwtToken = Jwts.builder()
+                .setSubject(client.getClientEmail())
+                .claim("roles", "user")
+                .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
 
-        client.setToken("Bearer " + jwtToken);
-        clientRepository.saveAndFlush(client);
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
 

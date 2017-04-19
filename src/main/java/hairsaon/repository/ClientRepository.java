@@ -16,6 +16,4 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ClientRepository extends JpaRepository<Client, String> {
         Client findClientByClientEmail(String email);
 
-        Client findClientByToken(String token);
-
 }
