@@ -1,6 +1,6 @@
 package hairsaon.services;
 
-import hairsaon.models.Adress;
+import hairsaon.models.Address;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
 import hairsaon.repository.MasterRepository;
@@ -71,13 +71,13 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        ArrayList<Adress> adresses = master.getAdress();
+        ArrayList<Address> addresses = master.getAddresses();
 
-        return new ResponseEntity<>(adresses, HttpStatus.OK);
+        return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
     @PostMapping("address")
-    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("authorization") String token, @RequestBody ArrayList<Adress> adresses) {
+    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("authorization") String token, @RequestBody ArrayList<Address> addresses) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -88,7 +88,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        master.setAdress(adresses);
+        master.setAddresses(addresses);
         masterRepository.saveAndFlush(master);
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
@@ -100,8 +100,6 @@ public class MasterController {
                 .parseClaimsJws(token)
                 .getBody()
                 .get("sub", String.class);
-
-
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);

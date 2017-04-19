@@ -5,20 +5,20 @@ import java.io.Serializable;
 /**
  * Created by Boris on 09.04.2017.
  */
-public class Adress implements Serializable {
+public class Address implements Serializable {
     private static final long serialVersionUID = 112234550L;
-    private String adress;
+    private String address;
     private String note;
 
-    public Adress() {
+    public Address() {
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getNote() {

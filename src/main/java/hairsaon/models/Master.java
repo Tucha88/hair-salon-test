@@ -42,7 +42,7 @@ public class Master implements Serializable {
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
     @Column(columnDefinition = "LONGBLOB")
-    private ArrayList<Adress> adress = new ArrayList<Adress>();
+    private ArrayList<Address> addresses = new ArrayList<Address>();
 
     @Column
     private String token;
@@ -62,12 +62,12 @@ public class Master implements Serializable {
         this.serivce = serivce;
     }
 
-    public ArrayList<Adress> getAdress() {
-        return adress;
+    public ArrayList<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAdress(ArrayList<Adress> adress) {
-        this.adress = adress;
+    public void setAddresses(ArrayList<Address> addresses) {
+        this.addresses = addresses;
     }
 
     public Master() {
