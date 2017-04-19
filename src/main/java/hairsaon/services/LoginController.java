@@ -54,6 +54,7 @@ public class LoginController {
         String jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
         master.setToken("Bearer " + jwtToken);
+        masterRepository.saveAndFlush(master);
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
 
@@ -73,7 +74,6 @@ public class LoginController {
         if (!client.getClientPassword().equals(authType.getClientPassword())) {
             return new ResponseEntity<>("Password is incorrect.", HttpStatus.CONFLICT);
         }
-        Date date = new Date();
 
         String jwtToken = Jwts.builder().setSubject(client.getClientEmail() + client.getClientPassword()).claim("roles", "user").setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();

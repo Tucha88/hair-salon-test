@@ -34,8 +34,7 @@ import java.util.List;
 @RequestMapping("service")
 public class HairSalonController {
     private static String UPLOAD_PATH = "F://upload//";
-    @Autowired
-    private IUtils utils;
+
     @Autowired
     private MasterRepository masterRepositoryr;
     @Autowired
@@ -54,13 +53,6 @@ public class HairSalonController {
         if (!master.getPassword().equals(updatedMaster.getPassword())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-//        updatedMaster.setLang(master.getLang());
-//        updatedMaster.setName(master.getName());
-//        updatedMaster.setMasterType(master.getMasterType());
-//        updatedMaster.setLastName(master.getLastName());
-//        updatedMaster.setPhoneNumber(master.getPhoneNumber());
-//        updatedMaster.addServise(master.getSerivce());
-//        updatedMaster.addAdress(master.getAdress());
 
         updatedMaster = master;
         masterRepositoryr.saveAndFlush(updatedMaster);

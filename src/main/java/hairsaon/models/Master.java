@@ -129,16 +129,4 @@ public class Master implements Serializable {
         this.masterType = masterType;
     }
 
-//
-//    public void addServise(ArrayList<Services> serivce) {
-//        for (int i = 0; i < serivce.size(); i++) {
-//            this.serivce.add(serivce.get(i));
-//        }
-//    }
-//
-//    public void addAdress(ArrayList<Adress> adress) {
-//        for (int i = 0; i < adress.size() -1; i++) {
-//            this.adress.add(adress.get(i));
-//        }
-//    }
 }

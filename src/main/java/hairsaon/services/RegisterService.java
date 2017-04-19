@@ -22,7 +22,7 @@ import java.util.Date;
 @RestController
 @CrossOrigin
 @RequestMapping("/register")
-public class RegisterServise{
+public class RegisterService {
 
     @Autowired
     private ClientRepository clientRepository;

@@ -1,17 +1,12 @@
 package hairsaon.services;
 
-import hairsaon.models.Adress;
 import hairsaon.models.Client;
 import hairsaon.repository.ClientRepository;
-import hairsaon.repository.MasterRepository;
-import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 
 /**
  * Created by Boris on 17.04.2017.
