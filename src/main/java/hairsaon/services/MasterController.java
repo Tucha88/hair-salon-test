@@ -93,7 +93,7 @@ public class MasterController {
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
 
-    @PostMapping("info")
+    @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("authorization") String token) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
