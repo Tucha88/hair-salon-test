@@ -22,6 +22,7 @@ public class MasterController {
     @Autowired
     private MasterRepository masterRepository;
 
+
     @GetMapping("services")
     public ResponseEntity<Object> getMasterServices(@RequestHeader("authorization") String token) {
         String email = Jwts.parser()
