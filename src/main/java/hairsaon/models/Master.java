@@ -41,34 +41,9 @@ public class Master implements Serializable {
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
-    @Column(columnDefinition = "LONGBLOB")
-    private ArrayList<Address> addresses = new ArrayList<Address>();
+    @Column(name = "address")
+    private String addresses;
 
-    @Column
-    private String token;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public ArrayList<Services> getSerivce() {
-        return serivce;
-    }
-    public void setSerivce(ArrayList<Services> serivce) {
-        this.serivce = serivce;
-    }
-
-    public ArrayList<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(ArrayList<Address> addresses) {
-        this.addresses = addresses;
-    }
 
     public Master() {
     }
@@ -129,4 +104,19 @@ public class Master implements Serializable {
         this.masterType = masterType;
     }
 
+    public ArrayList<Services> getSerivce() {
+        return serivce;
+    }
+
+    public void setSerivce(ArrayList<Services> serivce) {
+        this.serivce = serivce;
+    }
+
+    public String getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(String addresses) {
+        this.addresses = addresses;
+    }
 }

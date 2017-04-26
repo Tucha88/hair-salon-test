@@ -72,13 +72,13 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        ArrayList<Address> addresses = master.getAddresses();
+        String addresses = master.getAddresses();
 
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
     @PostMapping("address")
-    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("authorization") String token, @RequestBody ArrayList<Address> addresses) {
+    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("authorization") String token, @RequestBody String addresses) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
