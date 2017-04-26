@@ -39,18 +39,18 @@ public class RegisterService {
         if (utils.isLoginInfoExist(master)) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }
-
-
         if (masterRepository.findByEmail(master.getEmail())!=null){
             return new ResponseEntity<>("This user already exists", HttpStatus.UNAUTHORIZED);
 
         }
+        masterRepository.save(master);
 
         String jwtToken = Jwts.builder().setSubject(master.getEmail())
                 .claim("roles", "user")
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG")
                 .compact();
+
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }
@@ -70,6 +70,8 @@ public class RegisterService {
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG")
                 .compact();
+
+        clientRepository.save(client);
 
         return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
     }

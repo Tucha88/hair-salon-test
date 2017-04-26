@@ -33,8 +33,6 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("service")
 public class HairSalonController {
-    private static String UPLOAD_PATH = "F://upload//";
-
     @Autowired
     private MasterRepository masterRepositoryr;
     @Autowired
@@ -101,19 +99,19 @@ public class HairSalonController {
         return new ResponseEntity<>(updatedClient, HttpStatus.OK);
     }
 
-    @PostMapping("uploadfile")
-    public ResponseEntity<Object> uploadFile(MultipartFile file) {
-
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOAD_PATH + file.getOriginalFilename());
-            Files.write(path, bytes);
-            return new ResponseEntity<>("Thanks for a upload", HttpStatus.OK);
-        } catch (IOException e) {
-            String str = e.getMessage();
-            return new ResponseEntity<>(str, HttpStatus.CONFLICT);
-        }
-    }
+//    @PostMapping("uploadfile")
+//    public ResponseEntity<Object> uploadFile(MultipartFile file) {
+//
+//        try {
+//            byte[] bytes = file.getBytes();
+//            Path path = Paths.get(UPLOAD_PATH + file.getOriginalFilename());
+//            Files.write(path, bytes);
+//            return new ResponseEntity<>("Thanks for a upload", HttpStatus.OK);
+//        } catch (IOException e) {
+//            String str = e.getMessage();
+//            return new ResponseEntity<>(str, HttpStatus.CONFLICT);
+//        }
+//    }
 
 
 }
