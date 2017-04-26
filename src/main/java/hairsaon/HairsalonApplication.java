@@ -22,6 +22,9 @@ public class HairsalonApplication {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new JwtFilter());
         registrationBean.addUrlPatterns("/service/*");
+        registrationBean.addUrlPatterns("/client/*");
+        registrationBean.addUrlPatterns("/master/*");
+
 
         return registrationBean;
     }
@@ -32,20 +35,5 @@ public class HairsalonApplication {
     }
 
 
-    //Tomcat large file upload connection reset
-    //http://www.mkyong.com/spring/spring-file-upload-and-connection-reset-issue/
-    @Bean
-    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
-
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-
-        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
-            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
-                //-1 means unlimited
-                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
-            }
-        });
-        return tomcat;
-    }
 
 }

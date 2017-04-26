@@ -85,19 +85,19 @@ public class HairSalonController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
-    @PutMapping("updateclient")
-    public ResponseEntity<Object> updateClietn(@RequestBody Client client) {
-        Client updatedClient = clientRepository.findClientByClientEmail(client.getClientEmail());
-        if (updatedClient == null) {
-            return new ResponseEntity<>("Such user does not exist", HttpStatus.CONFLICT);
-        }
-        if (!client.getClientPassword().equals(updatedClient.getClientPassword())) {
-            return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
-        }
-        updatedClient = client;
-        clientRepository.saveAndFlush(updatedClient);
-        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
-    }
+//    @PutMapping("updateclient")
+//    public ResponseEntity<Object> updateClietn(@RequestBody Client client) {
+//        Client updatedClient = clientRepository.findClientByClientEmail(client.getClientEmail());
+//        if (updatedClient == null) {
+//            return new ResponseEntity<>("Such user does not exist", HttpStatus.CONFLICT);
+//        }
+//        if (!client.getClientPassword().equals(updatedClient.getClientPassword())) {
+//            return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
+//        }
+//        updatedClient = client;
+//        clientRepository.saveAndFlush(updatedClient);
+//        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+//    }
 
 //    @PostMapping("uploadfile")
 //    public ResponseEntity<Object> uploadFile(MultipartFile file) {
