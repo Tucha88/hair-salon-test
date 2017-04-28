@@ -12,10 +12,7 @@ import java.util.HashMap;
  * Created by Лимаренко on 28.04.2017.
  */
 public class AddressMaster {
-    static private int counterId = 1;
 
-
-    int id;
     String address;
     ArrayList<WeekDay> weekTemplate;
     HashMap<MyCalendar, CalendarDay> timetableMap;
@@ -24,8 +21,6 @@ public class AddressMaster {
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
         timetableMap = new HashMap<MyCalendar, CalendarDay>();
-        this.id = counterId;
-        counterId++;
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -36,18 +31,16 @@ public class AddressMaster {
         this.address = address;
         weekTemplate = new ArrayList<WeekDay>();
         timetableMap = new HashMap<MyCalendar, CalendarDay>();
-        this.id = counterId;
-        counterId++;
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
     }
 
-    public void addTimeOnWeek(int dayOnWeek, boolean active, int startHour, int startMin, int endHour, int endMin) { /**Добовление(изменение дня в шаблоне)*/
+    public void addTimeOnWeek(int dayOnWeek, boolean active, int startHour, int startMin, int endHour, int endMin) { /** Добовление(изменение дня в шаблоне)*/
         weekTemplate.get(dayOnWeek).setTime(active, startHour, startMin, endHour, endMin);
     }
 
-    public void addTimeOnDate(MyCalendar myCalendar, int startHour, int startMin, int endHour, int endMin) { /**Добовление дня в расписание (в клендарь)*/
+    public void addTimeOnDate(MyCalendar myCalendar, int startHour, int startMin, int endHour, int endMin) { /** Добовление дня в расписание (в клендарь)*/
         timetableMap.put(myCalendar, new CalendarDay(myCalendar, startHour, startMin, endHour, endMin, true));
     }
 
@@ -74,7 +67,7 @@ public class AddressMaster {
     }
 
 
-    public void update() { /**удаление дня недельной давности и добавление дня через 2 недели*/
+    public void update() { /** удаление дня недельной давности и добавление дня через 2 недели*/
 
 
         MyCalendar tempMyCalendar = new MyCalendar();
@@ -95,7 +88,7 @@ public class AddressMaster {
         }
     }
 
-    public void removeDate(int year, int month, int dayOfMonth) {  /**удаление даты из колендаря (метот для админа)*/
+    public void removeDate(int year, int month, int dayOfMonth) {  /** удаление даты из колендаря (метот для админа)*/
         timetableMap.remove(new MyCalendar(year, month, dayOfMonth));
     }
 

@@ -11,10 +11,6 @@ public class WeekDay {
     MyClock startWork;
     MyClock endWork;
 
-    /*int startHour;
-    int startMin;
-    int endHour;
-    int endMin;*/
 
     public WeekDay() {
         this.activeDay = false;
