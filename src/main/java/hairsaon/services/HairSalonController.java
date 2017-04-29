@@ -39,17 +39,17 @@ public class HairSalonController {
     private ClientRepository clientRepository;
 
     @PutMapping("updatemaster")
-    public ResponseEntity<Master> updateMuster(@RequestBody Master master) {
+    public ResponseEntity<Object> updateMuster(@RequestBody Master master) {
 
 
         Master updatedMaster = masterRepositoryr.findByEmail(master.getEmail());
 
 
         if (updatedMaster == null) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>("master doesn't exist", HttpStatus.CONFLICT);
         }
         if (!master.getPassword().equals(updatedMaster.getPassword())) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
         }
 
         updatedMaster = master;
@@ -85,33 +85,6 @@ public class HairSalonController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
-//    @PutMapping("updateclient")
-//    public ResponseEntity<Object> updateClietn(@RequestBody Client client) {
-//        Client updatedClient = clientRepository.findClientByClientEmail(client.getClientEmail());
-//        if (updatedClient == null) {
-//            return new ResponseEntity<>("Such user does not exist", HttpStatus.CONFLICT);
-//        }
-//        if (!client.getClientPassword().equals(updatedClient.getClientPassword())) {
-//            return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
-//        }
-//        updatedClient = client;
-//        clientRepository.saveAndFlush(updatedClient);
-//        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
-//    }
-
-//    @PostMapping("uploadfile")
-//    public ResponseEntity<Object> uploadFile(MultipartFile file) {
-//
-//        try {
-//            byte[] bytes = file.getBytes();
-//            Path path = Paths.get(UPLOAD_PATH + file.getOriginalFilename());
-//            Files.write(path, bytes);
-//            return new ResponseEntity<>("Thanks for a upload", HttpStatus.OK);
-//        } catch (IOException e) {
-//            String str = e.getMessage();
-//            return new ResponseEntity<>(str, HttpStatus.CONFLICT);
-//        }
-//    }
 
 
 }

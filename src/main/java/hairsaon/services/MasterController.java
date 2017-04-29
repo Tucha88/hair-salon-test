@@ -59,6 +59,25 @@ public class MasterController {
 
     }
 
+    @PostMapping("service")
+    public ResponseEntity<Object> addMasterService(@RequestHeader("authorization") String token, @RequestBody Services service) {
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        master.addServise(service);
+        masterRepository.saveAndFlush(master);
+        return new ResponseEntity<>(master, HttpStatus.OK);
+    }
+
+
     @GetMapping("address")
     public ResponseEntity<Object> getMasterAddresses(@RequestHeader("authorization") String token) {
         String email = Jwts.parser()

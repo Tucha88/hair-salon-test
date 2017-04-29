@@ -119,4 +119,8 @@ public class Master implements Serializable {
     public void setAddresses(String addresses) {
         this.addresses = addresses;
     }
+
+    public void addServise(Services services) {
+        this.serivce.add(services);
+    }
 }
