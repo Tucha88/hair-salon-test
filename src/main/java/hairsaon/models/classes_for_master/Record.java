@@ -1,27 +1,46 @@
 package hairsaon.models.classes_for_master;
 
+import hairsaon.models.Client;
 import hairsaon.myExtends.*;
+
+import javax.persistence.*;
 
 
 /**
  * Created by Лимаренко on 28.04.2017.
  */
+
+//TODO придумать как связывать клиента с мастером через запись
+
+@Entity
+@Table(name = "Record")
 public class Record implements Comparable<Record> {
+    @Column(name = "date")
     MyCalendar calendar;
+    @Column(name = "start time")
     MyClock starTime;
+    @Column(name = "service")
     ServiceMaster service;
+    @Column(name = "client")
+    Client client;
+    @Column(name = "info")
     String info;
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service) {
-        this.calendar = calendar;
-        this.starTime = starTime;
-        this.service = service;
+    public Record() {
     }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, String info) {
+    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client) {
         this.calendar = calendar;
         this.starTime = starTime;
         this.service = service;
+        this.client = client;
+    }
+
+    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client, String info) {
+        this.calendar = calendar;
+        this.starTime = starTime;
+        this.service = service;
+        this.client = client;
         this.info = info;
     }
 
@@ -47,6 +66,14 @@ public class Record implements Comparable<Record> {
 
     public void setService(ServiceMaster service) {
         this.service = service;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getInfo() {
