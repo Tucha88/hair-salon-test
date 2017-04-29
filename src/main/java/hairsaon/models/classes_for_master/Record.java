@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 //TODO придумать как связывать клиента с мастером через запись
 
-@Entity
+//@Entity
 @Table(name = "Record")
 public class Record implements Comparable<Record> {
     @Column(name = "date")
