@@ -113,6 +113,7 @@ public class CalendarDay {
 
         int arrSize = records.size();
 
+
         if (arrSize == 0) {
             timeStart = new MyClock(this.startWork);
             timeEnd = new MyClock(this.endWork);
