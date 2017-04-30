@@ -1,5 +1,7 @@
 package hairsaon.models;
 
+import hairsaon.models.classes_for_master.AddressMaster;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -42,10 +44,22 @@ public class Master implements Serializable {
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
     @Column(name = "address")
-    private String addresses;
+    private AddressMaster addresses;
 
 
     public Master() {
+    }
+
+    public String getAddressString(){
+        return addresses
+    }
+
+    public AddressMaster getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(AddressMaster addresses) {
+        this.addresses = addresses;
     }
 
     public String getEmail() {
@@ -112,13 +126,6 @@ public class Master implements Serializable {
         this.serivce = serivce;
     }
 
-    public String getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(String addresses) {
-        this.addresses = addresses;
-    }
 
     public void addServise(Services services) {
         this.serivce.add(services);
