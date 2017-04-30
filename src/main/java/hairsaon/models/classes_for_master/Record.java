@@ -17,12 +17,16 @@ import javax.persistence.*;
 public class Record implements Comparable<Record> {
     @Column(name = "date")
     MyCalendar calendar;
+
     @Column(name = "start time")
     MyClock starTime;
+
     @Column(name = "service")
     ServiceMaster service;
+
     @Column(name = "client")
     Client client;
+
     @Column(name = "info")
     String info;
 

@@ -46,6 +46,30 @@ public class MyCalendar extends GregorianCalendar {
         super(year, month, dayOfMonth, hourOfDay, minute, second);
     }
 
+    public int getYear() {
+        return this.get(Calendar.YEAR);
+    }
+
+    public void setHour(int year) {
+        this.set(Calendar.YEAR, year);
+    }
+
+    public int getMonth() {
+        return this.get(Calendar.MONTH);
+    }
+
+    public void setMonth(int month) {
+        this.set(Calendar.MONTH, month);
+    }
+
+    public int getDayOfMonth() {
+        return this.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public void setDayOfMonth(int day) {
+        this.set(Calendar.DAY_OF_MONTH, day);
+    }
+
 
     @Override
     public int hashCode() {
@@ -67,5 +91,18 @@ public class MyCalendar extends GregorianCalendar {
 
     public int getMyDayOfWeek() {
         return (this.get(Calendar.DAY_OF_WEEK) - 1);
+    }
+
+    @Override
+    public int compareTo(Calendar anotherCalendar) {
+        MyCalendar tempCalendar = (MyCalendar) anotherCalendar;
+        int res = this.getYear() - tempCalendar.getYear();
+        if (res == 0) {
+            res = this.getMonth() - tempCalendar.getMonth();
+            if (res == 0) {
+                res = this.getDayOfMonth() - tempCalendar.getDayOfMonth();
+            }
+        }
+        return res;
     }
 }
