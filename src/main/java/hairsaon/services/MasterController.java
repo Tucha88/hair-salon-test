@@ -91,7 +91,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        String addresses = master.getAddresses();
+        String addresses = master.getAddressString();
 
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
@@ -112,6 +112,9 @@ public class MasterController {
         masterRepository.saveAndFlush(master);
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
+
+
+
 
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("authorization") String token) {

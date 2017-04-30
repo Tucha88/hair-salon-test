@@ -44,22 +44,22 @@ public class Master implements Serializable {
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
     @Column(name = "address")
-    private AddressMaster addresses;
+    private AddressMaster addresses = new AddressMaster();
 
 
     public Master() {
     }
 
     public String getAddressString(){
-        return addresses
+        return this.addresses.getAddress();
     }
 
     public AddressMaster getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(AddressMaster addresses) {
-        this.addresses = addresses;
+    public void setAddresses(String addresses) {
+        this.addresses.setAddress(addresses);
     }
 
     public String getEmail() {
