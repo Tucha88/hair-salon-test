@@ -39,19 +39,33 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
-    @PostMapping("update")
-    public ResponseEntity<Object> updateClietn(@RequestBody Client client) {
-        Client updatedClient = clientRepository.findClientByClientEmail(client.getClientEmail());
+    @PutMapping("update")
+    public ResponseEntity<Object> updateClient(@RequestHeader("authorization")String token,@RequestBody Client client) {
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+        Client updatedClient = clientRepository.findClientByClientEmail(email);
         if (updatedClient == null) {
             return new ResponseEntity<>("Such user does not exist", HttpStatus.CONFLICT);
         }
-        if (!client.getClientPassword().equals(updatedClient.getClientPassword())) {
-            return new ResponseEntity<>("Wrong password", HttpStatus.CONFLICT);
-        }
-        updatedClient = client;
+        updatedClient.setClientName(client.getClientName());
+        updatedClient.setClientLastName(client.getClientLastName());
+        updatedClient.setClientPhoneNumber(client.getClientPhoneNumber());
+
+
         clientRepository.saveAndFlush(updatedClient);
-        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+        return new ResponseEntity<>("Client was updated", HttpStatus.OK);
     }
+
+
+    @RequestMapping(value = "clients", method = RequestMethod.GET)
+    public ResponseEntity<Object> getAllClients() {
+        return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);
+    }
+
 
 
 }

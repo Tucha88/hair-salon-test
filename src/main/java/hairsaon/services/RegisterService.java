@@ -37,10 +37,10 @@ public class RegisterService {
     public ResponseEntity<Object> registerMaster(@RequestBody Master master) throws ServletException {
 
         if (utils.isLoginInfoExist(master)) {
-            return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
         }
         if (masterRepository.findByEmail(master.getEmail())!=null){
-            return new ResponseEntity<>("This user already exists", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT);
 
         }
         masterRepository.save(master);
@@ -58,11 +58,11 @@ public class RegisterService {
     @PostMapping("client")
     public ResponseEntity<Object> registerClient(@RequestBody Client client) {
         if (utils.isLoginInfoExist(client)){
-            return new ResponseEntity<>("enter correct login or password", HttpStatus.NOT_ACCEPTABLE);// Wrong login or password
+            return new ResponseEntity<>("Enter correct login or password", HttpStatus.CONFLICT);// Wrong login or password
         }
 
         if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
-            return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST); // Found same login
+            return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT); // Found same login
         }
         String jwtToken = Jwts.builder()
                 .setSubject(client.getClientEmail())

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 public class Client {
     private static final long serialVersionUID = 112234557L;
-    private String clientPhoneNumber;
+
     @Id
     @Column(name = "email")
     private String clientEmail;
@@ -23,16 +23,8 @@ public class Client {
     private String clientName;
     @Column(name = "lastname")
     private String clientLastName;
-    @Column(name = "token")
-    private String token;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+    @Column(name = "telephone")
+    private String clientPhoneNumber;
 
     public Client() {
     }

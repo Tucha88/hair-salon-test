@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Boris on 19.04.2017.
@@ -23,8 +24,9 @@ public class MasterController {
     private MasterRepository masterRepository;
 
 
+
     @GetMapping("services")
-    public ResponseEntity<Object> getMasterServices(@RequestHeader("authorization") String token) {
+    public ResponseEntity<Object> getMasterServices(@RequestHeader("Authorization") String token) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -40,8 +42,8 @@ public class MasterController {
         return new ResponseEntity<>(services, HttpStatus.OK);
     }
 
-    @PostMapping("services")
-    public ResponseEntity<Object> setMasterServices(@RequestHeader("authorization") String token, @RequestBody ArrayList<Services> services) {
+    @PostMapping("service")
+    public ResponseEntity<Object> setMasterServices(@RequestHeader("Authorization") String token, @RequestBody ArrayList<Services> services) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -55,12 +57,12 @@ public class MasterController {
         }
         master.setSerivce(services);
         masterRepository.saveAndFlush(master);
-        return new ResponseEntity<>("User services were updated", HttpStatus.OK);
+        return new ResponseEntity<>("Master services were updated", HttpStatus.OK);
 
     }
 
-    @PostMapping("service")
-    public ResponseEntity<Object> addMasterService(@RequestHeader("authorization") String token, @RequestBody Services service) {
+    @PutMapping("service")
+    public ResponseEntity<Object> addMasterService(@RequestHeader("Authorization") String token, @RequestBody Services service) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -74,12 +76,12 @@ public class MasterController {
         }
         master.addServise(service);
         masterRepository.saveAndFlush(master);
-        return new ResponseEntity<>(master, HttpStatus.OK);
+        return new ResponseEntity<>("Service was added", HttpStatus.OK);
     }
 
 
     @GetMapping("address")
-    public ResponseEntity<Object> getMasterAddresses(@RequestHeader("authorization") String token) {
+    public ResponseEntity<Object> getMasterAddresses(@RequestHeader("Authorization") String token) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -96,8 +98,8 @@ public class MasterController {
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
-    @PostMapping("address")
-    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("authorization") String token, @RequestBody String addresses) {
+    @PutMapping("address")
+    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("Authorization") String token, @RequestBody String addresses) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -114,7 +116,7 @@ public class MasterController {
     }
 
     @GetMapping("info")
-    public ResponseEntity<Object> getMasterInfo(@RequestHeader("authorization") String token) {
+    public ResponseEntity<Object> getMasterInfo(@RequestHeader("Authorization") String token) {
         String email = Jwts.parser()
                 .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
                 .parseClaimsJws(token)
@@ -126,5 +128,43 @@ public class MasterController {
         }
         return new ResponseEntity<>(master, HttpStatus.OK);
     }
+
+    @PutMapping("update")
+    public ResponseEntity<Object> updateMuster(@RequestHeader("Authorization") String token, @RequestBody Master master) {
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+        Master updatedMaster = masterRepository.findByEmail(email);
+
+        if (updatedMaster == null) {
+            return new ResponseEntity<>("master doesn't exist", HttpStatus.CONFLICT);
+        }
+        updatedMaster.setSerivce(master.getSerivce());
+        updatedMaster.setPhoneNumber(master.getPhoneNumber());
+        updatedMaster.setLastName(master.getLastName());
+        updatedMaster.setName(master.getName());
+        updatedMaster.setAddresses(master.getAddresses());
+        updatedMaster.setLang(master.getLang());
+        updatedMaster.setMasterType(master.getMasterType());
+
+        masterRepository.saveAndFlush(updatedMaster);
+        return new ResponseEntity<>("Master is updated", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public ResponseEntity<List<Master>> getAllMasters() {
+        return new ResponseEntity<>(masterRepository.findAll(), HttpStatus.OK);
+    }
+
+//    @RequestMapping(value = "masters/{id:.+}", method = RequestMethod.GET)
+//    public ResponseEntity<Object> getMaster(@PathVariable("id") String id) {
+//        Master master = masterRepository.findByEmail(id);
+//        if (master == null) {
+//            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(master, HttpStatus.OK);
+//    }
 
 }

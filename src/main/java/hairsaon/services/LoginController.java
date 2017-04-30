@@ -34,7 +34,7 @@ public class LoginController {
     @PostMapping("/master")
     public ResponseEntity<Object> loginMaster(@RequestBody MasterAuthType authType) throws ServletException {
         if (authType.getEmail() == null || authType.getPassword() == null) {
-            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }
         String email = authType.getEmail();
         String password = authType.getPassword();
@@ -42,13 +42,13 @@ public class LoginController {
         Master master = masterRepository.findByEmail(email);
 
         if (master == null) {
-            return new ResponseEntity<>("User name not found.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("User name not found.", HttpStatus.UNAUTHORIZED);
         }
 
         String pwd = master.getPassword();
 
         if (!password.equals(pwd)) {
-            return new ResponseEntity<>("Please fillin username and password", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Please fillin username and password", HttpStatus.UNAUTHORIZED);
         }
 
         String jwtToken = Jwts.builder()
@@ -66,14 +66,14 @@ public class LoginController {
     public ResponseEntity<String> liginClient(@RequestBody ClientAuthType authType) {
         if (authType.getClientEmail().equals("") || authType.getClientEmail() == null || authType.getClientPassword().
                 equals("") || authType.getClientPassword() == null) {
-            return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);// Wrong login or password
+            return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);// Wrong login or password
         }
         Client client = clientRepository.findClientByClientEmail(authType.getClientEmail());
         if (client == null) {
-            return new ResponseEntity<>("User name not found.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("User name not found.", HttpStatus.UNAUTHORIZED);
         }
         if (!client.getClientPassword().equals(authType.getClientPassword())) {
-            return new ResponseEntity<>("Password is incorrect.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Password is incorrect.", HttpStatus.UNAUTHORIZED);
         }
 
         String jwtToken = Jwts.builder()
