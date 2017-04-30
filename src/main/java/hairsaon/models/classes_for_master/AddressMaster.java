@@ -18,6 +18,7 @@ public class AddressMaster {
     HashMap<MyCalendar, CalendarDay> timetableMap;
     ArrayList<ServiceMaster> arrayServices;
 
+
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
         timetableMap = new HashMap<MyCalendar, CalendarDay>();
@@ -34,6 +35,14 @@ public class AddressMaster {
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void addTimeOnWeek(int dayOnWeek, boolean active, int startHour, int startMin, int endHour, int endMin) { /** Добовление(изменение дня в шаблоне)*/
