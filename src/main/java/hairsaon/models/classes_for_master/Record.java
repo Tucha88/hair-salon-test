@@ -100,6 +100,10 @@ public class Record implements Comparable<Record> {
 
     @Override
     public int compareTo(Record tempRecord) {
-        return this.starTime.compareTo(tempRecord.starTime);
+        int res = this.getCalendar().compareTo(tempRecord.getCalendar());
+        if (res == 0) {
+            res = this.getStarTime().compareTo(tempRecord.getStarTime());
+        }
+        return res;
     }
 }
