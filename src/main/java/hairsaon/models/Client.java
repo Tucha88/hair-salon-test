@@ -1,9 +1,9 @@
 package hairsaon.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import hairsaon.models.classes_for_master.Record;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 
 /**
  * Created by Boris on 01.04.2017.
@@ -26,15 +26,18 @@ public class Client {
     @Column(name = "token")
     private String token;
 
+    /*@OneToMany
+    private ArrayList<Record> records = new ArrayList<Record>();*/
+
+    public Client() {
+    }
+
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Client() {
     }
 
     public String getClientPhoneNumber() {

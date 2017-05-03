@@ -41,7 +41,7 @@ public class Master implements Serializable {
     @Column(name = "masterType")
     private String masterType;
 
-    //@OneToMany или @Embedded
+    //@Embedded
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
 

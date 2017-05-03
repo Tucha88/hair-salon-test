@@ -4,13 +4,18 @@ import hairsaon.models.classes_for_master.Record;
 import hairsaon.myExtends.MyCalendar;
 import hairsaon.myExtends.MyClock;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class CalendarDay {
+
+public class CalendarDay implements Serializable {
+    //@Embedded
     MyCalendar myCalendar;
     MyClock startWork;
     MyClock endWork;

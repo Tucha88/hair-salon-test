@@ -23,6 +23,7 @@ public class Record implements Comparable<Record> {
     @Column(name = "service")
     ServiceMaster service;
 
+    //@ManyToOne
     @Column(name = "client")
     Client client;
 

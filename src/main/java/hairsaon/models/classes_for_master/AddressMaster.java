@@ -5,6 +5,8 @@ import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.MyCalendar;
 
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -12,14 +14,13 @@ import java.util.HashMap;
 /**
  * Created by Лимаренко on 28.04.2017.
  */
+
 public class AddressMaster {
 
     String address;
-    /**
-     * @ElementCollection
-     */
+    /*@ElementCollection*/
     ArrayList<WeekDay> weekTemplate;
-    /**@ElementCollection*/
+    /*@ElementCollection*/
     HashMap<MyCalendar, CalendarDay> timetableMap;
     //ArrayList<ServiceMaster> arrayServices;
 
