@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Лимаренко on 28.04.2017.
  */
+
 public class ServiceMaster implements Serializable {
     String name;
     int duration; // в минутах

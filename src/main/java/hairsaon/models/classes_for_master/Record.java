@@ -1,6 +1,7 @@
 package hairsaon.models.classes_for_master;
 
 import hairsaon.models.Client;
+import hairsaon.models.Master;
 import hairsaon.myExtends.*;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class Record implements Comparable<Record> {
     //@ManyToOne
     @Column(name = "client")
     Client client;
+
+    /*@OneToMany
+    Master master;*/
 
     @Column(name = "info")
     String info;
