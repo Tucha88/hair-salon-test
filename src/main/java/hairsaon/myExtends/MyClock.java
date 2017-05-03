@@ -1,10 +1,15 @@
 package hairsaon.myExtends;
 
+import javax.persistence.Embeddable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * Created by Лимаренко on 28.04.2017.
+ */
+
+/**
+ * @Embeddable
  */
 public class MyClock extends GregorianCalendar {
 

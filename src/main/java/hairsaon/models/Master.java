@@ -34,15 +34,18 @@ public class Master implements Serializable {
     @Column(name = "lastName")
     private String lastName;
 
+    //@ElementCollection
     @Column(name = "lang")
     private ArrayList<String> lang;
 
     @Column(name = "masterType")
     private String masterType;
 
+    //@OneToMany или @Embedded
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
+    //@Embedded
     @Column(name = "address")
     private AddressMaster addresses = new AddressMaster();
 
