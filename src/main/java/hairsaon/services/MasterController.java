@@ -113,9 +113,11 @@ public class MasterController {
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
 
-
-
-
+    /**
+     * Добавил Лёша
+     */
+    /*@PostMapping("weekTemplate")
+    public ResponseEntity<Object> set*/
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("authorization") String token) {
         String email = Jwts.parser()

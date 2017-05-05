@@ -1,6 +1,7 @@
 package hairsaon.models;
 
 import hairsaon.models.classes_for_master.AddressMaster;
+import hairsaon.models.classes_for_master.AddressTemp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -45,9 +46,9 @@ public class Master implements Serializable {
     @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
-    //@Embedded
+    @Embedded
     @Column(name = "address")
-    private AddressMaster addresses = new AddressMaster();
+    private AddressTemp addresses = new AddressTemp();
 
 
     public Master() {
@@ -57,7 +58,7 @@ public class Master implements Serializable {
         return this.addresses.getAddress();
     }
 
-    public AddressMaster getAddresses() {
+    public AddressTemp getAddresses() {
         return addresses;
     }
 
