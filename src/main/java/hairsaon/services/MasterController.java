@@ -115,13 +115,42 @@ public class MasterController {
     }
 
     /**
-     * Добавил Лёша
+     * Добавил Лёша 05.05.2017
      */
-    /*@PostMapping("weekTemplate")
+    @PostMapping("weekTemplate")
     public ResponseEntity<Object> setTemplate(@RequestHeader("authorization") String token, @RequestBody ArrayList<WeekDay> arrTemplate){
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        master.getAddresses().setWeekTemplate(arrTemplate);
+        masterRepository.saveAndFlush(master);
+        return new ResponseEntity<>(arrTemplate, HttpStatus.OK);
+    }
+
+    /**
+     * Добавил Лёша 06.05.2017
+     */
+    @GetMapping("weekTemplate")
+    public ResponseEntity<Object> getTemplate(@RequestHeader("authorization") String token) {
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+
+        Master master = masterRepository.findByEmail(email);
+        ArrayList arrTemplate = master.getTemplate();
 
         return new ResponseEntity<>(arrTemplate, HttpStatus.OK);
-    }*/
+    }
+
 
 
     @GetMapping("info")
