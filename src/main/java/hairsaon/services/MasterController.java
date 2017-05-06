@@ -3,6 +3,7 @@ package hairsaon.services;
 import hairsaon.models.Address;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
+import hairsaon.models.timetable.MasterArray;
 import hairsaon.repository.MasterRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,5 +167,17 @@ public class MasterController {
 //        }
 //        return new ResponseEntity<>(master, HttpStatus.OK);
 //    }
+
+    @RequestMapping(value = "arraylist", method = RequestMethod.GET)
+    public ResponseEntity<Object> getArrayListMasters() {
+        MasterArray masterArray = new MasterArray();
+        ArrayList<Master> masters = new ArrayList<>();
+        for (Master master :
+                masterRepository.findAll()) {
+            masters.add(master);
+        }
+        masterArray.setMasters(masters);
+        return new ResponseEntity<>(masterArray, HttpStatus.OK);
+    }
 
 }
