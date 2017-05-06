@@ -3,6 +3,7 @@ package hairsaon.services;
 import hairsaon.models.Address;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
+import hairsaon.models.timetable.WeekDay;
 import hairsaon.repository.MasterRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,12 @@ public class MasterController {
      * Добавил Лёша
      */
     /*@PostMapping("weekTemplate")
-    public ResponseEntity<Object> set*/
+    public ResponseEntity<Object> setTemplate(@RequestHeader("authorization") String token, @RequestBody ArrayList<WeekDay> arrTemplate){
+
+        return new ResponseEntity<>(arrTemplate, HttpStatus.OK);
+    }*/
+
+
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("authorization") String token) {
         String email = Jwts.parser()

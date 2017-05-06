@@ -2,6 +2,7 @@ package hairsaon.models;
 
 import hairsaon.models.classes_for_master.AddressMaster;
 import hairsaon.models.classes_for_master.AddressTemp;
+import hairsaon.models.timetable.WeekDay;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -64,6 +65,14 @@ public class Master implements Serializable {
 
     public void setAddresses(String addresses) {
         this.addresses.setAddress(addresses);
+    }
+
+    public ArrayList<WeekDay> getTemplate() {
+        return this.addresses.getWeekTemplate();
+    }
+
+    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
+        this.addresses.setWeekTemplate(arrTemplate);
     }
 
     public String getEmail() {
