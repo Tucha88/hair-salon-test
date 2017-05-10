@@ -167,17 +167,17 @@ public class MasterController {
 //        }
 //        return new ResponseEntity<>(master, HttpStatus.OK);
 //    }
-
-    @RequestMapping(value = "arraylist", method = RequestMethod.GET)
-    public ResponseEntity<Object> getArrayListMasters() {
-        MasterArray masterArray = new MasterArray();
-        ArrayList<Master> masters = new ArrayList<>();
-        for (Master master :
-                masterRepository.findAll()) {
-            masters.add(master);
-        }
-        masterArray.setMasters(masters);
-        return new ResponseEntity<>(masterArray, HttpStatus.OK);
-    }
+//
+//    @RequestMapping(value = "arraylist", method = RequestMethod.GET)
+//    public ResponseEntity<Object> getArrayListMasters() {
+//        MasterArray masterArray = new MasterArray();
+//        ArrayList<Master> masters = new ArrayList<>();
+//        for (Master master :
+//                masterRepository.findAll()) {
+//            masters.add(master);
+//        }
+//        masterArray.setMasters(masters);
+//        return new ResponseEntity<>(masterArray, HttpStatus.OK);
+//    }
 
 }
