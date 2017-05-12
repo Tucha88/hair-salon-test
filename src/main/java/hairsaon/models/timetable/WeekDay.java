@@ -1,13 +1,16 @@
 package hairsaon.models.timetable;
 
+
 import hairsaon.myExtends.MyClock;
+
+import java.io.Serializable;
 
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class WeekDay {
+public class WeekDay implements Serializable{
+    private static final long serialVersionUID = 112234551L;
     boolean activeDay;
-
     MyClock startWork;
     MyClock endWork;
 

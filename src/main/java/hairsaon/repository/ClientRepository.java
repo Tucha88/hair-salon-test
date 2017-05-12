@@ -1,9 +1,8 @@
 package hairsaon.repository;
 
+
 import hairsaon.models.Client;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * Created by Boris on 06.04.2017.
@@ -11,9 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 //TODO создать запросы поиска по отдельным полям
-@Transactional
-@Repository
-public interface ClientRepository extends JpaRepository<Client, String> {
+
+public interface ClientRepository extends MongoRepository<Client, String> {
         Client findClientByClientEmail(String email);
 
 }

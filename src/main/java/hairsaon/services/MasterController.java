@@ -1,9 +1,9 @@
 package hairsaon.services;
 
-import hairsaon.models.Address;
+
 import hairsaon.models.Master;
 import hairsaon.models.Services;
-import hairsaon.models.timetable.MasterArray;
+import hairsaon.models.classes_for_master.AddressTemp;
 import hairsaon.repository.MasterRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class MasterController {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
         master.setSerivce(services);
-        masterRepository.saveAndFlush(master);
+        masterRepository.save(master);
         return new ResponseEntity<>("Master services were updated", HttpStatus.OK);
 
     }
@@ -76,7 +76,7 @@ public class MasterController {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
         master.addServise(service);
-        masterRepository.saveAndFlush(master);
+        masterRepository.save(master);
         return new ResponseEntity<>("Service was added", HttpStatus.OK);
     }
 
@@ -94,7 +94,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        String addresses = master.getAddresses();
+        AddressTemp addresses = master.getAddresses();
 
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
@@ -112,7 +112,7 @@ public class MasterController {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
         master.setAddresses(addresses);
-        masterRepository.saveAndFlush(master);
+        masterRepository.save(master);
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
 
@@ -146,11 +146,11 @@ public class MasterController {
         updatedMaster.setPhoneNumber(master.getPhoneNumber());
         updatedMaster.setLastName(master.getLastName());
         updatedMaster.setName(master.getName());
-        updatedMaster.setAddresses(master.getAddresses());
+//        updatedMaster.setAddresses(master.getAddresses());
         updatedMaster.setLang(master.getLang());
         updatedMaster.setMasterType(master.getMasterType());
 
-        masterRepository.saveAndFlush(updatedMaster);
+        masterRepository.save(updatedMaster);
         return new ResponseEntity<>("Master is updated", HttpStatus.OK);
     }
 

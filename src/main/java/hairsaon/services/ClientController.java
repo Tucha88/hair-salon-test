@@ -1,5 +1,6 @@
 package hairsaon.services;
 
+
 import hairsaon.models.Client;
 import hairsaon.repository.ClientRepository;
 import io.jsonwebtoken.Jwts;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 /**
  * Created by Boris on 17.04.2017.
@@ -28,6 +28,7 @@ public class ClientController {
                 .parseClaimsJws(token)
                 .getBody()
                 .get("sub", String.class);
+
 
 
         Client client = clientRepository.findClientByClientEmail(email);
@@ -56,7 +57,7 @@ public class ClientController {
         updatedClient.setClientPhoneNumber(client.getClientPhoneNumber());
 
 
-        clientRepository.saveAndFlush(updatedClient);
+        clientRepository.save(updatedClient);
         return new ResponseEntity<>("Client was updated", HttpStatus.OK);
     }
 

@@ -1,29 +1,19 @@
 package hairsaon.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * Created by Boris on 01.04.2017.
  * Client entity
  * Класс для записи в базу данных
  */
-@Entity
 public class Client {
     private static final long serialVersionUID = 112234557L;
 
-    @Id
-    @Column(name = "email")
+
     private String clientEmail;
-    @Column(name = "password")
     private String clientPassword;
-    @Column(name = "name")
     private String clientName;
-    @Column(name = "lastname")
     private String clientLastName;
-    @Column(name = "telephone")
     private String clientPhoneNumber;
 
     public Client() {

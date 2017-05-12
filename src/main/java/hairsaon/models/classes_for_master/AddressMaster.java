@@ -1,5 +1,6 @@
 package hairsaon.models.classes_for_master;
 
+
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.MyCalendar;

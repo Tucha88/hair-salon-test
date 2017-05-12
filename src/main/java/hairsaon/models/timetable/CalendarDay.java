@@ -1,5 +1,6 @@
 package hairsaon.models.timetable;
 
+
 import hairsaon.models.classes_for_master.Record;
 import hairsaon.myExtends.MyCalendar;
 import hairsaon.myExtends.MyClock;
@@ -17,6 +18,8 @@ public class CalendarDay {
     boolean working; // рабочий ли день
     ArrayList<Record> records;
 
+    public CalendarDay() {
+    }
 
     public CalendarDay(MyCalendar myCalendar, int startHour, int startMin, int endHour, int endMin, boolean working) {
         this.myCalendar = myCalendar;

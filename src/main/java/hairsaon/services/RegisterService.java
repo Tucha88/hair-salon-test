@@ -1,8 +1,9 @@
 package hairsaon.services;
 
+
 import hairsaon.models.Client;
-import hairsaon.repository.ClientRepository;
 import hairsaon.models.Master;
+import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import io.jsonwebtoken.Jwts;
@@ -39,9 +40,11 @@ public class RegisterService {
         if (utils.isLoginInfoExist(master)) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
         }
-        if (masterRepository.findByEmail(master.getEmail())!=null){
+        else  if (masterRepository.findByEmail(master.getEmail())!=null){
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT);
-
+        }
+        else if (clientRepository.findClientByClientEmail(master.getEmail()) != null) {
+            return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
         }
         masterRepository.save(master);
 
@@ -61,8 +64,12 @@ public class RegisterService {
             return new ResponseEntity<>("Enter correct login or password", HttpStatus.CONFLICT);// Wrong login or password
         }
 
-        if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
-            return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT); // Found same login
+        else if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
+            return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
+        }
+        else if (masterRepository.findByEmail(client.getClientEmail())!=null){
+            return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT);
+
         }
         String jwtToken = Jwts.builder()
                 .setSubject(client.getClientEmail())

@@ -1,7 +1,11 @@
 package hairsaon.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
+import hairsaon.models.classes_for_master.AddressTemp;
+import hairsaon.models.timetable.WeekDay;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,41 +15,52 @@ import java.util.ArrayList;
  */
 
 //TODO добавить масив с услугами и календарь расписание
-@Entity
+@Document(collection = "master")
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556L;
+
     @Id
-    @NotNull
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    @Column(name = "password")
-    @NotNull
     private String password;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "lang")
     private ArrayList<String> lang;
 
-    @Column(name = "masterType")
     private String masterType;
 
-    @Column(columnDefinition = "LONGBLOB")
     private ArrayList<Services> serivce = new ArrayList<Services>();
 
-    @Column(name = "address")
-    private String addresses;
+    private AddressTemp addresses = new AddressTemp();
 
 
     public Master() {
+    }
+
+    public String getAddressString(){
+        return this.addresses.getAddress();
+    }
+
+    public AddressTemp getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(String addresses) {
+        this.addresses.setAddress(addresses);
+        this.addresses.setWeekTime();
+    }
+
+    public ArrayList<WeekDay> getTemplate() {
+        return this.addresses.getWeekTemplate();
+    }
+
+    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
+        this.addresses.setWeekTemplate(arrTemplate);
     }
 
     public String getEmail() {
@@ -112,13 +127,6 @@ public class Master implements Serializable {
         this.serivce = serivce;
     }
 
-    public String getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(String addresses) {
-        this.addresses = addresses;
-    }
 
     public void addServise(Services services) {
         this.serivce.add(services);

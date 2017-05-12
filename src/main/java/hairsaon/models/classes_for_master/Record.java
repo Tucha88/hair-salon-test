@@ -1,10 +1,9 @@
 package hairsaon.models.classes_for_master;
 
+
 import hairsaon.models.Client;
-import hairsaon.myExtends.*;
-
-import javax.persistence.*;
-
+import hairsaon.myExtends.MyCalendar;
+import hairsaon.myExtends.MyClock;
 
 /**
  * Created by Лимаренко on 28.04.2017.
@@ -13,17 +12,11 @@ import javax.persistence.*;
 //TODO придумать как связывать клиента с мастером через запись
 
 //@Entity
-@Table(name = "Record")
 public class Record implements Comparable<Record> {
-    @Column(name = "date")
     MyCalendar calendar;
-    @Column(name = "start time")
     MyClock starTime;
-    @Column(name = "service")
     ServiceMaster service;
-    @Column(name = "client")
     Client client;
-    @Column(name = "info")
     String info;
 
     public Record() {

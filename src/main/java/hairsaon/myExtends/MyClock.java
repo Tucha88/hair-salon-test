@@ -9,6 +9,9 @@ import java.util.GregorianCalendar;
 public class MyClock extends GregorianCalendar {
 
 
+    public MyClock() {
+    }
+
     public MyClock(int hourOfDay, int minute) {
         super(26, 03, 1992, hourOfDay, minute, 0);
     }

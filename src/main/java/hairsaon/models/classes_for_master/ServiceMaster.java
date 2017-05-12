@@ -9,6 +9,9 @@ public class ServiceMaster {
     int price;
     String info;
 
+    public ServiceMaster() {
+    }
+
     public ServiceMaster(String name, int duration, int price) {
         this.name = name;
         this.duration = duration;
