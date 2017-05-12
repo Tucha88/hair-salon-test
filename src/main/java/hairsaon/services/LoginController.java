@@ -32,8 +32,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody MasterAuthType authType){
-        if (authType == null || authType.getEmail().equals("") || authType.getPassword().equals("") || authType.getPassword() == null ||
-                authType.getEmail() == null){
+        if (authType == null || authType.getEmail() == null || authType.getPassword() == null) {
+            return new ResponseEntity<Object>("Error, there is no auth info", HttpStatus.UNAUTHORIZED);
+        }
+        if (authType.getEmail().equals("") || authType.getPassword().equals("")) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }else if (clientRepository.findClientByClientEmail(authType.getEmail()) != null){
             Client client = clientRepository.findClientByClientEmail(authType.getEmail());

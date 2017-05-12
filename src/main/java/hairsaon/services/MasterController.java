@@ -146,7 +146,7 @@ public class MasterController {
         updatedMaster.setPhoneNumber(master.getPhoneNumber());
         updatedMaster.setLastName(master.getLastName());
         updatedMaster.setName(master.getName());
-//        updatedMaster.setAddresses(master.getAddresses());
+//        updatedMaster.setAddresses(master.getAddresses().getAddress());
         updatedMaster.setLang(master.getLang());
         updatedMaster.setMasterType(master.getMasterType());
 
