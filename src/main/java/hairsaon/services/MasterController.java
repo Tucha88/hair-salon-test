@@ -159,25 +159,5 @@ public class MasterController {
         return new ResponseEntity<>(masterRepository.findAll(), HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "masters/{id:.+}", method = RequestMethod.GET)
-//    public ResponseEntity<Object> getMaster(@PathVariable("id") String id) {
-//        Master master = masterRepository.findByEmail(id);
-//        if (master == null) {
-//            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(master, HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "arraylist", method = RequestMethod.GET)
-//    public ResponseEntity<Object> getArrayListMasters() {
-//        MasterArray masterArray = new MasterArray();
-//        ArrayList<Master> masters = new ArrayList<>();
-//        for (Master master :
-//                masterRepository.findAll()) {
-//            masters.add(master);
-//        }
-//        masterArray.setMasters(masters);
-//        return new ResponseEntity<>(masterArray, HttpStatus.OK);
-//    }
 
 }

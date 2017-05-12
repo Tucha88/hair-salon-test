@@ -24,6 +24,7 @@ public class AddressTemp implements Serializable {
         }
     }
 
+
     public String getAddress() {
         return address;
     }

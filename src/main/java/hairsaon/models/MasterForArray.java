@@ -1,25 +1,11 @@
 package hairsaon.models;
 
-
-import hairsaon.models.classes_for_master.AddressTemp;
-import hairsaon.models.timetable.WeekDay;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Boris on 01.04.2017.
- * Класс Мастер для записи в базу банных
+ * Created by Boris on 12.05.2017.
  */
-
-//TODO добавить масив с услугами и календарь расписание
-@Document(collection = "master")
-public class Master implements Serializable {
-    private static final long serialVersionUID = 112234556L;
-
-    @Id
+public class MasterForArray {
     private String email;
     private String phoneNumber;
     private String password;
@@ -27,32 +13,24 @@ public class Master implements Serializable {
     private String lastName;
     private ArrayList<String> lang;
     private String masterType;
-    private ArrayList<Services> serivce = new ArrayList<Services>();
-    private AddressTemp addresses = new AddressTemp();
+    private ArrayList<Services> serivce = new ArrayList<>();
+    private String addresses;
 
-
-    public Master() {
+    public MasterForArray(String email, String phoneNumber, String password,
+                          String name, String lastName, ArrayList<String> lang,
+                          String masterType, ArrayList<Services> serivce, String addresses) {
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.lang = lang;
+        this.masterType = masterType;
+        this.serivce = serivce;
+        this.addresses = addresses;
     }
 
-    public String getAddressString(){
-        return this.addresses.getAddress();
-    }
-
-    public AddressTemp getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(String addresses) {
-        this.addresses.setAddress(addresses);
-        this.addresses.setWeekTime();
-    }
-
-    public ArrayList<WeekDay> getTemplate() {
-        return this.addresses.getWeekTemplate();
-    }
-
-    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
-        this.addresses.setWeekTemplate(arrTemplate);
+    public MasterForArray() {
     }
 
     public String getEmail() {
@@ -119,8 +97,11 @@ public class Master implements Serializable {
         this.serivce = serivce;
     }
 
+    public String getAddresses() {
+        return addresses;
+    }
 
-    public void addServise(Services services) {
-        this.serivce.add(services);
+    public void setAddresses(String addresses) {
+        this.addresses = addresses;
     }
 }
