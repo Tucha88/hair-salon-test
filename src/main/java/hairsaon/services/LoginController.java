@@ -33,14 +33,14 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody MasterAuthType authType){
         if (authType == null || authType.getEmail() == null || authType.getPassword() == null) {
-            return new ResponseEntity<Object>("Error, there is no auth info", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Error, there is no auth info", HttpStatus.UNAUTHORIZED);
         }
         if (authType.getEmail().equals("") || authType.getPassword().equals("")) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }else if (clientRepository.findClientByClientEmail(authType.getEmail()) != null){
             Client client = clientRepository.findClientByClientEmail(authType.getEmail());
             if (!client.getClientPassword().equals(authType.getPassword())) {
-                return new ResponseEntity<Object>("Wrong password", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
             String jwtToken = Jwts.builder()
                     .setSubject(client.getClientEmail())
@@ -53,7 +53,7 @@ public class LoginController {
         }else if (masterRepository.findByEmail(authType.getEmail()) != null){
             Master master = masterRepository.findByEmail(authType.getEmail());
             if (!master.getPassword().equals(authType.getPassword())) {
-                return new ResponseEntity<Object>("Wrong password", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
             String jwtToken = Jwts.builder()
                     .setSubject(master.getEmail())

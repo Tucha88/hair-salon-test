@@ -30,7 +30,7 @@ public class GuestService {
     private MasterRepository masterRepository;
 
 
-    @RequestMapping(value = "arraylist", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public ResponseEntity<Object> getListMasters() {
         MasterArray masterArray = new MasterArray();
         ArrayList<MasterForArray> masters = new ArrayList<>();
