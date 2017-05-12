@@ -1,15 +1,20 @@
 package hairsaon.models;
 
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Created by Boris on 01.04.2017.
  * Client entity
  * Класс для записи в базу данных
  */
+@Document(collection = "client")
 public class Client {
     private static final long serialVersionUID = 112234557L;
 
 
+    @Id
     private String clientEmail;
     private String clientPassword;
     private String clientName;
