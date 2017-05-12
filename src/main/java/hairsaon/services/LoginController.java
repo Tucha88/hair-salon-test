@@ -37,15 +37,22 @@ public class LoginController {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }else if (clientRepository.findClientByClientEmail(authType.getEmail()) != null){
             Client client = clientRepository.findClientByClientEmail(authType.getEmail());
+            if (!client.getClientPassword().equals(authType.getPassword())) {
+                return new ResponseEntity<Object>("Wrong password", HttpStatus.UNAUTHORIZED);
+            }
             String jwtToken = Jwts.builder()
                     .setSubject(client.getClientEmail())
                     .claim("roles", "user")
                     .setIssuedAt(new Date())
                     .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
 
+
             return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
         }else if (masterRepository.findByEmail(authType.getEmail()) != null){
             Master master = masterRepository.findByEmail(authType.getEmail());
+            if (!master.getPassword().equals(authType.getPassword())) {
+                return new ResponseEntity<Object>("Wrong password", HttpStatus.UNAUTHORIZED);
+            }
             String jwtToken = Jwts.builder()
                     .setSubject(master.getEmail())
                     .claim("roles", "user")
