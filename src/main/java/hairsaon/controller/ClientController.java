@@ -1,8 +1,9 @@
-package hairsaon.services;
+package hairsaon.controller;
 
 
 import hairsaon.models.Client;
 import hairsaon.repository.ClientRepository;
+import hairsaon.utils.IUtils;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,12 @@ public class ClientController {
 
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private IUtils utils;
 
     @GetMapping("info")
     public ResponseEntity<Object> getClientInfo(@RequestHeader("authorization") String token) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
 
 
@@ -42,11 +41,7 @@ public class ClientController {
 
     @PutMapping("update")
     public ResponseEntity<Object> updateClient(@RequestHeader("authorization")String token,@RequestBody Client client) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
         Client updatedClient = clientRepository.findClientByClientEmail(email);
         if (updatedClient == null) {

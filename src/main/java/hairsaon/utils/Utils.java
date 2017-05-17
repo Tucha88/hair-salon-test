@@ -2,7 +2,13 @@ package hairsaon.utils;
 
 import hairsaon.models.Client;
 import hairsaon.models.Master;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by Boris on 06.04.2017.
@@ -25,4 +31,32 @@ public class Utils implements IUtils {
         }
         return false;
     }
+
+
+    @Override
+    public String hashPassword(String rawPassword) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(rawPassword);
+    }
+
+    @Override
+    public String parsJwts(String token) {
+        String email = Jwts.parser()
+                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
+                .parseClaimsJws(token)
+                .getBody()
+                .get("sub", String.class);
+        return email;
+    }
+
+    @Override
+    public String buildJwt(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("roles", "user")
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
+    }
+
+
 }

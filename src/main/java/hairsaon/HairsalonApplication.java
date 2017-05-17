@@ -17,6 +17,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class HairsalonApplication {
     private int maxUploadSizeInMb = 1 * 1024 * 1024; // 1 MB
 
+    public static void main(String[] args) {
+        SpringApplication.run(HairsalonApplication.class, args);
+    }
+
     @Bean
     public FilterRegistrationBean jwtFilter() {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -28,12 +32,4 @@ public class HairsalonApplication {
 
         return registrationBean;
     }
-
-
-    public static void main(String[] args) {
-        SpringApplication.run(HairsalonApplication.class, args);
-    }
-
-
-
 }

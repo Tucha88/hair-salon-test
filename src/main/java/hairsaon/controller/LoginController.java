@@ -1,4 +1,4 @@
-package hairsaon.services;
+package hairsaon.controller;
 
 
 import hairsaon.models.Client;
@@ -6,6 +6,7 @@ import hairsaon.models.Master;
 import hairsaon.models.MasterAuthType;
 import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
+import hairsaon.utils.IUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class LoginController {
     private ClientRepository clientRepository;
     @Autowired
     private MasterRepository masterRepository;
+    @Autowired
+    private IUtils utils;
 
 
     @PostMapping("/login")
@@ -42,26 +45,19 @@ public class LoginController {
             if (!client.getClientPassword().equals(authType.getPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
-            String jwtToken = Jwts.builder()
-                    .setSubject(client.getClientEmail())
-                    .claim("roles", "user")
-                    .setIssuedAt(new Date())
-                    .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
+            return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}", HttpStatus.OK);
 
 
-            return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
         }else if (masterRepository.findByEmail(authType.getEmail()) != null){
+
+
             Master master = masterRepository.findByEmail(authType.getEmail());
             if (!master.getPassword().equals(authType.getPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
-            String jwtToken = Jwts.builder()
-                    .setSubject(master.getEmail())
-                    .claim("roles", "user")
-                    .setIssuedAt(new Date())
-                    .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
 
-            return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
+
+            return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(master.getEmail()) + "\"}", HttpStatus.OK);
         }
         return new ResponseEntity<>("Please register",HttpStatus.UNAUTHORIZED);
     }

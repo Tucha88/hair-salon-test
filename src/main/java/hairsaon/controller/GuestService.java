@@ -1,10 +1,10 @@
-package hairsaon.services;
+package hairsaon.controller;
 
 
 
 import hairsaon.models.Master;
+import hairsaon.models.MasterArray;
 import hairsaon.models.MasterForArray;
-import hairsaon.models.timetable.MasterArray;
 import hairsaon.repository.MasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

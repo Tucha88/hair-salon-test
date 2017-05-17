@@ -1,4 +1,4 @@
-package hairsaon.services;
+package hairsaon.controller;
 
 
 import hairsaon.models.Client;
@@ -48,14 +48,8 @@ public class RegisterService {
         }
         masterRepository.save(master);
 
-        String jwtToken = Jwts.builder().setSubject(master.getEmail())
-                .claim("roles", "user")
-                .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG")
-                .compact();
 
-
-        return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(master.getEmail()) + "\"}", HttpStatus.OK);
     }
 
     @PostMapping("client")
@@ -71,16 +65,11 @@ public class RegisterService {
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT);
 
         }
-        String jwtToken = Jwts.builder()
-                .setSubject(client.getClientEmail())
-                .claim("roles", "user")
-                .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG")
-                .compact();
+
 
         clientRepository.save(client);
 
-        return new ResponseEntity<>("{\"token\":" + "\"" + jwtToken + "\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}", HttpStatus.OK);
     }
 
 }

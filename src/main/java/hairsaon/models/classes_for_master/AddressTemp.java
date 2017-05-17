@@ -2,6 +2,7 @@ package hairsaon.models.classes_for_master;
 
 
 import hairsaon.models.timetable.WeekDay;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,12 +10,10 @@ import java.util.ArrayList;
 /**
  * Created by Лимаренко on 06.05.2017.
  */
-
 public class AddressTemp implements Serializable {
     private static final long serialVersionUID = 1122345511L;
 
     String address;
-//    @ElementCollection
     private ArrayList<WeekDay> weekTemplate;
 
     public AddressTemp() {

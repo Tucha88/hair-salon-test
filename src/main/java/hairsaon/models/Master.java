@@ -123,4 +123,8 @@ public class Master implements Serializable {
     public void addServise(Services services) {
         this.serivce.add(services);
     }
+
+    public Boolean isPassword(String hashPass) {
+        return this.password.equals(hashPass);
+    }
 }

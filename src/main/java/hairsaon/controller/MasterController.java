@@ -1,10 +1,11 @@
-package hairsaon.services;
+package hairsaon.controller;
 
 
 import hairsaon.models.Master;
 import hairsaon.models.Services;
 import hairsaon.models.classes_for_master.AddressTemp;
 import hairsaon.repository.MasterRepository;
+import hairsaon.utils.IUtils;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,16 +24,14 @@ import java.util.List;
 public class MasterController {
     @Autowired
     private MasterRepository masterRepository;
+    @Autowired
+    private IUtils utils;
 
 
 
     @GetMapping("services")
     public ResponseEntity<Object> getMasterServices(@RequestHeader("Authorization") String token) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
 
         Master master = masterRepository.findByEmail(email);
@@ -45,11 +44,7 @@ public class MasterController {
 
     @PostMapping("service")
     public ResponseEntity<Object> setMasterServices(@RequestHeader("Authorization") String token, @RequestBody ArrayList<Services> services) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
 
         Master master = masterRepository.findByEmail(email);
@@ -58,17 +53,13 @@ public class MasterController {
         }
         master.setSerivce(services);
         masterRepository.save(master);
-        return new ResponseEntity<>("Master services were updated", HttpStatus.OK);
+        return new ResponseEntity<>("Master controller were updated", HttpStatus.OK);
 
     }
 
     @PutMapping("service")
     public ResponseEntity<Object> addMasterService(@RequestHeader("Authorization") String token, @RequestBody Services service) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
 
         Master master = masterRepository.findByEmail(email);
@@ -83,11 +74,7 @@ public class MasterController {
 
     @GetMapping("address")
     public ResponseEntity<Object> getMasterAddresses(@RequestHeader("Authorization") String token) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
 
         Master master = masterRepository.findByEmail(email);
@@ -101,11 +88,7 @@ public class MasterController {
 
     @PutMapping("address")
     public ResponseEntity<Object> setMasterAddresses(@RequestHeader("Authorization") String token, @RequestBody String addresses) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
 
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
@@ -118,11 +101,7 @@ public class MasterController {
 
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("Authorization") String token) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
@@ -132,11 +111,7 @@ public class MasterController {
 
     @PutMapping("update")
     public ResponseEntity<Object> updateMuster(@RequestHeader("Authorization") String token, @RequestBody Master master) {
-        String email = Jwts.parser()
-                .setSigningKey("ujhswljbnwygh2379633278uYYGHBGYG")
-                .parseClaimsJws(token)
-                .getBody()
-                .get("sub", String.class);
+        String email = utils.parsJwts(token);
         Master updatedMaster = masterRepository.findByEmail(email);
 
         if (updatedMaster == null) {
@@ -149,8 +124,8 @@ public class MasterController {
 //        updatedMaster.setAddresses(master.getAddresses().getAddress());
         updatedMaster.setLang(master.getLang());
         updatedMaster.setMasterType(master.getMasterType());
-
         masterRepository.save(updatedMaster);
+
         return new ResponseEntity<>("Master is updated", HttpStatus.OK);
     }
 
