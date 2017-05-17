@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 @SpringBootApplication
 public class HairsalonApplication {
-    private int maxUploadSizeInMb = 1 * 1024 * 1024; // 1 MB
 
     public static void main(String[] args) {
         SpringApplication.run(HairsalonApplication.class, args);

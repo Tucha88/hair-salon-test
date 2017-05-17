@@ -46,6 +46,8 @@ public class RegisterService {
         else if (clientRepository.findClientByClientEmail(master.getEmail()) != null) {
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
         }
+        String str = utils.hashPassword(master.getPassword());
+        master.setPassword(str);
         masterRepository.save(master);
 
 
@@ -66,7 +68,8 @@ public class RegisterService {
 
         }
 
-
+        String str = utils.hashPassword(client.getClientPassword());
+        client.setClientPassword(str);
         clientRepository.save(client);
 
         return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}", HttpStatus.OK);

@@ -12,4 +12,7 @@ public interface IUtils {
     String parsJwts(String token);
 
     String buildJwt(String email);
+
+
+    Boolean isPasswordCorrect(String newPassword, String hashedPassrod);
 }

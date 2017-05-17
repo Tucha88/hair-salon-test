@@ -42,7 +42,7 @@ public class LoginController {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
         }else if (clientRepository.findClientByClientEmail(authType.getEmail()) != null){
             Client client = clientRepository.findClientByClientEmail(authType.getEmail());
-            if (!client.getClientPassword().equals(authType.getPassword())) {
+            if (!utils.isPasswordCorrect(authType.getPassword(), client.getClientPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
             return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}", HttpStatus.OK);
@@ -52,7 +52,7 @@ public class LoginController {
 
 
             Master master = masterRepository.findByEmail(authType.getEmail());
-            if (!master.getPassword().equals(authType.getPassword())) {
+            if (!utils.isPasswordCorrect(authType.getPassword(), master.getPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
 

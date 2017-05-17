@@ -58,5 +58,11 @@ public class Utils implements IUtils {
                 .signWith(SignatureAlgorithm.HS256, "ujhswljbnwygh2379633278uYYGHBGYG").compact();
     }
 
+    @Override
+    public Boolean isPasswordCorrect(String newPassword, String hashedPassrod) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(newPassword, hashedPassrod);
+    }
+
 
 }

@@ -28,8 +28,6 @@ public class ClientController {
     public ResponseEntity<Object> getClientInfo(@RequestHeader("authorization") String token) {
         String email = utils.parsJwts(token);
 
-
-
         Client client = clientRepository.findClientByClientEmail(email);
 
         System.out.println(token + client);
