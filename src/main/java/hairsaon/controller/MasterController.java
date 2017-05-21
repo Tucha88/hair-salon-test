@@ -81,9 +81,9 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        AddressTemp addresses = master.getAddresses();
+//        AddressTemp addresses = master.getAddresses();
 
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        return new ResponseEntity<>(master.getAddresses(), HttpStatus.OK);
     }
 
     @PutMapping("address")
@@ -121,7 +121,7 @@ public class MasterController {
         updatedMaster.setPhoneNumber(master.getPhoneNumber());
         updatedMaster.setLastName(master.getLastName());
         updatedMaster.setName(master.getName());
-//        updatedMaster.setAddresses(master.getAddresses().getAddress());
+        updatedMaster.setAddresses(master.getAddresses());
         updatedMaster.setLang(master.getLang());
         updatedMaster.setMasterType(master.getMasterType());
         masterRepository.save(updatedMaster);

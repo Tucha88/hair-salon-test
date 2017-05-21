@@ -28,32 +28,40 @@ public class Master implements Serializable {
     private ArrayList<String> lang;
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
-    private AddressTemp addresses = new AddressTemp();
+    //    private AddressTemp addresses = new AddressTemp();
+    private String addresses;
 
 
     public Master() {
     }
 
-    public String getAddressString(){
-        return this.addresses.getAddress();
-    }
-
-    public AddressTemp getAddresses() {
+    public String getAddresses() {
         return addresses;
     }
 
     public void setAddresses(String addresses) {
-        this.addresses.setAddress(addresses);
-        this.addresses.setWeekTime();
+        this.addresses = addresses;
     }
-
-    public ArrayList<WeekDay> getTemplate() {
-        return this.addresses.getWeekTemplate();
-    }
-
-    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
-        this.addresses.setWeekTemplate(arrTemplate);
-    }
+    //    public String getAddressString(){
+//        return this.addresses.getAddress();
+//    }
+//
+//    public AddressTemp getAddresses() {
+//        return addresses;
+//    }
+//
+//    public void setAddresses(String addresses) {
+//        this.addresses.setAddress(addresses);
+//        this.addresses.setWeekTime();
+//    }
+//
+//    public ArrayList<WeekDay> getTemplate() {
+//        return this.addresses.getWeekTemplate();
+//    }
+//
+//    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
+//        this.addresses.setWeekTemplate(arrTemplate);
+//    }
 
     public String getEmail() {
         return email;
