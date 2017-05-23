@@ -46,6 +46,12 @@ public class LightCalendar implements Comparable {
         this.year = year;
     }
 
+    public void setDate(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     @Override
     public int hashCode() {
         return this.getYear() * 3 - 500 + this.getMonth() * 4 + this.getDay();
@@ -81,5 +87,23 @@ public class LightCalendar implements Comparable {
             }
         }
         return res;
+    }
+
+    public void addYear(int year) {
+        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+        myCalendar.add(Calendar.YEAR, year);
+        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
+    }
+
+    public void addMonth(int month) {
+        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+        myCalendar.add(Calendar.MONTH, month);
+        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
+    }
+
+    public void addDay(int day) {
+        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+        myCalendar.add(Calendar.DAY_OF_MONTH, day);
+        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
     }
 }
