@@ -24,7 +24,7 @@ public class LightCalendar implements Comparable {
 
     public LightCalendar(MyCalendar myCalendar) {
         this.year = myCalendar.getYear();
-        this.month = myCalendar.getMonth();
+        this.month = myCalendar.getMonth() + 1;
         this.day = myCalendar.getDayOfMonth();
     }
 
@@ -56,6 +56,10 @@ public class LightCalendar implements Comparable {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+
+    public String getDateString() {
+        return day + "." + month + "." + year;
     }
 
     @Override
@@ -111,5 +115,25 @@ public class LightCalendar implements Comparable {
         MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
         myCalendar.add(Calendar.DAY_OF_MONTH, day);
         this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
+    }
+
+    @Override
+    public String toString() {
+        String tempDay;
+        String tempMonth;
+        String tempYear = String.valueOf(this.year);
+        if (this.day < 10) {
+            tempDay = "0" + this.day;
+        } else {
+            tempDay = String.valueOf(this.day);
+        }
+        if (this.month < 10) {
+            tempMonth = "0" + this.month;
+        } else {
+            tempMonth = String.valueOf(this.month);
+        }
+
+
+        return tempDay + "." + tempMonth + "." + tempYear;
     }
 }

@@ -89,5 +89,8 @@ public class LightClock implements Comparable {
         this.setTime(myClock.getHour(), myClock.getMinute());
     }
 
-
+    @Override
+    public String toString() {
+        return hour + ":" + minute;
+    }
 }

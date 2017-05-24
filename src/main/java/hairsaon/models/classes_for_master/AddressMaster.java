@@ -11,6 +11,7 @@ import javax.persistence.Embedded;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by Лимаренко on 28.04.2017.
@@ -22,13 +23,13 @@ public class AddressMaster {
     /*@ElementCollection*/
     ArrayList<WeekDay> weekTemplate;
     /*@ElementCollection*/
-    HashMap<LightCalendar, CalendarDay> timetableMap;
+    TreeMap<LightCalendar, CalendarDay> timetableMap;
     //ArrayList<ServiceMaster> arrayServices;
 
 
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
-        timetableMap = new HashMap<LightCalendar, CalendarDay>();
+        timetableMap = new TreeMap<LightCalendar, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -38,7 +39,7 @@ public class AddressMaster {
     public AddressMaster(String address) {
         this.address = address;
         weekTemplate = new ArrayList<WeekDay>();
-        timetableMap = new HashMap<LightCalendar, CalendarDay>();
+        timetableMap = new TreeMap<LightCalendar, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -52,6 +53,22 @@ public class AddressMaster {
         this.address = address;
     }
 
+    public ArrayList<WeekDay> getWeekTemplate() {
+        return weekTemplate;
+    }
+
+    public void setWeekTemplate(ArrayList<WeekDay> weekTemplate) {
+        this.weekTemplate = weekTemplate;
+    }
+
+    public TreeMap<LightCalendar, CalendarDay> getTimetableMap() {
+        return timetableMap;
+    }
+
+    public void setTimetableMap(TreeMap<LightCalendar, CalendarDay> timetableMap) {
+        this.timetableMap = timetableMap;
+    }
+
     public void addTimeOnWeek(int dayOnWeek, boolean active, int startHour, int startMin, int endHour, int endMin) { /** Добовление(изменение дня в шаблоне)*/
         weekTemplate.get(dayOnWeek).setTime(active, startHour, startMin, endHour, endMin);
     }
@@ -63,20 +80,36 @@ public class AddressMaster {
     public void startMasterTrmplatr() { /** Первое создание расписание мастера*/
 
         for (int i = 0; i < 21; i++) {
-            LightCalendar tempMyCalendar = new LightCalendar();
-            tempMyCalendar.addDay(-7);
-            tempMyCalendar.addDay(i);
-            if (timetableMap.get(tempMyCalendar) == null) {
+
+            MyCalendar tempMyCalendar = new MyCalendar();
+            tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
+            tempMyCalendar.add(Calendar.DAY_OF_MONTH, i);
+            LightCalendar lightTemp = new LightCalendar(tempMyCalendar);
+            if (timetableMap.get(lightTemp) == null) {
+                WeekDay tempWeekDay = weekTemplate.get(tempMyCalendar.getMyDayOfWeek());
+                if (tempWeekDay.getActiveDay()) {
+                    timetableMap.put(lightTemp, new CalendarDay(lightTemp, tempWeekDay));
+                } else {
+                    timetableMap.put(lightTemp, new CalendarDay(lightTemp, 0, 0, 0, 0, false));
+                }
+            }
+
+            /*MyCalendar tempMyCalendar = new MyCalendar();
+            tempMyCalendar.add(Calendar.DAY_OF_YEAR,-7);
+            tempMyCalendar.add(Calendar.DAY_OF_YEAR,i);
+            LightCalendar lightCL = new LightCalendar(tempMyCalendar);
+            if (timetableMap.get(lightCL) == null) {
                 if (weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getActiveDay()) {
-                    timetableMap.put(tempMyCalendar, new CalendarDay(tempMyCalendar,
+
+                    timetableMap.put(lightCL, new CalendarDay(lightCL,
                             weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getStartHour(),
                             weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getStartMin(),
                             weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getEndHour(),
                             weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getEndMin(), true));
                 } else {
-                    timetableMap.put(tempMyCalendar, new CalendarDay(tempMyCalendar, 0, 0, 0, 0, false));
+                    timetableMap.put(lightCL, new CalendarDay(lightCL, 0, 0, 0, 0, false));
                 }
-            }
+            }*/
 
         }
 
@@ -85,21 +118,19 @@ public class AddressMaster {
 
     public void update() { /** удаление дня недельной давности и добавление дня через 2 недели*/
 
-        MyCalendar myCalendar = new MyCalendar();
-        LightCalendar tempMyCalendar = new LightCalendar(myCalendar);
-        tempMyCalendar.addDay(-7);
-        timetableMap.remove(tempMyCalendar);
-        tempMyCalendar = new LightCalendar(myCalendar);
-        tempMyCalendar.addDay(14);
-        if (timetableMap.get(tempMyCalendar) == null) { // если эта дата пустая проверить шаблон.
-            if (weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getActiveDay()) { // если в шаблоне этот день рабочий берём време с шаблона
-                timetableMap.put(tempMyCalendar, new CalendarDay(tempMyCalendar,
-                        weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getStartHour(),
-                        weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getStartMin(),
-                        weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getEndHour(),
-                        weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getEndMin(), true));
+
+        MyCalendar tempMyCalendar = new MyCalendar();
+        tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
+        timetableMap.remove(new LightCalendar(tempMyCalendar));
+        tempMyCalendar = new MyCalendar();
+        tempMyCalendar.add(Calendar.DAY_OF_MONTH, 14);
+        LightCalendar lightTemp = new LightCalendar(tempMyCalendar);
+        if (timetableMap.get(lightTemp) == null) {
+            WeekDay tempWeekDay = weekTemplate.get(tempMyCalendar.getMyDayOfWeek());
+            if (tempWeekDay.getActiveDay()) {
+                timetableMap.put(lightTemp, new CalendarDay(lightTemp, tempWeekDay));
             } else {
-                timetableMap.put(tempMyCalendar, new CalendarDay(tempMyCalendar, 0, 0, 0, 0, false));
+                timetableMap.put(lightTemp, new CalendarDay(lightTemp, 0, 0, 0, 0, false));
             }
         }
     }

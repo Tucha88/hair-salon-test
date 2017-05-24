@@ -27,6 +27,9 @@ public class CalendarDay implements Serializable {
     boolean working; // рабочий ли день
     ArrayList<Record> records;
 
+    public CalendarDay() {
+        records = new ArrayList<Record>();
+    }
 
     public CalendarDay(LightCalendar myCalendar, int startHour, int startMin, int endHour, int endMin, boolean working) {
         this.myCalendar = myCalendar;
@@ -34,6 +37,13 @@ public class CalendarDay implements Serializable {
         endWork = new LightClock(endHour, endMin);
         this.working = working;
         records = new ArrayList<Record>();
+    }
+
+    public CalendarDay(LightCalendar lightCalendar, WeekDay weekDay) {
+        this.myCalendar = lightCalendar;
+        this.startWork = weekDay.getStartWork();
+        this.endWork = weekDay.getEndWork();
+        this.working = weekDay.getActiveDay();
     }
 
 
@@ -135,16 +145,16 @@ public class CalendarDay implements Serializable {
         }
     }
 
-    /*@Override
+    @Override
     public String toString() {
         if (working) {
-            return "Date: " + myCalendar.getTime() +
-                    ", Работает с  " + startWork +
-                    ", по " + endWork;
+            return /*"Date: " + myCalendar.toString() +*/
+                    " работает с  " + startWork +
+                            " по " + endWork + ";";
 
         } else {
-            return "Date: " + myCalendar.getTime() + " - Не работает";
+            return /*"Date: " + myCalendar.toString() + */" - Не работает;";
         }
 
-    }*/
+    }
 }
