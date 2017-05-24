@@ -6,8 +6,6 @@ import hairsaon.myExtends.LightClock;
 import hairsaon.myExtends.MyCalendar;
 import hairsaon.myExtends.MyClock;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeSet;

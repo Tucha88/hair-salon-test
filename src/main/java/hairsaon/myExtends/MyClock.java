@@ -1,6 +1,6 @@
 package hairsaon.myExtends;
 
-import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 /**
  * @Embeddable
  */
-public class MyClock extends GregorianCalendar {
+public class MyClock extends GregorianCalendar implements Serializable {
 
 
     public MyClock(int hourOfDay, int minute) {
