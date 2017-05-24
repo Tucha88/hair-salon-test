@@ -4,7 +4,6 @@ package hairsaon.controller;
 import hairsaon.models.Client;
 import hairsaon.repository.ClientRepository;
 import hairsaon.utils.IUtils;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("client")
 public class ClientController {
 
+    private final ClientRepository clientRepository;
+    private final IUtils utils;
+
     @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private IUtils utils;
+    public ClientController(ClientRepository clientRepository, IUtils utils) {
+        this.clientRepository = clientRepository;
+        this.utils = utils;
+    }
 
     @GetMapping("info")
     public ResponseEntity<Object> getClientInfo(@RequestHeader("authorization") String token) {

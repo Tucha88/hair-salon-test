@@ -7,14 +7,10 @@ import hairsaon.models.MasterAuthType;
 import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 /**
  * Created by Boris on 05.04.2017.
@@ -25,13 +21,16 @@ import java.util.Date;
 @RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private MasterRepository masterRepository;
-    @Autowired
-    private IUtils utils;
+    private final ClientRepository clientRepository;
+    private final MasterRepository masterRepository;
+    private final IUtils utils;
 
+    @Autowired
+    public LoginController(ClientRepository clientRepository, IUtils utils, MasterRepository masterRepository) {
+        this.clientRepository = clientRepository;
+        this.masterRepository = masterRepository;
+        this.utils = utils;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody MasterAuthType authType){

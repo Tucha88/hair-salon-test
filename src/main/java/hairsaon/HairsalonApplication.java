@@ -27,8 +27,8 @@ public class HairsalonApplication {
         registrationBean.addUrlPatterns("/service/*");
         registrationBean.addUrlPatterns("/client/*");
         registrationBean.addUrlPatterns("/master/*");
-
-
         return registrationBean;
     }
+
+
 }

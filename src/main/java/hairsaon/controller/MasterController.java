@@ -3,10 +3,8 @@ package hairsaon.controller;
 
 import hairsaon.models.Master;
 import hairsaon.models.Services;
-import hairsaon.models.classes_for_master.AddressTemp;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +20,14 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("master")
 public class MasterController {
+    private final MasterRepository masterRepository;
+    private final IUtils utils;
+
     @Autowired
-    private MasterRepository masterRepository;
-    @Autowired
-    private IUtils utils;
+    public MasterController(MasterRepository masterRepository, IUtils utils) {
+        this.masterRepository = masterRepository;
+        this.utils = utils;
+    }
 
 
 

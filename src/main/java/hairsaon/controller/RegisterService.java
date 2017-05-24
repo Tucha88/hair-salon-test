@@ -6,15 +6,12 @@ import hairsaon.models.Master;
 import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import java.util.Date;
 
 /**
  * Created by Boris on 06.04.2017.
@@ -25,14 +22,17 @@ import java.util.Date;
 @RequestMapping("/register")
 public class RegisterService {
 
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private IUtils utils;
+
+    private final ClientRepository clientRepository;
+    private final IUtils utils;
+    private final MasterRepository masterRepository;
 
     @Autowired
-    private MasterRepository masterRepository;
-
+    public RegisterService(ClientRepository clientRepository, IUtils utils, MasterRepository masterRepository) {
+        this.clientRepository = clientRepository;
+        this.masterRepository = masterRepository;
+        this.utils = utils;
+    }
 
     @PostMapping("/master")
     public ResponseEntity<Object> registerMaster(@RequestBody Master master) throws ServletException {

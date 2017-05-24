@@ -5,6 +5,7 @@ package hairsaon.controller;
 import hairsaon.models.Master;
 import hairsaon.models.MasterArray;
 import hairsaon.models.MasterForArray;
+import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,13 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("guest")
 public class GuestService {
-    @Autowired
-    private MasterRepository masterRepoMongo;
 
-
-
-    @Autowired
     private MasterRepository masterRepository;
 
+    @Autowired
+    public GuestService(MasterRepository masterRepository) {
+        this.masterRepository = masterRepository;
+    }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ResponseEntity<Object> getListMasters() {
