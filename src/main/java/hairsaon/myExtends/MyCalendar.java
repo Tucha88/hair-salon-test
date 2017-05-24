@@ -46,6 +46,10 @@ public class MyCalendar extends GregorianCalendar {
         super(year, month, dayOfMonth, hourOfDay, minute, second);
     }
 
+    public MyCalendar(LightCalendar lightCalendar) {
+        super(lightCalendar.getYear(), lightCalendar.getMonth(), lightCalendar.getDay());
+    }
+
     public int getYear() {
         return this.get(Calendar.YEAR);
     }

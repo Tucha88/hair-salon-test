@@ -1,8 +1,10 @@
 package hairsaon.models.classes_for_master;
 
 import hairsaon.models.Client;
-import hairsaon.myExtends.MyCalendar;
-import hairsaon.myExtends.MyClock;
+import hairsaon.models.Master;
+import hairsaon.myExtends.*;
+
+import javax.persistence.*;
 
 
 /**
@@ -11,38 +13,38 @@ import hairsaon.myExtends.MyClock;
 
 //TODO придумать как связывать клиента с мастером через запись
 //@Entity
-//@Table(name = "Record")
+@Table(name = "Record")
 public class Record implements Comparable<Record> {
-    //    @Column(name = "date")
-    MyCalendar calendar;
+    @Column(name = "date")
+    LightCalendar calendar;
 
-    //    @Column(name = "start time")
-    MyClock starTime;
+    @Column(name = "start time")
+    LightClock starTime;
 
-    //    @Column(name = "service")
+    @Column(name = "service")
     ServiceMaster service;
 
     //@ManyToOne
-//    @Column(name = "client")
+    @Column(name = "client")
     Client client;
 
     /*@OneToMany
     Master master;*/
 
-    //    @Column(name = "info")
+    @Column(name = "info")
     String info;
 
     public Record() {
     }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client) {
+    public Record(LightCalendar calendar, LightClock starTime, ServiceMaster service, Client client) {
         this.calendar = calendar;
         this.starTime = starTime;
         this.service = service;
         this.client = client;
     }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client, String info) {
+    public Record(LightCalendar calendar, LightClock starTime, ServiceMaster service, Client client, String info) {
         this.calendar = calendar;
         this.starTime = starTime;
         this.service = service;
@@ -50,19 +52,19 @@ public class Record implements Comparable<Record> {
         this.info = info;
     }
 
-    public MyCalendar getCalendar() {
+    public LightCalendar getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(MyCalendar calendar) {
+    public void setCalendar(LightCalendar calendar) {
         this.calendar = calendar;
     }
 
-    public MyClock getStarTime() {
+    public LightClock getStarTime() {
         return starTime;
     }
 
-    public void setStarTime(MyClock starTime) {
+    public void setStarTime(LightClock starTime) {
         this.starTime = starTime;
     }
 

@@ -22,6 +22,9 @@ public class MyClock extends GregorianCalendar implements Serializable {
         super(26, 03, 1992, tempClock.getHour(), tempClock.getMinute(), 0);
     }
 
+    public MyClock(LightClock tempLightClock) {
+        super(26, 03, 1992, tempLightClock.getHour(), tempLightClock.getMinute(), 0);
+    }
 
     public int getHour() {
         return this.get(Calendar.HOUR_OF_DAY);

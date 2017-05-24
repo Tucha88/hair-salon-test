@@ -1,23 +1,22 @@
 package hairsaon.models.timetable;
 
+import hairsaon.myExtends.LightClock;
 import hairsaon.myExtends.MyClock;
-
-import java.io.Serializable;
 
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class WeekDay implements Serializable {
-    private static final long serialVersionUID = 112234551L;
+public class WeekDay {
     boolean activeDay;
-    MyClock startWork;
-    MyClock endWork;
+
+    LightClock startWork;
+    LightClock endWork;
 
 
     public WeekDay() {
         this.activeDay = false;
-        this.startWork = new MyClock(0, 0);
-        this.endWork = new MyClock(0, 0);
+        this.startWork = new LightClock(0, 0);
+        this.endWork = new LightClock(0, 0);
     }
 
     public boolean getActiveDay() {
@@ -60,10 +59,27 @@ public class WeekDay implements Serializable {
         this.endWork.setMinute(endMin);
     }
 
+
+    public LightClock getStartWork() {
+        return startWork;
+    }
+
+    public void setStartWork(LightClock startWork) {
+        this.startWork = startWork;
+    }
+
+    public LightClock getEndWork() {
+        return endWork;
+    }
+
+    public void setEndWork(LightClock endWork) {
+        this.endWork = endWork;
+    }
+
     public void setTime(boolean active, int startHour, int startMin, int endHour, int endMin) {
         this.activeDay = active;
-        this.startWork = new MyClock(startHour, startMin);
-        this.endWork = new MyClock(endHour, endMin);
+        this.startWork = new LightClock(startHour, startMin);
+        this.endWork = new LightClock(endHour, endMin);
 
     }
 
