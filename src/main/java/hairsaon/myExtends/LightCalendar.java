@@ -2,78 +2,77 @@ package hairsaon.myExtends;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Лимаренко on 21.05.2017.
  */
 public class LightCalendar implements Comparable, Serializable {
     private static final long serialVersionUID = 11223452L;
-    int year;
-    int month;
-    int day;
+    int yearLight;
+    int monthLight;
+    int dayLight;
 
 
     public LightCalendar() {
     }
 
     public LightCalendar(int year, int month, int day) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        this.yearLight = year;
+        this.monthLight = month;
+        this.dayLight = day;
     }
 
     public LightCalendar(MyCalendar myCalendar) {
-        this.year = myCalendar.getYear();
-        this.month = myCalendar.getMonth() + 1;
-        this.day = myCalendar.getDayOfMonth();
+        this.yearLight = myCalendar.getYear();
+        this.monthLight = myCalendar.getMonth() + 1;
+        this.dayLight = myCalendar.getDayOfMonth();
     }
 
-    public int getDay() {
-        return day;
+    public int getYearLight() {
+        return yearLight;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setYearLight(int yearLight) {
+        this.yearLight = yearLight;
     }
 
-    public int getMonth() {
-        return month;
+    public int getMonthLight() {
+        return monthLight;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public void setMonthLight(int monthLight) {
+        this.monthLight = monthLight;
     }
 
-    public int getYear() {
-        return year;
+    public int getDayLight() {
+        return dayLight;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setDayLight(int dayLight) {
+        this.dayLight = dayLight;
     }
 
     public void setDate(int year, int month, int day) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        this.yearLight = year;
+        this.monthLight = month;
+        this.dayLight = day;
     }
 
     public String getDateString() {
-        return day + "." + month + "." + year;
+        return dayLight + "." + monthLight + "." + yearLight;
     }
 
     @Override
     public int hashCode() {
-        return this.getYear() * 3 - 500 + this.getMonth() * 4 + this.getDay();
+        return this.getYearLight() * 3 - 500 + this.getMonthLight() * 4 + this.getDayLight();
     }
 
     @Override
     public boolean equals(Object obj) {
         LightCalendar tempCalendar = (LightCalendar) obj;
-        if (this.getYear() == tempCalendar.getYear()) {
-            if (this.getMonth() == tempCalendar.getMonth()) {
-                if (this.getDay() == tempCalendar.getDay()) {
+        if (this.getYearLight() == tempCalendar.getYearLight()) {
+            if (this.getMonthLight() == tempCalendar.getMonthLight()) {
+                if (this.getDayLight() == tempCalendar.getDayLight()) {
                     return true;
                 }
             }
@@ -82,7 +81,7 @@ public class LightCalendar implements Comparable, Serializable {
     }
 
     public int getMyDayOfWeek() {
-        MyCalendar tempMyCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+        MyCalendar tempMyCalendar = new MyCalendar(this.getYearLight(), this.getMonthLight(), this.getDayLight());
         return (tempMyCalendar.get(Calendar.DAY_OF_WEEK) - 1);
     }
 
@@ -90,11 +89,11 @@ public class LightCalendar implements Comparable, Serializable {
     @Override
     public int compareTo(Object obj) {
         LightCalendar tempLightCalendar = (LightCalendar) obj;
-        int res = this.getYear() - tempLightCalendar.getYear();
+        int res = this.getYearLight() - tempLightCalendar.getYearLight();
         if (res == 0) {
-            res = this.getMonth() - tempLightCalendar.getMonth();
+            res = this.getMonthLight() - tempLightCalendar.getMonthLight();
             if (res == 0) {
-                res = this.getDay() - tempLightCalendar.getDay();
+                res = this.getDayLight() - tempLightCalendar.getDayLight();
             }
         }
         return res;
@@ -122,16 +121,16 @@ public class LightCalendar implements Comparable, Serializable {
     public String toString() {
         String tempDay;
         String tempMonth;
-        String tempYear = String.valueOf(this.year);
-        if (this.day < 10) {
-            tempDay = "0" + this.day;
+        String tempYear = String.valueOf(this.yearLight);
+        if (this.dayLight < 10) {
+            tempDay = "0" + this.dayLight;
         } else {
-            tempDay = String.valueOf(this.day);
+            tempDay = String.valueOf(this.dayLight);
         }
-        if (this.month < 10) {
-            tempMonth = "0" + this.month;
+        if (this.monthLight < 10) {
+            tempMonth = "0" + this.monthLight;
         } else {
-            tempMonth = String.valueOf(this.month);
+            tempMonth = String.valueOf(this.monthLight);
         }
 
 

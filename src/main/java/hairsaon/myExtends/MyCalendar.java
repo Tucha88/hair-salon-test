@@ -49,7 +49,7 @@ public class MyCalendar extends GregorianCalendar implements Serializable {
     }
 
     public MyCalendar(LightCalendar lightCalendar) {
-        super(lightCalendar.getYear(), lightCalendar.getMonth() - 1, lightCalendar.getDay());
+        super(lightCalendar.getYearLight(), lightCalendar.getMonthLight() - 1, lightCalendar.getDayLight());
     }
 
     public int getYear() {
