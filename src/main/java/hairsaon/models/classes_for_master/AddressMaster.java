@@ -21,13 +21,13 @@ public class AddressMaster implements Serializable {
     /*@ElementCollection*/
     ArrayList<WeekDay> weekTemplate;
     /*@ElementCollection*/
-    TreeMap<LightCalendar, CalendarDay> timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+    TreeMap<LightCalendar, CalendarDay> timetableMap;
     //ArrayList<ServiceMaster> arrayServices;
 
 
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
-        //timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+        timetableMap = new TreeMap<LightCalendar, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -37,7 +37,7 @@ public class AddressMaster implements Serializable {
     public AddressMaster(String address) {
         this.address = address;
         weekTemplate = new ArrayList<WeekDay>();
-        //timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+        timetableMap = new TreeMap<LightCalendar, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
