@@ -28,6 +28,7 @@ public class AddressMaster implements Serializable {
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
         timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+        timetableMap.put(new LightCalendar(2000, 10, 13), new CalendarDay(new LightCalendar(2000, 10, 13), 10, 0, 18, 30, false));
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -38,6 +39,7 @@ public class AddressMaster implements Serializable {
         this.address = address;
         weekTemplate = new ArrayList<WeekDay>();
         timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+        timetableMap.put(new LightCalendar(2000, 10, 13), new CalendarDay(new LightCalendar(2000, 10, 13), 10, 0, 18, 30, false));
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
