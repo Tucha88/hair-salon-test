@@ -9,10 +9,13 @@ import java.util.ArrayList;
 /**
  * Created by Лимаренко on 06.05.2017.
  */
+
 public class AddressTemp implements Serializable {
+    private static final long serialVersionUID = 1122345511L;
 
     String address;
-    @ElementCollection
+    //    @ElementCollection
+//    @Embedded
     ArrayList<WeekDay> weekTemplate;
 
     public AddressTemp() {
@@ -40,6 +43,13 @@ public class AddressTemp implements Serializable {
 
     public void addTimeOnWeek(int dayOnWeek, boolean active, int startHour, int startMin, int endHour, int endMin) { /** Добовление(изменение дня в шаблоне)*/
         weekTemplate.get(dayOnWeek).setTime(active, startHour, startMin, endHour, endMin);
+    }
+
+    public void setWeekTime() {
+        weekTemplate = new ArrayList<WeekDay>();
+        for (int i = 0; i < 7; i++) {
+            weekTemplate.add(new WeekDay());
+        }
     }
 
 

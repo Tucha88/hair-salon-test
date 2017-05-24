@@ -4,8 +4,6 @@ import hairsaon.models.classes_for_master.Record;
 import hairsaon.myExtends.MyCalendar;
 import hairsaon.myExtends.MyClock;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeSet;

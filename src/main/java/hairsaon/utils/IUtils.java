@@ -6,4 +6,13 @@ package hairsaon.utils;
  */
 public interface IUtils {
     Boolean isLoginInfoExist(Object obj);
+
+    String hashPassword(String rawPassword);
+
+    String parsJwts(String token);
+
+    String buildJwt(String email);
+
+
+    Boolean isPasswordCorrect(String newPassword, String hashedPassrod);
 }

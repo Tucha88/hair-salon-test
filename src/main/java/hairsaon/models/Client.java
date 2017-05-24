@@ -1,43 +1,27 @@
 package hairsaon.models;
 
-import hairsaon.models.classes_for_master.Record;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Created by Boris on 01.04.2017.
  * Client entity
  * Класс для записи в базу данных
  */
-@Entity
+@Document(collection = "client")
 public class Client {
     private static final long serialVersionUID = 112234557L;
-    private String clientPhoneNumber;
-    @Id
-    @Column(name = "email")
-    private String clientEmail;
-    @Column(name = "password")
-    private String clientPassword;
-    @Column(name = "name")
-    private String clientName;
-    @Column(name = "lastname")
-    private String clientLastName;
-    @Column(name = "token")
-    private String token;
 
-    /*@OneToMany
-    private ArrayList<Record> records = new ArrayList<Record>();*/
+
+    @Id
+    private String clientEmail;
+    private String clientPassword;
+    private String clientName;
+    private String clientLastName;
+    private String clientPhoneNumber;
 
     public Client() {
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getClientPhoneNumber() {

@@ -4,9 +4,6 @@ import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.MyCalendar;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
