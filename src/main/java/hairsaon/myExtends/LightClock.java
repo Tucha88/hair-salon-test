@@ -13,6 +13,16 @@ public class LightClock implements Comparable {
     public LightClock() {
     }
 
+    public LightClock(LightClock clock) {
+        this.hour = clock.getHour();
+        this.minute = clock.getMinute();
+    }
+
+    public LightClock(MyClock clock) {
+        this.hour = clock.getHour();
+        this.minute = clock.getMinute();
+    }
+
     public LightClock(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;

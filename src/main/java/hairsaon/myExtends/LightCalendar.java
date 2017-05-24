@@ -22,6 +22,12 @@ public class LightCalendar implements Comparable {
         this.day = day;
     }
 
+    public LightCalendar(MyCalendar myCalendar) {
+        this.year = myCalendar.getYear();
+        this.month = myCalendar.getMonth();
+        this.day = myCalendar.getDayOfMonth();
+    }
+
     public int getDay() {
         return day;
     }

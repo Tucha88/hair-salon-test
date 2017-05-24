@@ -16,10 +16,10 @@ import javax.persistence.*;
 @Table(name = "Record")
 public class Record implements Comparable<Record> {
     @Column(name = "date")
-    MyCalendar calendar;
+    LightCalendar calendar;
 
     @Column(name = "start time")
-    MyClock starTime;
+    LightClock starTime;
 
     @Column(name = "service")
     ServiceMaster service;
@@ -37,14 +37,14 @@ public class Record implements Comparable<Record> {
     public Record() {
     }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client) {
+    public Record(LightCalendar calendar, LightClock starTime, ServiceMaster service, Client client) {
         this.calendar = calendar;
         this.starTime = starTime;
         this.service = service;
         this.client = client;
     }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client, String info) {
+    public Record(LightCalendar calendar, LightClock starTime, ServiceMaster service, Client client, String info) {
         this.calendar = calendar;
         this.starTime = starTime;
         this.service = service;
@@ -52,19 +52,19 @@ public class Record implements Comparable<Record> {
         this.info = info;
     }
 
-    public MyCalendar getCalendar() {
+    public LightCalendar getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(MyCalendar calendar) {
+    public void setCalendar(LightCalendar calendar) {
         this.calendar = calendar;
     }
 
-    public MyClock getStarTime() {
+    public LightClock getStarTime() {
         return starTime;
     }
 
-    public void setStarTime(MyClock starTime) {
+    public void setStarTime(LightClock starTime) {
         this.starTime = starTime;
     }
 
