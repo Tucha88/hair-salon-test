@@ -1,15 +1,16 @@
 package hairsaon.models.classes_for_master;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.LightCalendar;
 import hairsaon.myExtends.MyCalendar;
+import hairsaon.utils.MyLightCalendarDeserializer;
+import hairsaon.utils.MyLightCalendarSerializer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Лимаренко on 28.04.2017.
@@ -18,16 +19,16 @@ import java.util.TreeMap;
 public class AddressMaster implements Serializable {
     private static final long serialVersionUID = 11223L;
     String address;
-    /*@ElementCollection*/
     ArrayList<WeekDay> weekTemplate;
-    /*@ElementCollection*/
-    TreeMap<LightCalendar, CalendarDay> timetableMap;
+    @JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
+    @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)
+    Map<LightCalendar, CalendarDay> timetableMap;
     //ArrayList<ServiceMaster> arrayServices;
 
 
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
-        timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+        timetableMap = new HashMap<LightCalendar, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -37,17 +38,17 @@ public class AddressMaster implements Serializable {
     public AddressMaster(String address) {
         this.address = address;
         weekTemplate = new ArrayList<WeekDay>();
-        timetableMap = new TreeMap<LightCalendar, CalendarDay>();
+        timetableMap = new HashMap<LightCalendar, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
     }
 
-    public TreeMap<LightCalendar, CalendarDay> getTimetableMap() {
+    public Map<LightCalendar, CalendarDay> getTimetableMap() {
         return timetableMap;
     }
 
-    public void setTimetableMap(TreeMap<LightCalendar, CalendarDay> timetableMap) {
+    public void setTimetableMap(HashMap<LightCalendar, CalendarDay> timetableMap) {
         this.timetableMap = timetableMap;
     }
 

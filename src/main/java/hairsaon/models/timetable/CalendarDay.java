@@ -15,6 +15,7 @@ import java.util.TreeSet;
  */
 
 public class CalendarDay implements Serializable {
+    private static final long serialVersionUID = 11L;
 
     LightCalendar myCalendar;
     LightClock startWork;

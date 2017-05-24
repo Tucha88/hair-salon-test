@@ -27,7 +27,7 @@ public class Master implements Serializable {
     private ArrayList<String> lang;
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
-    private AddressMaster addressMaster/* = new AddressMaster()*/;
+    private AddressMaster addressMaster = new AddressMaster();
 //    private String addresses;
 
     public Master() {

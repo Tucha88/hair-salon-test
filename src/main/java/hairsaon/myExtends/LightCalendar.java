@@ -1,5 +1,7 @@
 package hairsaon.myExtends;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -8,10 +10,18 @@ import java.util.Calendar;
  */
 public class LightCalendar implements Comparable, Serializable {
     private static final long serialVersionUID = 11223452L;
+
     int yearLight;
     int monthLight;
     int dayLight;
 
+
+    public LightCalendar(String all) {
+        String[] strings = all.split(".");
+        this.yearLight = Integer.valueOf(strings[0]);
+        this.monthLight = Integer.valueOf(strings[1]);
+        this.dayLight = Integer.valueOf(strings[2]);
+    }
 
     public LightCalendar() {
     }
@@ -21,7 +31,6 @@ public class LightCalendar implements Comparable, Serializable {
         this.monthLight = month;
         this.dayLight = day;
     }
-
     public LightCalendar(MyCalendar myCalendar) {
         this.yearLight = myCalendar.getYear();
         this.monthLight = myCalendar.getMonth() + 1;
@@ -58,9 +67,9 @@ public class LightCalendar implements Comparable, Serializable {
         this.dayLight = day;
     }
 
-    public String getDateString() {
+ /*   public String getDateString() {
         return dayLight + "." + monthLight + "." + yearLight;
-    }
+    }*/
 
     @Override
     public int hashCode() {
@@ -98,7 +107,6 @@ public class LightCalendar implements Comparable, Serializable {
         }
         return res;
     }
-
 //    public void addYear(int year) {
 //        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
 //        myCalendar.add(Calendar.YEAR, year);
@@ -117,7 +125,9 @@ public class LightCalendar implements Comparable, Serializable {
 //        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
 //    }
 
+
     @Override
+    @JsonValue
     public String toString() {
         String tempDay;
         String tempMonth;
