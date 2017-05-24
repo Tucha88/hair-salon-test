@@ -1,11 +1,13 @@
 package hairsaon.myExtends;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by Лимаренко on 23.05.2017.
  */
-public class LightClock implements Comparable {
+public class LightClock implements Comparable, Serializable {
+    private static final long serialVersionUID = 112234554L;
 
     int hour;
     int minute;
@@ -18,10 +20,10 @@ public class LightClock implements Comparable {
         this.minute = clock.getMinute();
     }
 
-    public LightClock(MyClock clock) {
-        this.hour = clock.getHour();
-        this.minute = clock.getMinute();
-    }
+//    public LightClock(MyClock clock) {
+//        this.hour = clock.getHour();
+//        this.minute = clock.getMinute();
+//    }
 
     public LightClock(int hour, int minute) {
         this.hour = hour;

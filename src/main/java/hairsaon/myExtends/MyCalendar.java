@@ -1,5 +1,6 @@
 package hairsaon.myExtends;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -8,7 +9,8 @@ import java.util.TimeZone;
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class MyCalendar extends GregorianCalendar {
+public class MyCalendar extends GregorianCalendar implements Serializable {
+    private static final long serialVersionUID = 1122345567L;
     static public int SUNDAY = 0;
     static public int MONDAY = 1;
     static public int TUESDAY = 2;

@@ -15,10 +15,7 @@ import java.util.TreeSet;
  */
 
 public class CalendarDay implements Serializable {
-    //@Embedded
-    /*MyCalendar myCalendar;
-    MyClock startWork;
-    MyClock endWork;*/
+
     LightCalendar myCalendar;
     LightClock startWork;
     LightClock endWork;
@@ -31,6 +28,7 @@ public class CalendarDay implements Serializable {
 
     public CalendarDay(LightCalendar myCalendar, int startHour, int startMin, int endHour, int endMin, boolean working) {
         this.myCalendar = myCalendar;
+
         startWork = new LightClock(startHour, startMin);
         endWork = new LightClock(endHour, endMin);
         this.working = working;

@@ -5,6 +5,7 @@ import hairsaon.models.Master;
 import hairsaon.myExtends.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -12,26 +13,17 @@ import javax.persistence.*;
  */
 
 //TODO придумать как связывать клиента с мастером через запись
-//@Entity
-//@Table(name = "Record")
-public class Record implements Comparable<Record> {
-    //    @Column(name = "date")
+
+public class Record implements Comparable<Record>, Serializable {
+    private static final long serialVersionUID = 11223455612L;
     LightCalendar calendar;
 
-    //    @Column(name = "start time")
     LightClock starTime;
 
-    //    @Column(name = "service")
     ServiceMaster service;
 
-    //@ManyToOne
-//    @Column(name = "client")
     Client client;
 
-    /*@OneToMany
-    Master master;*/
-
-    //    @Column(name = "info")
     String info;
 
     public Record() {

@@ -38,7 +38,7 @@ public class GuestService {
                 masterRepository.findAll()) {
             MasterForArray masterForArray = new MasterForArray();
             masterForArray.setEmail(master.getEmail());
-            masterForArray.setAddresses(master.getAddresses());
+//            masterForArray.setAddresses(master.getAddresses());
             masterForArray.setLang(master.getLang());
             masterForArray.setLastName(master.getLastName());
             masterForArray.setMasterType(master.getMasterType());

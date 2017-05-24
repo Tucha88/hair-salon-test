@@ -73,32 +73,32 @@ public class MasterController {
     }
 
 
-    @GetMapping("address")
-    public ResponseEntity<Object> getMasterAddresses(@RequestHeader("Authorization") String token) {
-        String email = utils.parsJwts(token);
-
-
-        Master master = masterRepository.findByEmail(email);
-        if (master == null) {
-            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
-        }
-//        AddressTemp addresses = master.getAddresses();
-
-        return new ResponseEntity<>(master.getAddresses(), HttpStatus.OK);
-    }
-
-    @PutMapping("address")
-    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("Authorization") String token, @RequestBody String addresses) {
-        String email = utils.parsJwts(token);
-
-        Master master = masterRepository.findByEmail(email);
-        if (master == null) {
-            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
-        }
-        master.setAddresses(addresses);
-        masterRepository.save(master);
-        return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
-    }
+//    @GetMapping("address")
+//    public ResponseEntity<Object> getMasterAddresses(@RequestHeader("Authorization") String token) {
+//        String email = utils.parsJwts(token);
+//
+//
+//        Master master = masterRepository.findByEmail(email);
+//        if (master == null) {
+//            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+//        }
+////        AddressTemp addresses = master.getAddresses();
+//
+//        return new ResponseEntity<>(master.getAddresses(), HttpStatus.OK);
+//    }
+//
+//    @PutMapping("address")
+//    public ResponseEntity<Object> setMasterAddresses(@RequestHeader("Authorization") String token, @RequestBody String addresses) {
+//        String email = utils.parsJwts(token);
+//
+//        Master master = masterRepository.findByEmail(email);
+//        if (master == null) {
+//            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+//        }
+//        master.setAddresses(addresses);
+//        masterRepository.save(master);
+//        return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
+//    }
 
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("Authorization") String token) {
@@ -122,7 +122,7 @@ public class MasterController {
         updatedMaster.setPhoneNumber(master.getPhoneNumber());
         updatedMaster.setLastName(master.getLastName());
         updatedMaster.setName(master.getName());
-        updatedMaster.setAddresses(master.getAddresses());
+//        updatedMaster.setAddresses(master.getAddresses());
         updatedMaster.setLang(master.getLang());
         updatedMaster.setMasterType(master.getMasterType());
         masterRepository.save(updatedMaster);

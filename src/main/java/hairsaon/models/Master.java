@@ -1,6 +1,7 @@
 package hairsaon.models;
 
 
+import hairsaon.models.classes_for_master.AddressMaster;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  */
 
 //TODO добавить масив с услугами и календарь расписание
-@Document(collection = "master")
+@Document(collection = "master_test")
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556L;
 
@@ -26,41 +27,28 @@ public class Master implements Serializable {
     private ArrayList<String> lang;
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
-    //    private AddressTemp addresses = new AddressTemp();
-    private String addresses;
-
+    private AddressMaster addressMaster/* = new AddressMaster()*/;
+//    private String addresses;
 
     public Master() {
     }
 
-    public String getAddresses() {
-        return addresses;
+    public AddressMaster getAddressMaster() {
+        return addressMaster;
     }
 
-    public void setAddresses(String addresses) {
-        this.addresses = addresses;
+    public void setAddressMaster(AddressMaster addressMaster) {
+        this.addressMaster = addressMaster;
     }
-    //    public String getAddressString(){
-//        return this.addresses.getAddress();
-//    }
-//
-//    public AddressTemp getAddresses() {
+
+    //    public String getAddresses() {
 //        return addresses;
 //    }
 //
 //    public void setAddresses(String addresses) {
-//        this.addresses.setAddress(addresses);
-//        this.addresses.setWeekTime();
+//        this.addresses = addresses;
 //    }
 //
-//    public ArrayList<WeekDay> getTemplate() {
-//        return this.addresses.getWeekTemplate();
-//    }
-//
-//    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
-//        this.addresses.setWeekTemplate(arrTemplate);
-//    }
-
     public String getEmail() {
         return email;
     }

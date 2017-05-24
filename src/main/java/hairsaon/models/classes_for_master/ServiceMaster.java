@@ -7,10 +7,14 @@ import java.io.Serializable;
  */
 
 public class ServiceMaster implements Serializable {
+    private static final long serialVersionUID = 1122345876L;
     String name;
     int duration; // в минутах
     int price;
     String info;
+
+    public ServiceMaster() {
+    }
 
     public ServiceMaster(String name, int duration, int price) {
         this.name = name;

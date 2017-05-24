@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
  * @Embeddable
  */
 public class MyClock extends GregorianCalendar implements Serializable {
-
+    private static final long serialVersionUID = 1122345569L;
 
     public MyClock(int hourOfDay, int minute) {
         super(26, 03, 1992, hourOfDay, minute, 0);

@@ -3,14 +3,18 @@ package hairsaon.models.timetable;
 import hairsaon.myExtends.LightClock;
 import hairsaon.myExtends.MyClock;
 
+import java.io.Serializable;
+
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class WeekDay {
+public class WeekDay implements Serializable {
+    private static final long serialVersionUID = 112234550L;
     boolean activeDay;
 
     LightClock startWork;
     LightClock endWork;
+
 
 
     public WeekDay() {
@@ -19,6 +23,9 @@ public class WeekDay {
         this.endWork = new LightClock(0, 0);
     }
 
+    public boolean isActiveDay() {
+        return activeDay;
+    }
     public boolean getActiveDay() {
         return activeDay;
     }

@@ -5,6 +5,7 @@ import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.LightCalendar;
 import hairsaon.myExtends.MyCalendar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -14,8 +15,8 @@ import java.util.TreeMap;
  * Created by Лимаренко on 28.04.2017.
  */
 
-public class AddressMaster {
-
+public class AddressMaster implements Serializable {
+    private static final long serialVersionUID = 11223L;
     String address;
     /*@ElementCollection*/
     ArrayList<WeekDay> weekTemplate;
@@ -42,6 +43,14 @@ public class AddressMaster {
         }
     }
 
+    public TreeMap<LightCalendar, CalendarDay> getTimetableMap() {
+        return timetableMap;
+    }
+
+    public void setTimetableMap(TreeMap<LightCalendar, CalendarDay> timetableMap) {
+        this.timetableMap = timetableMap;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -58,13 +67,6 @@ public class AddressMaster {
         this.weekTemplate = weekTemplate;
     }
 
-    public TreeMap<LightCalendar, CalendarDay> getTimetableMap() {
-        return timetableMap;
-    }
-
-    public void setTimetableMap(TreeMap<LightCalendar, CalendarDay> timetableMap) {
-        this.timetableMap = timetableMap;
-    }
 
     public void addTimeOnWeek(int dayOnWeek, boolean active, int startHour, int startMin, int endHour, int endMin) { /** Добовление(изменение дня в шаблоне)*/
         weekTemplate.get(dayOnWeek).setTime(active, startHour, startMin, endHour, endMin);
@@ -91,22 +93,7 @@ public class AddressMaster {
                 }
             }
 
-            /*MyCalendar tempMyCalendar = new MyCalendar();
-            tempMyCalendar.add(Calendar.DAY_OF_YEAR,-7);
-            tempMyCalendar.add(Calendar.DAY_OF_YEAR,i);
-            LightCalendar lightCL = new LightCalendar(tempMyCalendar);
-            if (timetableMap.get(lightCL) == null) {
-                if (weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getActiveDay()) {
 
-                    timetableMap.put(lightCL, new CalendarDay(lightCL,
-                            weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getStartHour(),
-                            weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getStartMin(),
-                            weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getEndHour(),
-                            weekTemplate.get(tempMyCalendar.getMyDayOfWeek()).getEndMin(), true));
-                } else {
-                    timetableMap.put(lightCL, new CalendarDay(lightCL, 0, 0, 0, 0, false));
-                }
-            }*/
 
         }
 

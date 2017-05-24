@@ -1,13 +1,14 @@
 package hairsaon.myExtends;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * Created by Лимаренко on 21.05.2017.
  */
-public class LightCalendar implements Comparable {
-
+public class LightCalendar implements Comparable, Serializable {
+    private static final long serialVersionUID = 11223452L;
     int year;
     int month;
     int day;
@@ -99,23 +100,23 @@ public class LightCalendar implements Comparable {
         return res;
     }
 
-    public void addYear(int year) {
-        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
-        myCalendar.add(Calendar.YEAR, year);
-        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
-    }
-
-    public void addMonth(int month) {
-        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
-        myCalendar.add(Calendar.MONTH, month);
-        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
-    }
-
-    public void addDay(int day) {
-        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
-        myCalendar.add(Calendar.DAY_OF_MONTH, day);
-        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
-    }
+//    public void addYear(int year) {
+//        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+//        myCalendar.add(Calendar.YEAR, year);
+//        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
+//    }
+//
+//    public void addMonth(int month) {
+//        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+//        myCalendar.add(Calendar.MONTH, month);
+//        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
+//    }
+//
+//    public void addDay(int day) {
+//        MyCalendar myCalendar = new MyCalendar(this.getYear(), this.getMonth(), this.getDay());
+//        myCalendar.add(Calendar.DAY_OF_MONTH, day);
+//        this.setDate(myCalendar.getYear(), myCalendar.getMonth(), myCalendar.getDayOfMonth());
+//    }
 
     @Override
     public String toString() {
