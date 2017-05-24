@@ -34,37 +34,37 @@ public class WeekDay implements Serializable {
         this.activeDay = activeDay;
     }
 
-    public int getStartHour() {
-        return startWork.getHour();
+    /*public int getStartHour() {
+        return startWork.getHourLight();
     }
 
     public void setStartHour(int startHour) {
-        this.startWork.setHour(startHour);
+        this.startWork.setHourLight(startHour);
     }
 
     public int getStartMin() {
-        return startWork.getMinute();
+        return startWork.getMinuteLight();
     }
 
     public void setStartMin(int startMin) {
-        this.startWork.setMinute(startMin);
+        this.startWork.setMinuteLight(startMin);
     }
 
     public int getEndHour() {
-        return endWork.getHour();
+        return endWork.getHourLight();
     }
 
     public void setEndHour(int endHour) {
-        this.endWork.setHour(endHour);
+        this.endWork.setHourLight(endHour);
     }
 
     public int getEndMin() {
-        return endWork.getMinute();
+        return endWork.getMinuteLight();
     }
 
     public void setEndMin(int endMin) {
-        this.endWork.setMinute(endMin);
-    }
+        this.endWork.setMinuteLight(endMin);
+    }*/
 
 
     public LightClock getStartWork() {
@@ -94,10 +94,10 @@ public class WeekDay implements Serializable {
     public String toString() {
         if (activeDay) {
             return "activeDay: " + activeDay +
-                    ", start: " + startWork.getHour() +
-                    ":" + startWork.getMinute() +
-                    ", end: " + endWork.getHour() +
-                    ":" + endWork.getMinute() + "; ";
+                    ", start: " + startWork.getHourLight() +
+                    ":" + startWork.getMinuteLight() +
+                    ", end: " + endWork.getHourLight() +
+                    ":" + endWork.getMinuteLight() + "; ";
         } else {
             return "activeDay: " + activeDay;
         }
