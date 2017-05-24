@@ -13,25 +13,25 @@ import javax.persistence.*;
 
 //TODO придумать как связывать клиента с мастером через запись
 //@Entity
-@Table(name = "Record")
+//@Table(name = "Record")
 public class Record implements Comparable<Record> {
-    @Column(name = "date")
+    //    @Column(name = "date")
     LightCalendar calendar;
 
-    @Column(name = "start time")
+    //    @Column(name = "start time")
     LightClock starTime;
 
-    @Column(name = "service")
+    //    @Column(name = "service")
     ServiceMaster service;
 
     //@ManyToOne
-    @Column(name = "client")
+//    @Column(name = "client")
     Client client;
 
     /*@OneToMany
     Master master;*/
 
-    @Column(name = "info")
+    //    @Column(name = "info")
     String info;
 
     public Record() {
