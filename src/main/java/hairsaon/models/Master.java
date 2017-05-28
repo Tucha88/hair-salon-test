@@ -28,7 +28,6 @@ public class Master implements Serializable {
     private String lastName;
     private ArrayList<String> lang;
     private String masterType;
-    @DBRef
     private ArrayList<Services> serivce = new ArrayList<Services>();
     //    private AddressTemp addresses = new AddressTemp();
     private String addresses;
