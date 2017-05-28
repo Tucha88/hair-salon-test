@@ -2,6 +2,12 @@ package hairsaon.models.classes_for_master;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.Geometry;
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.LightCalendar;
@@ -9,6 +15,7 @@ import hairsaon.myExtends.MyCalendar;
 import hairsaon.utils.MyLightCalendarDeserializer;
 import hairsaon.utils.MyLightCalendarSerializer;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -19,6 +26,9 @@ import java.util.*;
 public class AddressMaster implements Serializable {
     private static final long serialVersionUID = 11223L;
     String address;
+    double latitude;
+    double longitude;
+    String placeId;
     ArrayList<WeekDay> weekTemplate;
     @JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
     @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)
@@ -43,6 +53,7 @@ public class AddressMaster implements Serializable {
             weekTemplate.add(new WeekDay());
         }
     }
+
 
     public Map<LightCalendar, CalendarDay> getTimetableMap() {
         return timetableMap;
@@ -75,6 +86,30 @@ public class AddressMaster implements Serializable {
 
     public void addTimeOnDate(LightCalendar myCalendar, int startHour, int startMin, int endHour, int endMin) { /** Добовление дня в расписание (в клендарь)*/
         timetableMap.put(myCalendar, new CalendarDay(myCalendar, startHour, startMin, endHour, endMin, true));
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public void startMasterTrmplatr() { /** Первое создание расписание мастера*/

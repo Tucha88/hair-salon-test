@@ -1,6 +1,11 @@
 package hairsaon.controller;
 
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.Geometry;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
 import hairsaon.repository.MasterRepository;
@@ -10,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,7 +117,7 @@ public class MasterController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Object> updateMuster(@RequestHeader("Authorization") String token, @RequestBody Master master) {
+    public ResponseEntity<Object> updateMuster(@RequestHeader("Authorization") String token, @RequestBody Master master) throws InterruptedException, ApiException, IOException {
         String email = utils.parsJwts(token);
         Master updatedMaster = masterRepository.findByEmail(email);
 
@@ -122,7 +128,16 @@ public class MasterController {
         updatedMaster.setPhoneNumber(master.getPhoneNumber());
         updatedMaster.setLastName(master.getLastName());
         updatedMaster.setName(master.getName());
-//        updatedMaster.setAddresses(master.getAddresses());
+        //добавил с
+        updatedMaster.setAddressMaster(master.getAddressMaster());
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+        String adressStr = master.getAddressMaster().getAddress();
+        GeocodingResult[] results = GeocodingApi.geocode(context, adressStr).await();
+        Geometry geometry = results[0].geometry;
+        updatedMaster.getAddressMaster().setPlaceId(results[0].placeId);
+        updatedMaster.getAddressMaster().setLatitude(geometry.location.lat);
+        updatedMaster.getAddressMaster().setLongitude(geometry.location.lng);
+        //по
         updatedMaster.setLang(master.getLang());
         updatedMaster.setMasterType(master.getMasterType());
         masterRepository.save(updatedMaster);
