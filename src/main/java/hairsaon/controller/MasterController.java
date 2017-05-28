@@ -1,6 +1,11 @@
 package hairsaon.controller;
 
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.Geometry;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
 import hairsaon.repository.MasterRepository;
@@ -10,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +140,23 @@ public class MasterController {
         if (master.getMasterType() != null) {
             updatedMaster.setMasterType(master.getMasterType());
         }
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+        String adressStr = master.getAddresses();
+        GeocodingResult[] results = new GeocodingResult[0];
+        if (adressStr != null) {
+            try {
+                results = GeocodingApi.geocode(context, adressStr).await();
+                Geometry geometry = results[0].geometry;
+                updatedMaster.setPlaceId(results[0].placeId);
+                updatedMaster.setLatitude(geometry.location.lat);
+                updatedMaster.setLongitude(geometry.location.lng);
+            } catch (Exception e) {
+                updatedMaster.setPlaceId(null);
+                updatedMaster.setLatitude(0);
+                updatedMaster.setLongitude(0);
+            }
+        }
+
         masterRepository.save(updatedMaster);
 
         return new ResponseEntity<>("Master is updated", HttpStatus.OK);

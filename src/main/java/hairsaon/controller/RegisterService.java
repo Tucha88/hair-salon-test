@@ -1,6 +1,11 @@
 package hairsaon.controller;
 
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.Geometry;
 import hairsaon.models.Client;
 import hairsaon.models.Master;
 import hairsaon.repository.ClientRepository;
@@ -12,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
+import java.io.IOException;
 
 /**
  * Created by Boris on 06.04.2017.
@@ -48,6 +54,25 @@ public class RegisterService {
         }
         String str = utils.hashPassword(master.getPassword());
         master.setPassword(str);
+
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+        String adressStr = master.getAddresses();
+        GeocodingResult[] results = new GeocodingResult[0];
+        if (adressStr != null) {
+            try {
+                results = GeocodingApi.geocode(context, adressStr).await();
+                Geometry geometry = results[0].geometry;
+                master.setPlaceId(results[0].placeId);
+                master.setLatitude(geometry.location.lat);
+                master.setLongitude(geometry.location.lng);
+            } catch (Exception e) {
+                master.setPlaceId(null);
+                master.setLatitude(0);
+                master.setLongitude(0);
+            }
+        }
+
+
         masterRepository.save(master);
 
 

@@ -19,7 +19,9 @@ import java.util.ArrayList;
 @Document(collection = "master")
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556L;
-
+    double latitude;
+    double longitude;
+    String placeId;
     @Id
     private String email;
     private String phoneNumber;
@@ -29,11 +31,35 @@ public class Master implements Serializable {
     private ArrayList<String> lang;
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
-    //    private AddressTemp addresses = new AddressTemp();
     private String addresses;
 
 
     public Master() {
+    }
+
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public String getAddresses() {
