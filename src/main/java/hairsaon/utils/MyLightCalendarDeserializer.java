@@ -15,10 +15,4 @@ public class MyLightCalendarDeserializer extends KeyDeserializer {
     public LightCalendar deserializeKey(String s, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         return new LightCalendar(s);
     }
-//    @Override
-//    public LightCalendar deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-//        ObjectCodec oc = jsonParser.getCodec();
-//        JsonNode node = oc.readTree(jsonParser);
-//        return new LightCalendar(node.get("yearLight").asInt(),node.get("monthLight").asInt(),node.get("dayLight").asInt());
-//    }
 }

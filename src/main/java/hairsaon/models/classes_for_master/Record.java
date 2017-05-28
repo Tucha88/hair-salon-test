@@ -22,6 +22,7 @@ public class Record implements Comparable<Record>, Serializable {
 
     ServiceMaster service;
 
+    //TODO Надо переделать на ID клиента. Зачем хранить всего клиента
     Client client;
 
     String info;

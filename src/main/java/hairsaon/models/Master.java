@@ -2,11 +2,13 @@ package hairsaon.models;
 
 
 import hairsaon.models.classes_for_master.AddressMaster;
+import hairsaon.models.classes_for_master.Record;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Boris on 01.04.2017.
@@ -28,9 +30,18 @@ public class Master implements Serializable {
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
     private AddressMaster addressMaster = new AddressMaster();
+    private List<Record> records = new ArrayList<>();
 //    private String addresses;
 
     public Master() {
+    }
+
+    public List<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Record> records) {
+        this.records = records;
     }
 
     public AddressMaster getAddressMaster() {

@@ -22,7 +22,7 @@ public class AddressMaster implements Serializable {
     ArrayList<WeekDay> weekTemplate;
     @JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
     @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)
-    Map<LightCalendar, CalendarDay> timetableMap;
+    Map<LightCalendar, CalendarDay> timetableMap = new TreeMap<>();
     //ArrayList<ServiceMaster> arrayServices;
 
 
