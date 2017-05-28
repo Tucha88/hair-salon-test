@@ -29,6 +29,7 @@ public class AddressMaster implements Serializable {
     double latitude;
     double longitude;
     String placeId;
+
     ArrayList<WeekDay> weekTemplate;
     @JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
     @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)
