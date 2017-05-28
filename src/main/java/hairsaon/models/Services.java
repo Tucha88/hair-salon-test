@@ -1,19 +1,15 @@
 package hairsaon.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.io.Serializable;
 
 /**
  * Created by Boris on 09.04.2017.
  */
 
-@Document
+
 public class Services implements Serializable {
     private static final long serialVersionUID = 112234558L;
-    @Id
-    private String id;
+
     private String service;
     private String price;
     private String time;
@@ -22,9 +18,6 @@ public class Services implements Serializable {
     public Services() {
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getService() {
         return service;
