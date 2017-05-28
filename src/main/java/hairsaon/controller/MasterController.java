@@ -150,12 +150,14 @@ public class MasterController {
                 updatedMaster.setPlaceId(results[0].placeId);
                 updatedMaster.setLatitude(geometry.location.lat);
                 updatedMaster.setLongitude(geometry.location.lng);
+                updatedMaster.setAddresses(adressStr);
             } catch (Exception e) {
                 updatedMaster.setPlaceId(null);
                 updatedMaster.setLatitude(0);
                 updatedMaster.setLongitude(0);
             }
         }
+
 
         masterRepository.save(updatedMaster);
 

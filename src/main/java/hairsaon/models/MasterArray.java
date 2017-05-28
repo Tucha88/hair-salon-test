@@ -6,22 +6,22 @@ import java.util.ArrayList;
  * Created by Boris on 06.05.2017.
  */
 public class MasterArray {
-    private ArrayList<MasterForArray> masters = new ArrayList<>();
+    private ArrayList<Master> masters = new ArrayList<>();
 
     public MasterArray() {
 
     }
 
-    public MasterArray(ArrayList<MasterForArray> masters) {
+    public MasterArray(ArrayList<Master> masters) {
 
         this.masters = masters;
     }
 
-    public ArrayList<MasterForArray> getMasters() {
+    public ArrayList<Master> getMasters() {
         return masters;
     }
 
-    public void setMasters(ArrayList<MasterForArray> masters) {
+    public void setMasters(ArrayList<Master> masters) {
         this.masters = masters;
     }
 }

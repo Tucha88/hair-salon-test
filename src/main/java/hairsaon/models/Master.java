@@ -69,26 +69,7 @@ public class Master implements Serializable {
     public void setAddresses(String addresses) {
         this.addresses = addresses;
     }
-    //    public String getAddressString(){
-//        return this.addresses.getAddress();
-//    }
-//
-//    public AddressTemp getAddresses() {
-//        return addresses;
-//    }
-//
-//    public void setAddresses(String addresses) {
-//        this.addresses.setAddress(addresses);
-//        this.addresses.setWeekTime();
-//    }
-//
-//    public ArrayList<WeekDay> getTemplate() {
-//        return this.addresses.getWeekTemplate();
-//    }
-//
-//    public void setTemplate(ArrayList<WeekDay> arrTemplate) {
-//        this.addresses.setWeekTemplate(arrTemplate);
-//    }
+
 
     public String getEmail() {
         return email;

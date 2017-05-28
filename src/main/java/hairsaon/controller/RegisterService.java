@@ -73,6 +73,7 @@ public class RegisterService {
         }
 
 
+        master.setAddresses(adressStr);
         masterRepository.save(master);
 
 
