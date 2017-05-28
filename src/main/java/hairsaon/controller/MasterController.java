@@ -119,13 +119,21 @@ public class MasterController {
         if (updatedMaster == null) {
             return new ResponseEntity<>("master doesn't exist", HttpStatus.CONFLICT);
         }
-        updatedMaster.setSerivce(master.getSerivce());
-        updatedMaster.setPhoneNumber(master.getPhoneNumber());
-        updatedMaster.setLastName(master.getLastName());
-        updatedMaster.setName(master.getName());
-        updatedMaster.setAddresses(master.getAddresses());
-        updatedMaster.setLang(master.getLang());
-        updatedMaster.setMasterType(master.getMasterType());
+        if (master.getPhoneNumber() != null) {
+            updatedMaster.setPhoneNumber(master.getPhoneNumber());
+        }
+        if (master.getLastName() != null) {
+            updatedMaster.setLastName(master.getLastName());
+        }
+        if (master.getName() != null) {
+            updatedMaster.setName(master.getName());
+        }
+        if (master.getLang() != null) {
+            updatedMaster.setLang(master.getLang());
+        }
+        if (master.getMasterType() != null) {
+            updatedMaster.setMasterType(master.getMasterType());
+        }
         masterRepository.save(updatedMaster);
 
         return new ResponseEntity<>("Master is updated", HttpStatus.OK);

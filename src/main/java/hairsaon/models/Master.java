@@ -4,6 +4,7 @@ package hairsaon.models;
 import hairsaon.models.classes_for_master.AddressTemp;
 import hairsaon.models.timetable.WeekDay;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class Master implements Serializable {
     private String lastName;
     private ArrayList<String> lang;
     private String masterType;
+    @DBRef
     private ArrayList<Services> serivce = new ArrayList<Services>();
     //    private AddressTemp addresses = new AddressTemp();
     private String addresses;
