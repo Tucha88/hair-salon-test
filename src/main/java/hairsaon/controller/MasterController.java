@@ -8,6 +8,7 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
+import hairsaon.models.timetable.WeekDay;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,32 @@ public class MasterController {
 //        masterRepository.save(master);
 //        return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
 //    }
+
+    /**
+     * Добавил Лёша 04.06.2017
+     */
+    @GetMapping("template")
+    public ResponseEntity<Object> getWeekTemplate(@RequestHeader("Authorization") String token) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        ArrayList<WeekDay> weekTemplate = master.getAddressMaster().getWeekTemplate();
+        return new ResponseEntity<>(weekTemplate, HttpStatus.OK);
+    }
+
+    @PutMapping("template")
+    public ResponseEntity<Object> setWeekTemplate(@RequestHeader("Authorization") String token, @RequestBody ArrayList<WeekDay> weekTemplate) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        master.getAddressMaster().setWeekTemplate(weekTemplate);
+        masterRepository.save(master);
+        return new ResponseEntity<>("User week template was update", HttpStatus.OK);
+    }
 
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("Authorization") String token) {
