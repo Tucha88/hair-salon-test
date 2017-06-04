@@ -6,6 +6,7 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
+import com.sun.xml.internal.bind.v2.TODO;
 import hairsaon.models.Client;
 import hairsaon.models.Master;
 import hairsaon.repository.ClientRepository;
@@ -54,11 +55,12 @@ public class RegisterService {
         master.setPassword(str);
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
         String adressStr = master.getAddressMaster().getAddress();
-        GeocodingResult[] results = GeocodingApi.geocode(context, adressStr).await();
+
+       /* GeocodingResult[] results = GeocodingApi.geocode(context, adressStr).await();
         Geometry geometry = results[0].geometry;
         master.getAddressMaster().setPlaceId(results[0].placeId);
         master.getAddressMaster().setLatitude(geometry.location.lat);
-        master.getAddressMaster().setLongitude(geometry.location.lng);
+        master.getAddressMaster().setLongitude(geometry.location.lng);*/
         masterRepository.save(master);
 
 

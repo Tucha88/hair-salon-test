@@ -144,6 +144,6 @@ public class LightCalendar implements Comparable, Serializable {
         }
 
 
-        return tempDay + "." + tempMonth + "." + tempYear;
+        return tempYear + "," + tempMonth + "," + tempDay;
     }
 }

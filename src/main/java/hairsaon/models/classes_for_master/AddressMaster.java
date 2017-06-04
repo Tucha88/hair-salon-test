@@ -11,6 +11,7 @@ import com.google.maps.model.Geometry;
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
 import hairsaon.myExtends.LightCalendar;
+import hairsaon.myExtends.LightClock;
 import hairsaon.myExtends.MyCalendar;
 import hairsaon.utils.MyLightCalendarDeserializer;
 import hairsaon.utils.MyLightCalendarSerializer;
@@ -31,15 +32,25 @@ public class AddressMaster implements Serializable {
     String placeId;
 
     ArrayList<WeekDay> weekTemplate;
-    @JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
-    @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)
-    Map<LightCalendar, CalendarDay> timetableMap = new TreeMap<>();
+    /*@JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
+    @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)*/
+    Map<String, CalendarDay> timetableMap;
+
     //ArrayList<ServiceMaster> arrayServices;
 
 
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
-        timetableMap = new HashMap<LightCalendar, CalendarDay>();
+        timetableMap = new TreeMap<String, CalendarDay>();
+        LightCalendar lightCalendar = new LightCalendar(2017, 7, 3);
+        LightCalendar lightCalendar2 = new LightCalendar(2016, 10, 13);
+        LightCalendar lightCalendar3 = new LightCalendar(2017, 7, 23);
+        CalendarDay calendarDay = new CalendarDay(lightCalendar, 14, 0, 19, 30, true);
+
+
+        timetableMap.put(lightCalendar.toString(), calendarDay);
+        timetableMap.put(lightCalendar2.toString(), calendarDay);
+        timetableMap.put(lightCalendar3.toString(), calendarDay);
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -49,18 +60,18 @@ public class AddressMaster implements Serializable {
     public AddressMaster(String address) {
         this.address = address;
         weekTemplate = new ArrayList<WeekDay>();
-        timetableMap = new HashMap<LightCalendar, CalendarDay>();
+        timetableMap = new TreeMap<String, CalendarDay>();
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
     }
 
 
-    public Map<LightCalendar, CalendarDay> getTimetableMap() {
+    public Map<String, CalendarDay> getTimetableMap() {
         return timetableMap;
     }
 
-    public void setTimetableMap(HashMap<LightCalendar, CalendarDay> timetableMap) {
+    public void setTimetableMap(Map<String, CalendarDay> timetableMap) {
         this.timetableMap = timetableMap;
     }
 
@@ -86,7 +97,7 @@ public class AddressMaster implements Serializable {
     }
 
     public void addTimeOnDate(LightCalendar myCalendar, int startHour, int startMin, int endHour, int endMin) { /** Добовление дня в расписание (в клендарь)*/
-        timetableMap.put(myCalendar, new CalendarDay(myCalendar, startHour, startMin, endHour, endMin, true));
+        timetableMap.put(myCalendar.toString(), new CalendarDay(myCalendar, startHour, startMin, endHour, endMin, true));
     }
 
     public double getLatitude() {
@@ -124,9 +135,9 @@ public class AddressMaster implements Serializable {
             if (timetableMap.get(lightTemp) == null) {
                 WeekDay tempWeekDay = weekTemplate.get(tempMyCalendar.getMyDayOfWeek());
                 if (tempWeekDay.getActiveDay()) {
-                    timetableMap.put(lightTemp, new CalendarDay(lightTemp, tempWeekDay));
+                    timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, tempWeekDay));
                 } else {
-                    timetableMap.put(lightTemp, new CalendarDay(lightTemp, 0, 0, 0, 0, false));
+                    timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, 0, 0, 0, 0, false));
                 }
             }
 
@@ -134,6 +145,13 @@ public class AddressMaster implements Serializable {
 
         }
 
+    }
+
+    public TreeSet<LightClock> getFreeTimeOnDate(String dateStr, int durationService) {
+        if (timetableMap.get(dateStr) == null) {
+            return null;
+        }
+        return this.timetableMap.get(dateStr).getFreeTime(durationService);
     }
 
 
@@ -149,9 +167,9 @@ public class AddressMaster implements Serializable {
         if (timetableMap.get(lightTemp) == null) {
             WeekDay tempWeekDay = weekTemplate.get(tempMyCalendar.getMyDayOfWeek());
             if (tempWeekDay.getActiveDay()) {
-                timetableMap.put(lightTemp, new CalendarDay(lightTemp, tempWeekDay));
+                timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, tempWeekDay));
             } else {
-                timetableMap.put(lightTemp, new CalendarDay(lightTemp, 0, 0, 0, 0, false));
+                timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, 0, 0, 0, 0, false));
             }
         }
     }
