@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Boris on 19.04.2017.
@@ -131,6 +132,18 @@ public class MasterController {
         master.getAddressMaster().setWeekTemplate(weekTemplate);
         masterRepository.save(master);
         return new ResponseEntity<>("User week template was update", HttpStatus.OK);
+    }
+
+    @GetMapping("getfreetime")
+    public ResponseEntity<Object> getFreeTimeOnDate(@RequestHeader("Authorization") String token) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+
+        Set set = master.getAddressMaster().getFreeTimeOnDate("2017,07,23", 45);
+        return new ResponseEntity<>(set, HttpStatus.OK);
     }
 
     @GetMapping("info")

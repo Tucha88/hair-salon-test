@@ -93,6 +93,11 @@ public class LightClock implements Comparable, Serializable {
 
     @Override
     public String toString() {
-        return hourLight + ":" + minuteLight;
+        if (minuteLight < 10) {
+            String minuteStr = "0" + minuteLight;
+            return hourLight + ":" + minuteStr;
+        } else {
+            return hourLight + ":" + minuteLight;
+        }
     }
 }
