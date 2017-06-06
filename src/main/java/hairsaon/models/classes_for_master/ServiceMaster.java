@@ -61,6 +61,7 @@ public class ServiceMaster implements Serializable {
         this.info = info;
     }
 
+
     @Override
     public String toString() {
         return "Title: " + name +

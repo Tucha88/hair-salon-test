@@ -6,10 +6,14 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
+import hairsaon.models.DateAndDuration;
+import hairsaon.models.DateAndRecord;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
+import hairsaon.models.classes_for_master.Record;
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
+import hairsaon.myExtends.LightCalendar;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,18 +162,34 @@ public class MasterController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-
-    /*@GetMapping("getfreetime")
-    public ResponseEntity<Object> getFreeTimeOnDate(@RequestHeader("Authorization") String token) {
+    @PostMapping("free_time")
+    public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Authorization") String token, @RequestBody DateAndDuration dateAndDuration) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-
-        Set set = master.getAddressMaster().getFreeTimeOnDate("2017,07,23", 45);
+        String dateStr = dateAndDuration.getMyCalendar().toString();
+        int duration = dateAndDuration.getDuration();
+        Set set = master.getAddressMaster().getFreeTimeOnDate(dateStr, duration);
         return new ResponseEntity<>(set, HttpStatus.OK);
-    }*/
+    }
+
+    @PutMapping("record")
+    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody DateAndRecord dateAndRecord) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        LightCalendar lightCalendar = dateAndRecord.getMyCalendar();
+        Record record = dateAndRecord.getRecord();
+        master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
+        masterRepository.save(master);
+        return new ResponseEntity<>("Record was added", HttpStatus.OK);
+    }
+
+
 
     @GetMapping("info")
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("Authorization") String token) {

@@ -6,6 +6,7 @@ import hairsaon.myExtends.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 /**
@@ -18,30 +19,18 @@ public class Record implements Comparable<Record>, Serializable {
     private static final long serialVersionUID = 11223455612L;
     LightCalendar calendar;
     LightClock starTime;
-    ServiceMaster service;
+    //ServiceMaster service;
+    ArrayList<ServiceMaster> services;
+    int duration;
 
     //TODO Надо переделать на ID клиента. Зачем хранить всего клиента
-    Client client;
+    //Client client;
 
     String info;
 
     public Record() {
     }
 
-    public Record(LightCalendar calendar, LightClock starTime, ServiceMaster service, Client client) {
-        this.calendar = calendar;
-        this.starTime = starTime;
-        this.service = service;
-        this.client = client;
-    }
-
-    public Record(LightCalendar calendar, LightClock starTime, ServiceMaster service, Client client, String info) {
-        this.calendar = calendar;
-        this.starTime = starTime;
-        this.service = service;
-        this.client = client;
-        this.info = info;
-    }
 
     public LightCalendar getCalendar() {
         return calendar;
@@ -59,20 +48,32 @@ public class Record implements Comparable<Record>, Serializable {
         this.starTime = starTime;
     }
 
-    public ServiceMaster getService() {
-        return service;
+    public ArrayList<ServiceMaster> getServices() {
+        return services;
     }
 
-    public void setService(ServiceMaster service) {
-        this.service = service;
+    public void setServices(ArrayList<ServiceMaster> services) {
+        this.services = services;
+        this.duration = 0;
+        for (int i = 0; i < services.size(); i++) {
+            duration = duration + services.get(i).getDuration();
+        }
     }
 
-    public Client getClient() {
+/*    public Client getClient() {
         return client;
     }
 
     public void setClient(Client client) {
         this.client = client;
+    }*/
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getInfo() {
@@ -88,8 +89,9 @@ public class Record implements Comparable<Record>, Serializable {
         return "Record " +
                 calendar +
                 ", Star in: " + starTime +
-                ", service=" + service +
-                ", note: " + info + ".";
+                ", service=" + services +
+                ", note: " + info +
+                "duration: " + duration + ".";
     }
 
 

@@ -85,6 +85,7 @@ public class CalendarDay implements Serializable {
         this.records = records;
     }
 
+
     public void addRecord(Record tempRecord) {
         TreeSet<Record> treeSet = new TreeSet<Record>(records);
         treeSet.add(tempRecord);
@@ -108,7 +109,7 @@ public class CalendarDay implements Serializable {
         } else {
             Record tempRecord = records.get(arrSize - 1);
             timeStart = new LightClock(tempRecord.getStarTime());
-            timeStart.addMinute(tempRecord.getService().getDuration());
+            timeStart.addMinute(tempRecord.getDuration());
             timeEnd = new LightClock(this.endWork);
             this.addToTreeSet(treeSet, timeStart, timeEnd, durationService);
 
@@ -116,7 +117,7 @@ public class CalendarDay implements Serializable {
                 for (int i = arrSize - 1; i >= 1; i--) {
                     timeEnd = new LightClock(records.get(i).getStarTime());
                     tempTime = new LightClock(records.get(i - 1).getStarTime());
-                    tempTime.addMinute(records.get(i - 1).getService().getDuration());
+                    tempTime.addMinute(records.get(i - 1).getDuration());
                     timeStart = new LightClock(tempTime);
                     this.addToTreeSet(treeSet, timeStart, timeEnd, durationService);
 
