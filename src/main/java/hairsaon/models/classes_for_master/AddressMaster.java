@@ -34,7 +34,7 @@ public class AddressMaster implements Serializable {
     ArrayList<WeekDay> weekTemplate;
     /*@JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
     @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)*/
-    Map<String, CalendarDay> timetableMap;
+    TreeMap<String, CalendarDay> timetableMap;
 
     //ArrayList<ServiceMaster> arrayServices;
 
@@ -42,15 +42,6 @@ public class AddressMaster implements Serializable {
     public AddressMaster() {
         weekTemplate = new ArrayList<WeekDay>();
         timetableMap = new TreeMap<String, CalendarDay>();
-        LightCalendar lightCalendar = new LightCalendar(2017, 7, 3);
-        LightCalendar lightCalendar2 = new LightCalendar(2016, 10, 13);
-        LightCalendar lightCalendar3 = new LightCalendar(2017, 7, 23);
-        CalendarDay calendarDay = new CalendarDay(lightCalendar, 14, 0, 19, 30, true);
-
-
-        timetableMap.put(lightCalendar.toString(), calendarDay);
-        timetableMap.put(lightCalendar2.toString(), calendarDay);
-        timetableMap.put(lightCalendar3.toString(), calendarDay);
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
@@ -67,11 +58,11 @@ public class AddressMaster implements Serializable {
     }
 
 
-    public Map<String, CalendarDay> getTimetableMap() {
+    public TreeMap<String, CalendarDay> getTimetableMap() {
         return timetableMap;
     }
 
-    public void setTimetableMap(Map<String, CalendarDay> timetableMap) {
+    public void setTimetableMap(TreeMap<String, CalendarDay> timetableMap) {
         this.timetableMap = timetableMap;
     }
 
@@ -129,10 +120,10 @@ public class AddressMaster implements Serializable {
         for (int i = 0; i < 21; i++) {
 
             MyCalendar tempMyCalendar = new MyCalendar();
-            tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
+//            tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
             tempMyCalendar.add(Calendar.DAY_OF_MONTH, i);
             LightCalendar lightTemp = new LightCalendar(tempMyCalendar);
-            if (timetableMap.get(lightTemp) == null) {
+            if (timetableMap.get(lightTemp.toString()) == null) {
                 WeekDay tempWeekDay = weekTemplate.get(tempMyCalendar.getMyDayOfWeek());
                 if (tempWeekDay.getActiveDay()) {
                     timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, tempWeekDay));
@@ -160,11 +151,14 @@ public class AddressMaster implements Serializable {
 
         MyCalendar tempMyCalendar = new MyCalendar();
         tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
-        timetableMap.remove(new LightCalendar(tempMyCalendar));
+        String CalendarStr = new LightCalendar(tempMyCalendar).toString();
+        if (timetableMap.get(CalendarStr) != null) {
+            timetableMap.remove(CalendarStr);
+        }
         tempMyCalendar = new MyCalendar();
         tempMyCalendar.add(Calendar.DAY_OF_MONTH, 14);
         LightCalendar lightTemp = new LightCalendar(tempMyCalendar);
-        if (timetableMap.get(lightTemp) == null) {
+        if (timetableMap.get(lightTemp.toString()) == null) {
             WeekDay tempWeekDay = weekTemplate.get(tempMyCalendar.getMyDayOfWeek());
             if (tempWeekDay.getActiveDay()) {
                 timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, tempWeekDay));

@@ -17,9 +17,7 @@ import java.io.Serializable;
 public class Record implements Comparable<Record>, Serializable {
     private static final long serialVersionUID = 11223455612L;
     LightCalendar calendar;
-
     LightClock starTime;
-
     ServiceMaster service;
 
     //TODO Надо переделать на ID клиента. Зачем хранить всего клиента

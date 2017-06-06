@@ -41,6 +41,7 @@ public class CalendarDay implements Serializable {
         this.startWork = weekDay.getStartWork();
         this.endWork = weekDay.getEndWork();
         this.working = weekDay.getActiveDay();
+        records = new ArrayList<Record>();
     }
 
 
