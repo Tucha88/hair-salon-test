@@ -1,16 +1,18 @@
 package hairsaon.myExtends;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class MyClock extends GregorianCalendar {
 
-
-    public MyClock() {
-    }
+/**
+ * @Embeddable
+ */
+public class MyClock extends GregorianCalendar implements Serializable {
+    private static final long serialVersionUID = 1122345569L;
 
     public MyClock(int hourOfDay, int minute) {
         super(26, 03, 1992, hourOfDay, minute, 0);
@@ -20,6 +22,9 @@ public class MyClock extends GregorianCalendar {
         super(26, 03, 1992, tempClock.getHour(), tempClock.getMinute(), 0);
     }
 
+    public MyClock(LightClock tempLightClock) {
+        super(26, 03, 1992, tempLightClock.getHourLight(), tempLightClock.getMinuteLight(), 0);
+    }
 
     public int getHour() {
         return this.get(Calendar.HOUR_OF_DAY);

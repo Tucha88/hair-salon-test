@@ -1,26 +1,32 @@
 package hairsaon.models.timetable;
 
-
-import hairsaon.myExtends.MyClock;
+import hairsaon.myExtends.LightClock;
 
 import java.io.Serializable;
 
 /**
  * Created by Лимаренко on 28.04.2017.
  */
-public class WeekDay implements Serializable{
-    private static final long serialVersionUID = 112234551L;
+public class WeekDay implements Serializable {
+    private static final long serialVersionUID = 112234550L;
+
+
     boolean activeDay;
-    MyClock startWork;
-    MyClock endWork;
+
+    LightClock startWork;
+    LightClock endWork;
+
 
 
     public WeekDay() {
         this.activeDay = false;
-        this.startWork = new MyClock(0, 0);
-        this.endWork = new MyClock(0, 0);
+        this.startWork = new LightClock(0, 0);
+        this.endWork = new LightClock(0, 0);
     }
 
+    public boolean isActiveDay() {
+        return activeDay;
+    }
     public boolean getActiveDay() {
         return activeDay;
     }
@@ -29,42 +35,59 @@ public class WeekDay implements Serializable{
         this.activeDay = activeDay;
     }
 
-    public int getStartHour() {
-        return startWork.getHour();
+    /*public int getStartHour() {
+        return startWork.getHourLight();
     }
 
     public void setStartHour(int startHour) {
-        this.startWork.setHour(startHour);
+        this.startWork.setHourLight(startHour);
     }
 
     public int getStartMin() {
-        return startWork.getMinute();
+        return startWork.getMinuteLight();
     }
 
     public void setStartMin(int startMin) {
-        this.startWork.setMinute(startMin);
+        this.startWork.setMinuteLight(startMin);
     }
 
     public int getEndHour() {
-        return endWork.getHour();
+        return endWork.getHourLight();
     }
 
     public void setEndHour(int endHour) {
-        this.endWork.setHour(endHour);
+        this.endWork.setHourLight(endHour);
     }
 
     public int getEndMin() {
-        return endWork.getMinute();
+        return endWork.getMinuteLight();
     }
 
     public void setEndMin(int endMin) {
-        this.endWork.setMinute(endMin);
+        this.endWork.setMinuteLight(endMin);
+    }*/
+
+
+    public LightClock getStartWork() {
+        return startWork;
+    }
+
+    public void setStartWork(LightClock startWork) {
+        this.startWork = startWork;
+    }
+
+    public LightClock getEndWork() {
+        return endWork;
+    }
+
+    public void setEndWork(LightClock endWork) {
+        this.endWork = endWork;
     }
 
     public void setTime(boolean active, int startHour, int startMin, int endHour, int endMin) {
         this.activeDay = active;
-        this.startWork = new MyClock(startHour, startMin);
-        this.endWork = new MyClock(endHour, endMin);
+        this.startWork = new LightClock(startHour, startMin);
+        this.endWork = new LightClock(endHour, endMin);
 
     }
 
@@ -72,10 +95,10 @@ public class WeekDay implements Serializable{
     public String toString() {
         if (activeDay) {
             return "activeDay: " + activeDay +
-                    ", start: " + startWork.getHour() +
-                    ":" + startWork.getMinute() +
-                    ", end: " + endWork.getHour() +
-                    ":" + endWork.getMinute() + "; ";
+                    ", start: " + startWork.getHourLight() +
+                    ":" + startWork.getMinuteLight() +
+                    ", end: " + endWork.getHourLight() +
+                    ":" + endWork.getMinuteLight() + "; ";
         } else {
             return "activeDay: " + activeDay;
         }

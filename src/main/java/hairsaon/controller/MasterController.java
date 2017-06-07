@@ -3,11 +3,17 @@ package hairsaon.controller;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
-import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
+import hairsaon.models.AppointmentArray;
+import hairsaon.models.DateAndDuration;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
+import hairsaon.models.classes_for_master.Record;
+import hairsaon.models.personal_models_for_schedule.Appointment;
+import hairsaon.models.timetable.CalendarDay;
+import hairsaon.models.timetable.WeekDay;
+import hairsaon.myExtends.LightCalendar;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +21,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Created by Boris on 19.04.2017.
@@ -46,7 +53,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        ArrayList<Services> services = master.getSerivce();
+        ArrayList<Services> services = master.getServices();
         return new ResponseEntity<>(services, HttpStatus.OK);
     }
 
@@ -59,7 +66,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        master.setSerivce(services);
+        master.setServices(services);
         masterRepository.save(master);
         return new ResponseEntity<>("Master controller were updated", HttpStatus.OK);
 
@@ -89,9 +96,8 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-//        AddressTemp addresses = master.getAddresses();
 
-        return new ResponseEntity<>(master.getAddresses(), HttpStatus.OK);
+        return new ResponseEntity<>(master.getAddressMaster().getAddress(), HttpStatus.OK);
     }
 
     @PutMapping("address")
@@ -102,7 +108,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        master.setAddresses(addresses);
+        master.getAddressMaster().setAddress(addresses);
         masterRepository.save(master);
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
@@ -140,8 +146,11 @@ public class MasterController {
         if (master.getMasterType() != null) {
             updatedMaster.setMasterType(master.getMasterType());
         }
+        if (master.getServices() != null) {
+            updatedMaster.setServices(master.getServices());
+        }
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
-        String adressStr = master.getAddresses();
+        String adressStr = master.getAddressMaster().getAddress();
         GeocodingResult[] results = new GeocodingResult[0];
         if (adressStr != null) {
             try {
@@ -150,7 +159,7 @@ public class MasterController {
                 updatedMaster.setPlaceId(results[0].placeId);
                 updatedMaster.setLatitude(geometry.location.lat);
                 updatedMaster.setLongitude(geometry.location.lng);
-                updatedMaster.setAddresses(adressStr);
+                updatedMaster.getAddressMaster().setAddress(adressStr);
             } catch (Exception e) {
                 updatedMaster.setPlaceId(null);
                 updatedMaster.setLatitude(0);
@@ -169,5 +178,108 @@ public class MasterController {
         return new ResponseEntity<>(masterRepository.findAll(), HttpStatus.OK);
     }
 
+   /* @GetMapping("appointment")
+    public ResponseEntity<Object> getAppointments(@RequestHeader("Authorization") String token){
+        Master master = masterRepository.findByEmail(utils.parsJwts(token));
+        AppointmentArray appointmentArray = new AppointmentArray();
+        appointmentArray.setRecords((ArrayList<Appointment>) master.getRecords());
+        return new ResponseEntity<>(appointmentArray,HttpStatus.OK);
+    }*/
+
+    /**
+     * Добавил Лёша 04.06.2017
+     */
+    @GetMapping("template")
+    public ResponseEntity<Object> getWeekTemplate(@RequestHeader("Authorization") String token) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        ArrayList<WeekDay> weekTemplate = master.getAddressMaster().getWeekTemplate();
+        return new ResponseEntity<>(weekTemplate, HttpStatus.OK);
+    }
+
+    @PutMapping("template")
+    public ResponseEntity<Object> setWeekTemplate(@RequestHeader("Authorization") String token, @RequestBody ArrayList<WeekDay> weekTemplate) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        master.getAddressMaster().setWeekTemplate(weekTemplate);
+        masterRepository.save(master);
+        return new ResponseEntity<>("User week template was update", HttpStatus.OK);
+    }
+
+    @PutMapping("add_day")
+    public ResponseEntity<Object> addCalendarDay(@RequestHeader("Authorization") String token, @RequestBody CalendarDay day) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        master.getAddressMaster().getTimetableMap().put(day.getMyCalendar().toString(), day);
+        masterRepository.save(master);
+        return new ResponseEntity<>("Calendar Day was added", HttpStatus.OK);
+    }
+
+    @GetMapping("start")
+    public ResponseEntity<Object> startMasterTimetable(@RequestHeader("Authorization") String token) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        master.getAddressMaster().startMasterTrmplatr();
+        masterRepository.save(master);
+        TreeMap<String, CalendarDay> map = master.getAddressMaster().getTimetableMap();
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @PostMapping("free_time")
+    public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Authorization") String token, @RequestBody DateAndDuration dateAndDuration) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        String dateStr = dateAndDuration.getMyCalendar().toString();
+        int duration = dateAndDuration.getDuration();
+        Set set = master.getAddressMaster().getFreeTimeOnDate(dateStr, duration);
+        return new ResponseEntity<>(set, HttpStatus.OK);
+    }
+
+    @PutMapping("add_record")
+    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+
+        LightCalendar lightCalendar = record.getCalendar();
+        CalendarDay calendarDay = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString());
+        if (calendarDay == null) {
+            return new ResponseEntity<>("Not found a calendar day", HttpStatus.CONFLICT);
+        }
+        if (!calendarDay.isWorking()) {
+            return new ResponseEntity<>("The master does not work this day ", HttpStatus.CONFLICT);
+        }
+        master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
+        masterRepository.save(master);
+        return new ResponseEntity<>("Record was added", HttpStatus.OK);
+    }
+
+    @PostMapping("day_records")
+    public ResponseEntity<Object> getRecordForDay(@RequestHeader("Authorization") String token, @RequestBody LightCalendar lightCalendar) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        ArrayList<Record> records = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).getRecords();
+        return new ResponseEntity<>(records, HttpStatus.OK);
+    }
 
 }

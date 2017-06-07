@@ -1,8 +1,14 @@
 package hairsaon.models;
 
 
+import hairsaon.models.classes_for_master.Record;
+import hairsaon.models.personal_models_for_schedule.Appointment;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Boris on 01.04.2017.
@@ -20,8 +26,22 @@ public class Client {
     private String clientName;
     private String clientLastName;
     private String clientPhoneNumber;
+    @DBRef
+    private List<Appointment> records = new ArrayList<>();
 
     public Client() {
+    }
+
+    public void addRecord(Appointment record) {
+        this.records.add(record);
+    }
+
+    public List<Appointment> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Appointment> records) {
+        this.records = records;
     }
 
     public String getClientPhoneNumber() {

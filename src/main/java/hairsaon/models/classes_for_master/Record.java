@@ -1,9 +1,12 @@
 package hairsaon.models.classes_for_master;
 
+import hairsaon.models.Services;
+import hairsaon.myExtends.LightCalendar;
+import hairsaon.myExtends.LightClock;
 
-import hairsaon.models.Client;
-import hairsaon.myExtends.MyCalendar;
-import hairsaon.myExtends.MyClock;
+import java.io.Serializable;
+import java.util.ArrayList;
+
 
 /**
  * Created by Лимаренко on 28.04.2017.
@@ -11,62 +14,64 @@ import hairsaon.myExtends.MyClock;
 
 //TODO придумать как связывать клиента с мастером через запись
 
-//@Entity
-public class Record implements Comparable<Record> {
-    MyCalendar calendar;
-    MyClock starTime;
-    ServiceMaster service;
-    Client client;
+public class Record implements Comparable<Record>, Serializable {
+    private static final long serialVersionUID = 11223455612L;
+    LightCalendar calendar;
+    LightClock starTime;
+    ArrayList<Services> services;
+    int duration;
+
+    //TODO Надо переделать на ID клиента. Зачем хранить всего клиента
+    //Client client;
+
     String info;
 
     public Record() {
     }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client) {
-        this.calendar = calendar;
-        this.starTime = starTime;
-        this.service = service;
-        this.client = client;
-    }
 
-    public Record(MyCalendar calendar, MyClock starTime, ServiceMaster service, Client client, String info) {
-        this.calendar = calendar;
-        this.starTime = starTime;
-        this.service = service;
-        this.client = client;
-        this.info = info;
-    }
-
-    public MyCalendar getCalendar() {
+    public LightCalendar getCalendar() {
         return calendar;
     }
 
-    public void setCalendar(MyCalendar calendar) {
+    public void setCalendar(LightCalendar calendar) {
         this.calendar = calendar;
     }
 
-    public MyClock getStarTime() {
+    public LightClock getStarTime() {
         return starTime;
     }
 
-    public void setStarTime(MyClock starTime) {
+    public void setStarTime(LightClock starTime) {
         this.starTime = starTime;
     }
 
-    public ServiceMaster getService() {
-        return service;
+    public ArrayList<Services> getServices() {
+        return services;
     }
 
-    public void setService(ServiceMaster service) {
-        this.service = service;
+    public void setServices(ArrayList<Services> services) {
+        this.services = services;
+        this.duration = 0;
+        for (int i = 0; i < services.size(); i++) {
+            duration = duration + services.get(i).getDuration();
+        }
     }
 
-    public Client getClient() {
+/*    public Client getClient() {
         return client;
     }
 
     public void setClient(Client client) {
         this.client = client;
+    }*/
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getInfo() {
@@ -82,13 +87,18 @@ public class Record implements Comparable<Record> {
         return "Record " +
                 calendar +
                 ", Star in: " + starTime +
-                ", service=" + service +
-                ", note: " + info + ".";
+                ", service=" + services +
+                ", note: " + info +
+                "duration: " + duration + ".";
     }
 
 
     @Override
     public int compareTo(Record tempRecord) {
-        return this.starTime.compareTo(tempRecord.starTime);
+        int res = this.getCalendar().compareTo(tempRecord.getCalendar());
+        if (res == 0) {
+            res = this.getStarTime().compareTo(tempRecord.getStarTime());
+        }
+        return res;
     }
 }

@@ -71,9 +71,7 @@ public class RegisterService {
                 master.setLongitude(0);
             }
         }
-
-
-        master.setAddresses(adressStr);
+        master.getAddressMaster().setAddress(adressStr);
         masterRepository.save(master);
 
 

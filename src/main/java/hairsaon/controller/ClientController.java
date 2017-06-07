@@ -1,13 +1,19 @@
 package hairsaon.controller;
 
 
+import hairsaon.models.AppointmentArray;
 import hairsaon.models.Client;
+import hairsaon.models.Master;
+import hairsaon.models.classes_for_master.Record;
+import hairsaon.models.personal_models_for_schedule.Appointment;
 import hairsaon.repository.ClientRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by Boris on 17.04.2017.
@@ -62,6 +68,15 @@ public class ClientController {
     public ResponseEntity<Object> getAllClients() {
         return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);
     }
+
+  /*  @GetMapping("appointment")
+    public ResponseEntity<Object> getAppointments(@RequestHeader("Authorization") String token){
+        Client master = clientRepository.findClientByClientEmail(utils.parsJwts(token));
+        AppointmentArray appointmentArray = new AppointmentArray();
+        appointmentArray.setRecords((ArrayList<Appointment>) master.getRecords());
+        return new ResponseEntity<>(appointmentArray,HttpStatus.OK);
+    }
+*/
 
 
 

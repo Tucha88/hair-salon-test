@@ -1,14 +1,16 @@
 package hairsaon.models;
 
 
-import hairsaon.models.classes_for_master.AddressTemp;
-import hairsaon.models.timetable.WeekDay;
+import hairsaon.models.classes_for_master.AddressMaster;
+import hairsaon.models.classes_for_master.Record;
+import hairsaon.models.personal_models_for_schedule.Appointment;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Boris on 01.04.2017.
@@ -32,11 +34,38 @@ public class Master implements Serializable {
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
     private String addresses;
+    private AddressMaster addressMaster = new AddressMaster();
+
+//    @DBRef
+//    private List<Appointment> records = new ArrayList<>();
+
 
 
     public Master() {
     }
 
+    public AddressMaster getAddressMaster() {
+        return addressMaster;
+    }
+
+    public void setAddressMaster(AddressMaster addressMaster) {
+        this.addressMaster = addressMaster;
+    }
+
+    /*
+
+    public void addRecord(Appointment record){
+        this.records.add(record);
+    }
+
+    public List<Appointment> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Appointment> records) {
+        this.records = records;
+    }
+*/
 
     public double getLatitude() {
         return latitude;
@@ -127,12 +156,12 @@ public class Master implements Serializable {
         this.masterType = masterType;
     }
 
-    public ArrayList<Services> getSerivce() {
+    public ArrayList<Services> getServices() {
         return serivce;
     }
 
-    public void setSerivce(ArrayList<Services> serivce) {
-        this.serivce = serivce;
+    public void setServices(ArrayList<Services> services) {
+        this.serivce = services;
     }
 
 
