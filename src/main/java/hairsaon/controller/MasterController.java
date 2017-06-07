@@ -53,7 +53,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        ArrayList<Services> services = master.getServices();
+        ArrayList<Services> services = master.getSerivce();
         return new ResponseEntity<>(services, HttpStatus.OK);
     }
 
@@ -66,7 +66,7 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        master.setServices(services);
+        master.setSerivce(services);
         masterRepository.save(master);
         return new ResponseEntity<>("Master controller were updated", HttpStatus.OK);
 
@@ -146,8 +146,8 @@ public class MasterController {
         if (master.getMasterType() != null) {
             updatedMaster.setMasterType(master.getMasterType());
         }
-        if (master.getServices() != null) {
-            updatedMaster.setServices(master.getServices());
+        if (master.getSerivce() != null) {
+            updatedMaster.setSerivce(master.getSerivce());
         }
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
         String adressStr = master.getAddressMaster().getAddress();

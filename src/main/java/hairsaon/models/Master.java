@@ -44,6 +44,14 @@ public class Master implements Serializable {
     public Master() {
     }
 
+    public ArrayList<Services> getSerivce() {
+        return serivce;
+    }
+
+    public void setSerivce(ArrayList<Services> serivce) {
+        this.serivce = serivce;
+    }
+
     public AddressMaster getAddressMaster() {
         return addressMaster;
     }
@@ -154,14 +162,6 @@ public class Master implements Serializable {
 
     public void setMasterType(String masterType) {
         this.masterType = masterType;
-    }
-
-    public ArrayList<Services> getServices() {
-        return serivce;
-    }
-
-    public void setServices(ArrayList<Services> services) {
-        this.serivce = services;
     }
 
 
