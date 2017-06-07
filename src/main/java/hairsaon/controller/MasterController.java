@@ -7,7 +7,6 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 import hairsaon.models.DateAndDuration;
-import hairsaon.models.DateAndRecord;
 import hairsaon.models.Master;
 import hairsaon.models.Services;
 import hairsaon.models.classes_for_master.Record;
@@ -175,18 +174,36 @@ public class MasterController {
         return new ResponseEntity<>(set, HttpStatus.OK);
     }
 
-    @PutMapping("record")
-    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody DateAndRecord dateAndRecord) {
+    @PutMapping("add_record")
+    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        LightCalendar lightCalendar = dateAndRecord.getMyCalendar();
-        Record record = dateAndRecord.getRecord();
+
+        LightCalendar lightCalendar = record.getCalendar();
+        CalendarDay calendarDay = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString());
+        if (calendarDay == null) {
+            return new ResponseEntity<>("Not found a calendar day", HttpStatus.CONFLICT);
+        }
+        if (!calendarDay.isWorking()) {
+            return new ResponseEntity<>("The master does not work this day ", HttpStatus.CONFLICT);
+        }
         master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
         masterRepository.save(master);
         return new ResponseEntity<>("Record was added", HttpStatus.OK);
+    }
+
+    @PostMapping("day_records")
+    public ResponseEntity<Object> getRecordForDay(@RequestHeader("Authorization") String token, @RequestBody LightCalendar lightCalendar) {
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        ArrayList<Record> records = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).getRecords();
+        return new ResponseEntity<>(records, HttpStatus.OK);
     }
 
 
