@@ -250,6 +250,7 @@ public class MasterController {
         return new ResponseEntity<>(set, HttpStatus.OK);
     }
 
+
     @PutMapping("add_record")
     public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
         String email = utils.parsJwts(token);
