@@ -15,7 +15,7 @@ import java.util.List;
  * Client entity
  * Класс для записи в базу данных
  */
-@Document(collection = "client")
+@Document(collection = "client_test")
 public class Client {
     private static final long serialVersionUID = 112234557L;
 

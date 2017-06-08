@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 //TODO добавить масив с услугами и календарь расписание
-@Document(collection = "master")
+@Document(collection = "master_test")
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556L;
     double latitude;
