@@ -238,7 +238,8 @@ public class MasterController {
     }
 
     @PostMapping("free_time")
-    public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Id") String email, @RequestBody DateAndDuration dateAndDuration) {
+    public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Authorization") String token, @RequestBody DateAndDuration dateAndDuration) {
+        String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
@@ -249,9 +250,9 @@ public class MasterController {
         return new ResponseEntity<>(set, HttpStatus.OK);
     }
 
-
     @PutMapping("add_record")
-    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Id") String email, @RequestBody Record record) {
+    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
+        String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
