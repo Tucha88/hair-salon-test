@@ -6,7 +6,6 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
-import com.sun.xml.internal.bind.v2.TODO;
 import hairsaon.models.Client;
 import hairsaon.models.Master;
 import hairsaon.repository.ClientRepository;
@@ -42,25 +41,37 @@ public class RegisterService {
     }
 
     @PostMapping("/master")
-    public ResponseEntity<Object> registerMaster(@RequestBody Master master) throws ServletException, InterruptedException, ApiException, IOException {
+    public ResponseEntity<Object> registerMaster(@RequestBody Master master) throws ServletException {
 
         if (utils.isLoginInfoExist(master)) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.CONFLICT);
-        } else if (masterRepository.findByEmail(master.getEmail()) != null) {
+        }
+        else  if (masterRepository.findByEmail(master.getEmail())!=null){
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT);
-        } else if (clientRepository.findClientByClientEmail(master.getEmail()) != null) {
+        }
+        else if (clientRepository.findClientByClientEmail(master.getEmail()) != null) {
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
         }
         String str = utils.hashPassword(master.getPassword());
         master.setPassword(str);
-        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
-        String adressStr = master.getAddressMaster().getAddress();
 
-       /* GeocodingResult[] results = GeocodingApi.geocode(context, adressStr).await();
-        Geometry geometry = results[0].geometry;
-        master.getAddressMaster().setPlaceId(results[0].placeId);
-        master.getAddressMaster().setLatitude(geometry.location.lat);
-        master.getAddressMaster().setLongitude(geometry.location.lng);*/
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+        String adressStr = master.getAddresses();
+        GeocodingResult[] results = new GeocodingResult[0];
+        if (adressStr != null) {
+            try {
+                results = GeocodingApi.geocode(context, adressStr).await();
+                Geometry geometry = results[0].geometry;
+                master.setPlaceId(results[0].placeId);
+                master.setLatitude(geometry.location.lat);
+                master.setLongitude(geometry.location.lng);
+            } catch (Exception e) {
+                master.setPlaceId(null);
+                master.setLatitude(0);
+                master.setLongitude(0);
+            }
+        }
+        master.getAddressMaster().setAddress(adressStr);
         masterRepository.save(master);
 
 
@@ -69,11 +80,14 @@ public class RegisterService {
 
     @PostMapping("client")
     public ResponseEntity<Object> registerClient(@RequestBody Client client) {
-        if (utils.isLoginInfoExist(client)) {
+        if (utils.isLoginInfoExist(client)){
             return new ResponseEntity<>("Enter correct login or password", HttpStatus.CONFLICT);// Wrong login or password
-        } else if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
+        }
+
+        else if (clientRepository.findClientByClientEmail(client.getClientEmail()) != null) {
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
-        } else if (masterRepository.findByEmail(client.getClientEmail()) != null) {
+        }
+        else if (masterRepository.findByEmail(client.getClientEmail())!=null){
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT);
 
         }

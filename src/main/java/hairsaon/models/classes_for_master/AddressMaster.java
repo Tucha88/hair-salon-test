@@ -1,24 +1,13 @@
 package hairsaon.models.classes_for_master;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
-import com.google.maps.errors.ApiException;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.Geometry;
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
-import hairsaon.myExtends.LightCalendar;
-import hairsaon.myExtends.LightClock;
-import hairsaon.myExtends.MyCalendar;
-import hairsaon.utils.MyLightCalendarDeserializer;
-import hairsaon.utils.MyLightCalendarSerializer;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Created by Лимаренко on 28.04.2017.
@@ -32,11 +21,8 @@ public class AddressMaster implements Serializable {
     String placeId;
 
     ArrayList<WeekDay> weekTemplate;
-    /*@JsonDeserialize(keyUsing = MyLightCalendarDeserializer.class)
-    @JsonSerialize(keyUsing = MyLightCalendarSerializer.class)*/
     TreeMap<String, CalendarDay> timetableMap;
 
-    //ArrayList<ServiceMaster> arrayServices;
 
 
     public AddressMaster() {
@@ -131,7 +117,6 @@ public class AddressMaster implements Serializable {
                     timetableMap.put(lightTemp.toString(), new CalendarDay(lightTemp, 0, 0, 0, 0, false));
                 }
             }
-
 
 
         }

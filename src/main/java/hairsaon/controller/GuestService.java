@@ -1,9 +1,9 @@
 package hairsaon.controller;
 
 
+
 import hairsaon.models.Master;
 import hairsaon.models.MasterArray;
-import hairsaon.models.MasterForArray;
 import hairsaon.repository.MasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,19 +33,9 @@ public class GuestService {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ResponseEntity<Object> getListMasters() {
         MasterArray masterArray = new MasterArray();
-        ArrayList<MasterForArray> masters = new ArrayList<>();
-        for (Master master :
-                masterRepository.findAll()) {
-            MasterForArray masterForArray = new MasterForArray();
-            masterForArray.setEmail(master.getEmail());
-//            masterForArray.setAddresses(master.getAddresses());
-            masterForArray.setLang(master.getLang());
-            masterForArray.setLastName(master.getLastName());
-            masterForArray.setMasterType(master.getMasterType());
-            masterForArray.setPhoneNumber(master.getPhoneNumber());
-            masterForArray.setSerivce(master.getSerivce());
-            masterForArray.setName(master.getName());
-            masters.add(masterForArray);
+        ArrayList<Master> masters = new ArrayList<>();
+        for (Master master : masterRepository.findAll()) {
+            masters.add(master);
         }
         masterArray.setMasters(masters);
         return new ResponseEntity<>(masterArray, HttpStatus.OK);

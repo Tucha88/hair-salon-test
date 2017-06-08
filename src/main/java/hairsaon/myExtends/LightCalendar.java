@@ -31,6 +31,7 @@ public class LightCalendar implements Comparable, Serializable {
         this.monthLight = month;
         this.dayLight = day;
     }
+
     public LightCalendar(MyCalendar myCalendar) {
         this.yearLight = myCalendar.getYear();
         this.monthLight = myCalendar.getMonth() + 1;

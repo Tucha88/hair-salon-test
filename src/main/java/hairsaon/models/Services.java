@@ -1,50 +1,72 @@
 package hairsaon.models;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.io.Serializable;
 
 /**
  * Created by Boris on 09.04.2017.
  */
-@Document(collection = "services")
+
+
 public class Services implements Serializable {
     private static final long serialVersionUID = 112234558L;
 
-    private String service;
-    private String price;
-    private String time;
+
+    private String name;
+    private int duration; // в минутах
+    private int price;
+    private String info;
+//    private String service;
+//    private int price;
+//    private int time;
+
 
 
     public Services() {
     }
 
-
-    public String getService() {
-        return service;
-    }
-
-    public void setService(String service) {
-        this.service = service;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
+    public Services(String name, int duration, int price) {
+        this.name = name;
+        this.duration = duration;
         this.price = price;
     }
 
-    public String getTime() {
-        return time;
+    public Services(String name, int duration, int price, String info) {
+        this.name = name;
+        this.duration = duration;
+        this.price = price;
+        this.info = info;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
 }

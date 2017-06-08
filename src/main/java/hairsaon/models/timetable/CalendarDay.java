@@ -1,10 +1,6 @@
 package hairsaon.models.timetable;
 
 import hairsaon.models.classes_for_master.Record;
-import hairsaon.myExtends.LightCalendar;
-import hairsaon.myExtends.LightClock;
-import hairsaon.myExtends.MyCalendar;
-import hairsaon.myExtends.MyClock;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -144,16 +140,16 @@ public class CalendarDay implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        if (working) {
-            return /*"Date: " + myCalendar.toString() +*/
-                    " работает с  " + startWork +
-                            " по " + endWork + ";";
-
-        } else {
-            return /*"Date: " + myCalendar.toString() + */" - Не работает;";
-        }
-
-    }
+//    @Override
+//    public String toString() {
+//        if (working) {
+//            return /*"Date: " + myCalendar.toString() +*/
+//                    " работает с  " + startWork +
+//                            " по " + endWork + ";";
+//
+//        } else {
+//            return /*"Date: " + myCalendar.toString() + */" - Не работает;";
+//        }
+//
+//    }
 }

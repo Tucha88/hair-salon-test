@@ -1,10 +1,7 @@
 package hairsaon.models.classes_for_master;
 
-import hairsaon.models.Client;
-import hairsaon.models.Master;
-import hairsaon.myExtends.*;
+import hairsaon.models.Services;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,8 +16,7 @@ public class Record implements Comparable<Record>, Serializable {
     private static final long serialVersionUID = 11223455612L;
     LightCalendar calendar;
     LightClock starTime;
-    //ServiceMaster service;
-    ArrayList<ServiceMaster> services;
+    ArrayList<Services> services;
     int duration;
 
     //TODO Надо переделать на ID клиента. Зачем хранить всего клиента
@@ -48,11 +44,11 @@ public class Record implements Comparable<Record>, Serializable {
         this.starTime = starTime;
     }
 
-    public ArrayList<ServiceMaster> getServices() {
+    public ArrayList<Services> getServices() {
         return services;
     }
 
-    public void setServices(ArrayList<ServiceMaster> services) {
+    public void setServices(ArrayList<Services> services) {
         this.services = services;
         this.duration = 0;
         for (int i = 0; i < services.size(); i++) {

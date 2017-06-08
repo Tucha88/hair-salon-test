@@ -3,7 +3,6 @@ package hairsaon.controller;
 
 import hairsaon.models.Client;
 import hairsaon.models.Master;
-import hairsaon.models.MasterAuthType;
 import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
@@ -33,13 +32,13 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody MasterAuthType authType) {
+    public ResponseEntity<Object> login(@RequestBody MasterAuthType authType){
         if (authType == null || authType.getEmail() == null || authType.getPassword() == null) {
             return new ResponseEntity<>("Error, there is no auth info", HttpStatus.UNAUTHORIZED);
         }
         if (authType.getEmail().equals("") || authType.getPassword().equals("")) {
             return new ResponseEntity<>("Please fill in username and password", HttpStatus.UNAUTHORIZED);
-        } else if (clientRepository.findClientByClientEmail(authType.getEmail()) != null) {
+        }else if (clientRepository.findClientByClientEmail(authType.getEmail()) != null){
             Client client = clientRepository.findClientByClientEmail(authType.getEmail());
             if (!utils.isPasswordCorrect(authType.getPassword(), client.getClientPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
@@ -47,7 +46,7 @@ public class LoginController {
             return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}", HttpStatus.OK);
 
 
-        } else if (masterRepository.findByEmail(authType.getEmail()) != null) {
+        }else if (masterRepository.findByEmail(authType.getEmail()) != null){
 
 
             Master master = masterRepository.findByEmail(authType.getEmail());
@@ -58,8 +57,9 @@ public class LoginController {
 
             return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(master.getEmail()) + "\"}", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Please register", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("Please register",HttpStatus.UNAUTHORIZED);
     }
+
 
 
 }

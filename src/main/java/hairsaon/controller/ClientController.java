@@ -1,13 +1,17 @@
 package hairsaon.controller;
 
 
+
 import hairsaon.models.Client;
+
 import hairsaon.repository.ClientRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by Boris on 17.04.2017.
@@ -41,7 +45,7 @@ public class ClientController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<Object> updateClient(@RequestHeader("authorization") String token, @RequestBody Client client) {
+    public ResponseEntity<Object> updateClient(@RequestHeader("authorization")String token,@RequestBody Client client) {
         String email = utils.parsJwts(token);
 
         Client updatedClient = clientRepository.findClientByClientEmail(email);
@@ -62,6 +66,16 @@ public class ClientController {
     public ResponseEntity<Object> getAllClients() {
         return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);
     }
+
+  /*  @GetMapping("appointment")
+    public ResponseEntity<Object> getAppointments(@RequestHeader("Authorization") String token){
+        Client master = clientRepository.findClientByClientEmail(utils.parsJwts(token));
+        AppointmentArray appointmentArray = new AppointmentArray();
+        appointmentArray.setRecords((ArrayList<Appointment>) master.getRecords());
+        return new ResponseEntity<>(appointmentArray,HttpStatus.OK);
+    }
+*/
+
 
 
 }

@@ -1,7 +1,5 @@
 package hairsaon.models;
 
-import hairsaon.myExtends.LightCalendar;
-
 /**
  * Created by Лимаренко on 07.06.2017.
  * Класс для подсчёта свободного времени

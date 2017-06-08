@@ -2,8 +2,8 @@ package hairsaon.models;
 
 
 import hairsaon.models.classes_for_master.AddressMaster;
-import hairsaon.models.classes_for_master.Record;
 import org.springframework.data.annotation.Id;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -16,10 +16,12 @@ import java.util.List;
  */
 
 //TODO добавить масив с услугами и календарь расписание
-@Document(collection = "master_test")
+@Document(collection = "master")
 public class Master implements Serializable {
     private static final long serialVersionUID = 112234556L;
-
+    double latitude;
+    double longitude;
+    String placeId;
     @Id
     private String email;
     private String phoneNumber;
@@ -29,19 +31,23 @@ public class Master implements Serializable {
     private ArrayList<String> lang;
     private String masterType;
     private ArrayList<Services> serivce = new ArrayList<Services>();
+    private String addresses;
     private AddressMaster addressMaster = new AddressMaster();
-    private List<Record> records = new ArrayList<>();
-//    private String addresses;
+
+//    @DBRef
+//    private List<Appointment> records = new ArrayList<>();
+
+
 
     public Master() {
     }
 
-    public List<Record> getRecords() {
-        return records;
+    public ArrayList<Services> getSerivce() {
+        return serivce;
     }
 
-    public void setRecords(List<Record> records) {
-        this.records = records;
+    public void setSerivce(ArrayList<Services> serivce) {
+        this.serivce = serivce;
     }
 
     public AddressMaster getAddressMaster() {
@@ -52,14 +58,54 @@ public class Master implements Serializable {
         this.addressMaster = addressMaster;
     }
 
-    //    public String getAddresses() {
-//        return addresses;
-//    }
-//
-//    public void setAddresses(String addresses) {
-//        this.addresses = addresses;
-//    }
-//
+    /*
+
+    public void addRecord(Appointment record){
+        this.records.add(record);
+    }
+
+    public List<Appointment> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<Appointment> records) {
+        this.records = records;
+    }
+*/
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
+    public String getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(String addresses) {
+        this.addresses = addresses;
+    }
+
+
     public String getEmail() {
         return email;
     }
@@ -114,14 +160,6 @@ public class Master implements Serializable {
 
     public void setMasterType(String masterType) {
         this.masterType = masterType;
-    }
-
-    public ArrayList<Services> getSerivce() {
-        return serivce;
-    }
-
-    public void setSerivce(ArrayList<Services> serivce) {
-        this.serivce = serivce;
     }
 
 

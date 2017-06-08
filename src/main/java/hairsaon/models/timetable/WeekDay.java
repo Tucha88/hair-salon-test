@@ -1,8 +1,5 @@
 package hairsaon.models.timetable;
 
-import hairsaon.myExtends.LightClock;
-import hairsaon.myExtends.MyClock;
-
 import java.io.Serializable;
 
 /**
@@ -10,6 +7,8 @@ import java.io.Serializable;
  */
 public class WeekDay implements Serializable {
     private static final long serialVersionUID = 112234550L;
+
+
     boolean activeDay;
 
     LightClock startWork;
