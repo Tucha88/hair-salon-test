@@ -1,6 +1,8 @@
 package hairsaon.models.classes_for_master;
 
 import hairsaon.models.Services;
+import hairsaon.myExtends.LightCalendar;
+import hairsaon.myExtends.LightClock;
 
 import java.io.Serializable;
 import java.util.ArrayList;

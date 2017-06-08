@@ -1,5 +1,7 @@
 package hairsaon.models.timetable;
 
+import hairsaon.myExtends.LightClock;
+
 import java.io.Serializable;
 
 /**

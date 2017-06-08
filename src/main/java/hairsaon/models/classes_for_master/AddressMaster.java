@@ -2,6 +2,9 @@ package hairsaon.models.classes_for_master;
 
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
+import hairsaon.myExtends.LightCalendar;
+import hairsaon.myExtends.LightClock;
+import hairsaon.myExtends.MyCalendar;
 
 import java.io.Serializable;
 import java.util.ArrayList;

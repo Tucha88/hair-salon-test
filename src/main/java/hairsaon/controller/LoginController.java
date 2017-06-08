@@ -3,6 +3,7 @@ package hairsaon.controller;
 
 import hairsaon.models.Client;
 import hairsaon.models.Master;
+import hairsaon.models.MasterAuthType;
 import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;

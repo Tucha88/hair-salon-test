@@ -1,6 +1,7 @@
 package hairsaon.models.timetable;
 
 import hairsaon.models.classes_for_master.Record;
+import hairsaon.myExtends.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;

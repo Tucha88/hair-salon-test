@@ -13,6 +13,7 @@ import hairsaon.models.classes_for_master.Record;
 
 import hairsaon.models.timetable.CalendarDay;
 import hairsaon.models.timetable.WeekDay;
+import hairsaon.myExtends.LightCalendar;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
