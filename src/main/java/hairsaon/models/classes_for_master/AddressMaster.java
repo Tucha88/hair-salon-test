@@ -126,14 +126,14 @@ public class AddressMaster implements Serializable {
 
     }
 
-    public TreeSet<LightClock> getFreeTimeOnDate(String dateStr, int durationService) {
+    public TreeSet<String> getFreeTimeOnDate(String dateStr, int durationService) {
         if (timetableMap.get(dateStr) == null) {
-            return new TreeSet<LightClock>();
+            return new TreeSet<String>();
         }
         if (timetableMap.get(dateStr).isWorking()) {
             return this.timetableMap.get(dateStr).getFreeTime(durationService);
         } else {
-            return new TreeSet<LightClock>();
+            return new TreeSet<String>();
         }
 
     }

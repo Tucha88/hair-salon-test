@@ -105,6 +105,7 @@ public class ClientController {
         if (!calendarDay.isWorking()) {
             return new ResponseEntity<>("The master does not work this day ", HttpStatus.CONFLICT);
         }
+        
         master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
         updatedClient.addRecord(record);
         clientRepository.save(updatedClient);

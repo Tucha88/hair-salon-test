@@ -93,8 +93,8 @@ public class CalendarDay implements Serializable {
         records = new ArrayList<Record>(treeSet);
     }
 
-    public TreeSet<LightClock> getFreeTime(int durationService) {
-        TreeSet<LightClock> treeSet = new TreeSet<LightClock>();
+    public TreeSet<String> getFreeTime(int durationService) {
+        TreeSet<String> treeSet = new TreeSet<String>();
         LightClock timeStart;
         LightClock timeEnd;
         LightClock tempTime;
@@ -133,12 +133,12 @@ public class CalendarDay implements Serializable {
     }
 
 
-    public void addToTreeSet(TreeSet<LightClock> treeSet, LightClock timeStart, LightClock timeEnd, int durationService) {
+    public void addToTreeSet(TreeSet<String> treeSet, LightClock timeStart, LightClock timeEnd, int durationService) {
         MyClock tempTime = new MyClock(timeStart);
         tempTime.addMinute(durationService);
         MyClock tempEndTime = new MyClock(timeEnd);
         while (tempTime.getTimeInMillis() <= tempEndTime.getTimeInMillis()) {
-            treeSet.add(new LightClock(timeStart));
+            treeSet.add(new LightClock(timeStart).toString());
             timeStart.addMinute(15);
             tempTime = new MyClock(timeStart);
             tempTime.addMinute(durationService);
