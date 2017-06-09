@@ -4,6 +4,7 @@ import hairsaon.models.classes_for_master.Record;
 import hairsaon.myExtends.LightCalendar;
 import hairsaon.myExtends.LightClock;
 import hairsaon.myExtends.MyClock;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class CalendarDay implements Serializable {
     LightClock startWork;
     LightClock endWork;
     boolean working; // рабочий ли день
+//    @DBRef
     ArrayList<Record> records;
 
     public CalendarDay() {

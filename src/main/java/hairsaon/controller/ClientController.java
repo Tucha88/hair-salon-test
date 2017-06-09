@@ -3,10 +3,14 @@ package hairsaon.controller;
 
 import hairsaon.models.AppointmentArray;
 import hairsaon.models.Client;
+import hairsaon.models.DateAndDuration;
 import hairsaon.models.Master;
 import hairsaon.models.classes_for_master.Record;
 import hairsaon.models.personal_models_for_schedule.Appointment;
+import hairsaon.models.timetable.CalendarDay;
+import hairsaon.myExtends.LightCalendar;
 import hairsaon.repository.ClientRepository;
+import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by Boris on 17.04.2017.
@@ -27,12 +32,14 @@ import java.util.ArrayList;
 public class ClientController {
 
     private final ClientRepository clientRepository;
+    private final MasterRepository masterRepository;
     private final IUtils utils;
 
     @Autowired
-    public ClientController(ClientRepository clientRepository, IUtils utils) {
+    public ClientController(ClientRepository clientRepository, IUtils utils, MasterRepository masterRepository) {
         this.clientRepository = clientRepository;
         this.utils = utils;
+        this.masterRepository = masterRepository;
     }
 
     @GetMapping("info")
@@ -65,6 +72,45 @@ public class ClientController {
         return new ResponseEntity<>("Client was updated", HttpStatus.OK);
     }
 
+    @PostMapping("free_time")
+    public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Authorization") String token, @RequestBody DateAndDuration dateAndDuration) {
+        String email = utils.parsJwts(token);
+        Client updatedClient = clientRepository.findClientByClientEmail(email);
+        Master master = masterRepository.findByEmail(dateAndDuration.getEmail());
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        String dateStr = dateAndDuration.getMyCalendar().toString();
+        int duration = dateAndDuration.getDuration();
+        Set set = master.getAddressMaster().getFreeTimeOnDate(dateStr, duration);
+        return new ResponseEntity<>(set, HttpStatus.OK);
+    }
+
+
+
+    @PutMapping("add_record")
+    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
+        String email = utils.parsJwts(token);
+        Client updatedClient = clientRepository.findClientByClientEmail(email);
+        Master master = masterRepository.findByEmail(record.getMaster());
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+
+        LightCalendar lightCalendar = record.getCalendar();
+        CalendarDay calendarDay = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString());
+        if (calendarDay == null) {
+            return new ResponseEntity<>("Not found a calendar day", HttpStatus.CONFLICT);
+        }
+        if (!calendarDay.isWorking()) {
+            return new ResponseEntity<>("The master does not work this day ", HttpStatus.CONFLICT);
+        }
+        master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
+        updatedClient.addRecord(record);
+        clientRepository.save(updatedClient);
+        masterRepository.save(master);
+        return new ResponseEntity<>("Record was added", HttpStatus.OK);
+    }
 
     @RequestMapping(value = "clients", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllClients() {

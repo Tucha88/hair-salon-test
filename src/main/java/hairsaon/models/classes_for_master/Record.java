@@ -22,8 +22,8 @@ public class Record implements Comparable<Record>, Serializable {
     int duration;
 
     //TODO Надо переделать на ID клиента. Зачем хранить всего клиента
-    //Client client;
-
+    String client;
+    String master;
     String info;
 
     public Record() {
@@ -80,6 +80,22 @@ public class Record implements Comparable<Record>, Serializable {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getMaster() {
+        return master;
+    }
+
+    public void setMaster(String master) {
+        this.master = master;
     }
 
     @Override

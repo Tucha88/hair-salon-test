@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by Boris on 01.04.2017.
@@ -26,21 +27,17 @@ public class Client {
     private String clientName;
     private String clientLastName;
     private String clientPhoneNumber;
-    @DBRef
-    private List<Appointment> records = new ArrayList<>();
+    //@DBRef
+    private ArrayList<Record> records = new ArrayList<>();
 
     public Client() {
     }
 
-    public void addRecord(Appointment record) {
-        this.records.add(record);
-    }
-
-    public List<Appointment> getRecords() {
+    public ArrayList<Record> getRecords() {
         return records;
     }
 
-    public void setRecords(List<Appointment> records) {
+    public void setRecords(ArrayList<Record> records) {
         this.records = records;
     }
 
@@ -82,5 +79,11 @@ public class Client {
 
     public void setClientLastName(String clientLastName) {
         this.clientLastName = clientLastName;
+    }
+
+    public void addRecord(Record tempRecord) {
+        TreeSet<Record> treeSet = new TreeSet<Record>(records);
+        treeSet.add(tempRecord);
+        records = new ArrayList<Record>(treeSet);
     }
 }

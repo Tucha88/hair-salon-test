@@ -237,41 +237,7 @@ public class MasterController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @PostMapping("free_time")
-    public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Authorization") String token, @RequestBody DateAndDuration dateAndDuration) {
-        String email = utils.parsJwts(token);
-        Master master = masterRepository.findByEmail(email);
-        if (master == null) {
-            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
-        }
-        String dateStr = dateAndDuration.getMyCalendar().toString();
-        int duration = dateAndDuration.getDuration();
-        Set set = master.getAddressMaster().getFreeTimeOnDate(dateStr, duration);
-        return new ResponseEntity<>(set, HttpStatus.OK);
-    }
 
-
-
-    @PutMapping("add_record")
-    public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
-        String email = utils.parsJwts(token);
-        Master master = masterRepository.findByEmail(email);
-        if (master == null) {
-            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
-        }
-
-        LightCalendar lightCalendar = record.getCalendar();
-        CalendarDay calendarDay = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString());
-        if (calendarDay == null) {
-            return new ResponseEntity<>("Not found a calendar day", HttpStatus.CONFLICT);
-        }
-        if (!calendarDay.isWorking()) {
-            return new ResponseEntity<>("The master does not work this day ", HttpStatus.CONFLICT);
-        }
-        master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
-        masterRepository.save(master);
-        return new ResponseEntity<>("Record was added", HttpStatus.OK);
-    }
 
     @PostMapping("day_records")
     public ResponseEntity<Object> getRecordForDay(@RequestHeader("Authorization") String token, @RequestBody LightCalendar lightCalendar) {

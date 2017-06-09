@@ -7,13 +7,15 @@ import hairsaon.myExtends.LightCalendar;
  * Класс для подсчёта свободного времени
  */
 public class DateAndDuration {
+    String email;
     int duration;
     LightCalendar myCalendar;
 
     public DateAndDuration() {
     }
 
-    public DateAndDuration(int duration, LightCalendar myCalendar) {
+    public DateAndDuration(String email, int duration, LightCalendar myCalendar) {
+        this.email = email;
         this.duration = duration;
         this.myCalendar = myCalendar;
     }
@@ -32,5 +34,13 @@ public class DateAndDuration {
 
     public void setMyCalendar(LightCalendar myCalendar) {
         this.myCalendar = myCalendar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
