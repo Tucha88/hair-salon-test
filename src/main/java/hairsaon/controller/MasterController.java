@@ -146,13 +146,15 @@ public class MasterController {
         if (master.getMasterType() != null) {
             updatedMaster.setMasterType(master.getMasterType());
         }
-        if (master.getSerivce() != null) {
+        /*if (master.getSerivce() != null) {
             updatedMaster.setSerivce(master.getSerivce());
-        }
+        }*/
         GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
-        String adressStr = master.getAddressMaster().getAddress();
+        String adressStr = master.getAddresses();
+
         GeocodingResult[] results = new GeocodingResult[0];
         if (adressStr != null) {
+            updatedMaster.setAddresses(adressStr);
             try {
                 results = GeocodingApi.geocode(context, adressStr).await();
                 Geometry geometry = results[0].geometry;
