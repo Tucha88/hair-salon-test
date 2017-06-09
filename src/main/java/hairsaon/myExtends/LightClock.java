@@ -1,5 +1,7 @@
 package hairsaon.myExtends;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -92,6 +94,7 @@ public class LightClock implements Comparable, Serializable {
     }
 
     @Override
+    @JsonValue
     public String toString() {
         if (minuteLight < 10) {
             String minuteStr = "0" + minuteLight;
