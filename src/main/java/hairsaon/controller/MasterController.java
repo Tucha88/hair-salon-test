@@ -21,10 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Boris on 19.04.2017.
@@ -239,7 +236,19 @@ public class MasterController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-
+    @GetMapping("all_timetable")
+    public ResponseEntity<Object> getAllTimetable (@RequestHeader("Authorization") String token){
+        String email = utils.parsJwts(token);
+        Master master = masterRepository.findByEmail(email);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        Map<String,CalendarDay> map = master.getAddressMaster().getTimetableMap();
+        ArrayList<CalendarDay> arrTimetable = new ArrayList<CalendarDay>();
+        arrTimetable.containsAll(map.values());
+        Collection collection = map.values();
+        return new ResponseEntity<>(collection, HttpStatus.OK);
+    }
 
     @PostMapping("day_records")
     public ResponseEntity<Object> getRecordForDay(@RequestHeader("Authorization") String token, @RequestBody LightCalendar lightCalendar) {
