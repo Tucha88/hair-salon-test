@@ -5,10 +5,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
-import hairsaon.models.AppointmentArray;
-import hairsaon.models.DateAndDuration;
-import hairsaon.models.Master;
-import hairsaon.models.Services;
+import hairsaon.models.*;
 import hairsaon.models.classes_for_master.Record;
 import hairsaon.models.personal_models_for_schedule.Appointment;
 import hairsaon.models.timetable.CalendarDay;
@@ -283,7 +280,7 @@ public class MasterController {
             ArrayList<Record> records = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).getRecords();
             return new ResponseEntity<>(records, HttpStatus.OK);
         }else {
-            return new ResponseEntity<>("rest day", HttpStatus.OK);
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }
 
