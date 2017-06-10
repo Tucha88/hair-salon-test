@@ -147,7 +147,7 @@ public class ClientController {
         }
         ArrayList<String> arrFavoritesMasters = client.getFavoritesMasters();
         for (int i = 0; i < arrFavoritesMasters.size(); i++) {
-            if (arrFavoritesMasters.get(i)==masterEmail){
+            if (arrFavoritesMasters.get(i).equals(masterEmail)){
                 return new ResponseEntity<>("This master is already in the list of favorites", HttpStatus.CONFLICT);
             }
         }

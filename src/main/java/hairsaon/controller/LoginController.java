@@ -46,7 +46,7 @@ public class LoginController {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
             TokenAndBoolean tokenAndBoolean = new TokenAndBoolean();
-            tokenAndBoolean.setToken("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}");
+            tokenAndBoolean.setToken(utils.buildJwt(client.getClientEmail()));
             tokenAndBoolean.setUser(false);
             return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
 
@@ -59,7 +59,7 @@ public class LoginController {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
             TokenAndBoolean tokenAndBoolean = new TokenAndBoolean();
-            tokenAndBoolean.setToken("{\"token\":" + "\"" + utils.buildJwt(master.getEmail()) + "\"}");
+            tokenAndBoolean.setToken(utils.buildJwt(master.getEmail()));
             tokenAndBoolean.setUser(true);
 
             return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
