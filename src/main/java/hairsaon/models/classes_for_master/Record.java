@@ -19,7 +19,7 @@ public class Record implements Comparable<Record>, Serializable {
     private static final long serialVersionUID = 11223455612L;
     LightCalendar calendar;
     LightClock starTime;
-    //LightClock endTime;
+    LightClock endTime;
     ArrayList<Services> services;
     int duration;
 
@@ -46,9 +46,9 @@ public class Record implements Comparable<Record>, Serializable {
 
     public void setStarTime(LightClock starTime) {
         this.starTime = starTime;
-        /*MyClock tempEndTime = new MyClock(starTime);
+        MyClock tempEndTime = new MyClock(starTime);
         tempEndTime.addMinute(duration);
-        this.endTime = new LightClock(tempEndTime.getHour(),tempEndTime.getMinute());*/
+        this.endTime = new LightClock(tempEndTime.getHour(),tempEndTime.getMinute());
     }
 
     public ArrayList<Services> getServices() {
@@ -61,18 +61,18 @@ public class Record implements Comparable<Record>, Serializable {
         for (int i = 0; i < services.size(); i++) {
             duration = duration + services.get(i).getDuration();
         }
-        /*MyClock tempEndTime = new MyClock(starTime);
+        MyClock tempEndTime = new MyClock(starTime);
         tempEndTime.addMinute(duration);
-        this.endTime = new LightClock(tempEndTime.getHour(),tempEndTime.getMinute());*/
+        this.endTime = new LightClock(tempEndTime.getHour(),tempEndTime.getMinute());
     }
 
-    /*public LightClock getEndTime() {
+    public LightClock getEndTime() {
         return endTime;
     }
 
     public void setEndTime(LightClock endTime) {
         this.endTime = endTime;
-    }*/
+    }
 
     public int getDuration() {
         return duration;
