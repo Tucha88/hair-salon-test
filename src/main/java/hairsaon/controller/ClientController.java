@@ -1,10 +1,7 @@
 package hairsaon.controller;
 
 
-import hairsaon.models.AppointmentArray;
-import hairsaon.models.Client;
-import hairsaon.models.DateAndDuration;
-import hairsaon.models.Master;
+import hairsaon.models.*;
 import hairsaon.models.classes_for_master.Record;
 import hairsaon.models.personal_models_for_schedule.Appointment;
 import hairsaon.models.timetable.CalendarDay;
@@ -113,7 +110,8 @@ public class ClientController {
         }
 
         master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).addRecord(record);
-        updatedClient.addRecord(record);
+        RecordClient recordClient = new RecordClient(record,master.getAddresses());
+        updatedClient.addRecord(recordClient);
         clientRepository.save(updatedClient);
         masterRepository.save(master);
         return new ResponseEntity<>("Record was added", HttpStatus.OK);
@@ -126,7 +124,7 @@ public class ClientController {
         if (client == null) {
             return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
         }
-        ArrayList<Record> records = client.getRecords();
+        ArrayList<RecordClient> records = client.getRecords();
         return new ResponseEntity<>(records, HttpStatus.OK);
     }
 

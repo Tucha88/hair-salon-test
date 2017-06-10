@@ -28,7 +28,7 @@ public class Client {
     private String clientLastName;
     private String clientPhoneNumber;
     //@DBRef
-    private ArrayList<Record> records = new ArrayList<>();
+    private ArrayList<RecordClient> records = new ArrayList<>();
     private ArrayList <String> favoritesMasters = new ArrayList<String>();
 
     public Client() {
@@ -53,11 +53,11 @@ public class Client {
     }
 
 
-    public ArrayList<Record> getRecords() {
+    public ArrayList<RecordClient> getRecords() {
         return records;
     }
 
-    public void setRecords(ArrayList<Record> records) {
+    public void setRecords(ArrayList<RecordClient> records) {
         this.records = records;
     }
 
@@ -101,9 +101,9 @@ public class Client {
         this.clientLastName = clientLastName;
     }
 
-    public void addRecord(Record tempRecord) {
-        TreeSet<Record> treeSet = new TreeSet<Record>(records);
+    public void addRecord(RecordClient tempRecord) {
+        TreeSet<RecordClient> treeSet = new TreeSet<RecordClient>(records);
         treeSet.add(tempRecord);
-        records = new ArrayList<Record>(treeSet);
+        records = new ArrayList<RecordClient>(treeSet);
     }
 }
