@@ -279,8 +279,12 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        ArrayList<Record> records = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).getRecords();
-        return new ResponseEntity<>(records, HttpStatus.OK);
+        if(master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).isWorking()) {
+            ArrayList<Record> records = master.getAddressMaster().getTimetableMap().get(lightCalendar.toString()).getRecords();
+            return new ResponseEntity<>(records, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("rest day", HttpStatus.OK);
+        }
     }
 
 }
