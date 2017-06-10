@@ -113,7 +113,16 @@ public class ClientController {
         return new ResponseEntity<>("Record was added", HttpStatus.OK);
     }
 
-
+    @GetMapping("records")
+    public ResponseEntity<Object> getClientRecord(@RequestHeader("authorization") String token) {
+        String email = utils.parsJwts(token);
+        Client client = clientRepository.findClientByClientEmail(email);
+        if (client == null) {
+            return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
+        }
+        ArrayList<Record> records = client.getRecords();
+        return new ResponseEntity<>(records, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "clients", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllClients() {
