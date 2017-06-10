@@ -94,7 +94,6 @@ public class LightClock implements Comparable, Serializable {
     }
 
     @Override
-    @JsonValue
     public String toString() {
         if (minuteLight < 10) {
             String minuteStr = "0" + minuteLight;

@@ -124,6 +124,31 @@ public class ClientController {
         return new ResponseEntity<>(records, HttpStatus.OK);
     }
 
+    @GetMapping("favorites_masters")
+    public ResponseEntity<Object> getFavoritesMasters (@RequestHeader ("authorization") String token){
+        String email = utils.parsJwts(token);
+        Client client = clientRepository.findClientByClientEmail(email);
+        if (client == null) {
+            return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
+    }
+
+    @PutMapping("add_favorites_masters")
+    public ResponseEntity<Object> addFavoritesMasters (@RequestHeader ("authorization") String token, @RequestBody String masterEmail){
+        String email = utils.parsJwts(token);
+        Client client = clientRepository.findClientByClientEmail(email);
+        if (client == null) {
+            return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
+        }
+        Master master = masterRepository.findByEmail(masterEmail);
+        if (master == null) {
+            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+        }
+        client.addFavoritesMasters(master.getEmail());
+        return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
+    }
+
     @RequestMapping(value = "clients", method = RequestMethod.GET)
     public ResponseEntity<Object> getAllClients() {
         return new ResponseEntity<>(clientRepository.findAll(), HttpStatus.OK);

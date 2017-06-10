@@ -29,9 +29,24 @@ public class Client {
     private String clientPhoneNumber;
     //@DBRef
     private ArrayList<Record> records = new ArrayList<>();
+    private ArrayList <String> favoritesMasters = new ArrayList<String>();
 
     public Client() {
     }
+
+    public ArrayList<String> getFavoritesMasters() {
+        return favoritesMasters;
+    }
+
+    public void setFavoritesMasters(ArrayList<String> favoritesMasters) {
+        this.favoritesMasters = favoritesMasters;
+    }
+
+    public ArrayList addFavoritesMasters (String master){
+        this.favoritesMasters.add(master);
+        return this.getFavoritesMasters();
+    }
+
 
     public ArrayList<Record> getRecords() {
         return records;
