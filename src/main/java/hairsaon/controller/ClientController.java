@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -83,8 +84,12 @@ public class ClientController {
         }
         String dateStr = dateAndDuration.getMyCalendar().toString();
         int duration = dateAndDuration.getDuration();
-        Set set = master.getAddressMaster().getFreeTimeOnDate(dateStr, duration);
-        return new ResponseEntity<>(set, HttpStatus.OK);
+        if (duration==0){
+            return new ResponseEntity<>(new HashSet<>(), HttpStatus.OK);
+        }else {
+            Set set = master.getAddressMaster().getFreeTimeOnDate(dateStr, duration);
+            return new ResponseEntity<>(set, HttpStatus.OK);
+        }
     }
 
 
