@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -124,6 +125,16 @@ public class ClientController {
         return new ResponseEntity<>(records, HttpStatus.OK);
     }
 
+    @GetMapping("favorites_masters_string")
+    public ResponseEntity<Object> getFavoritesMastersString (@RequestHeader ("authorization") String token){
+        String email = utils.parsJwts(token);
+        Client client = clientRepository.findClientByClientEmail(email);
+        if (client == null) {
+            return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
+    }
+
     @GetMapping("favorites_masters")
     public ResponseEntity<Object> getFavoritesMasters (@RequestHeader ("authorization") String token){
         String email = utils.parsJwts(token);
@@ -131,7 +142,15 @@ public class ClientController {
         if (client == null) {
             return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
+        ArrayList<Master> masters = new ArrayList<Master>();
+        ArrayList<String> mastersStrings = client.getFavoritesMasters();
+        for (int i = 0; i < mastersStrings.size(); i++) {
+            Master master = masterRepository.findByEmail(mastersStrings.get(i));
+            if(master != null){
+                masters.add(master);
+            }
+        }
+        return new ResponseEntity<>(masters,HttpStatus.OK);
     }
 
     @PutMapping("add_favorites_masters")
@@ -152,6 +171,18 @@ public class ClientController {
             }
         }
         client.addFavoritesMasters(master.getEmail());
+        clientRepository.save(client);
+        return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
+    }
+
+    @PostMapping("remove_favorites_masters")
+    public ResponseEntity<Object> removeFavoritesMasters (@RequestHeader ("authorization") String token, @RequestBody String masterEmail) {
+        String email = utils.parsJwts(token);
+        Client client = clientRepository.findClientByClientEmail(email);
+        if (client == null) {
+            return new ResponseEntity<>("Such client was not found", HttpStatus.CONFLICT);
+        }
+        client.removeFavoritesMasters(masterEmail);
         clientRepository.save(client);
         return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
     }

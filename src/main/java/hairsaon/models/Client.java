@@ -42,8 +42,13 @@ public class Client {
         this.favoritesMasters = favoritesMasters;
     }
 
-    public ArrayList addFavoritesMasters (String master){
-        this.favoritesMasters.add(master);
+    public ArrayList addFavoritesMasters (String masterEmail){
+        this.favoritesMasters.add(masterEmail);
+        return this.getFavoritesMasters();
+    }
+
+    public ArrayList removeFavoritesMasters (String masterEmail){
+        this.favoritesMasters.remove(masterEmail);
         return this.getFavoritesMasters();
     }
 
