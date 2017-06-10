@@ -78,6 +78,14 @@ public class RecordClient implements Comparable<RecordClient>, Serializable {
         this.endTime = new LightClock(tempEndTime.getHour(),tempEndTime.getMinute());
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public LightClock getEndTime() {
         return endTime;
     }
