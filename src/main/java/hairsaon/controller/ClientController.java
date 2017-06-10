@@ -42,7 +42,7 @@ public class ClientController {
         this.masterRepository = masterRepository;
     }
 
-    @GetMapping("info")
+    @GetMapping("info") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getClientInfo(@RequestHeader("authorization") String token) {
         String email = utils.parsJwts(token);
 
@@ -55,7 +55,7 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
-    @PutMapping("update")
+    @PutMapping("update") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> updateClient(@RequestHeader("authorization")String token,@RequestBody Client client) {
         String email = utils.parsJwts(token);
 
@@ -72,13 +72,13 @@ public class ClientController {
         return new ResponseEntity<>("Client was updated", HttpStatus.OK);
     }
 
-    @PostMapping("free_time")
+    @PostMapping("free_time") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> freeTimeOnDate(@RequestHeader("Authorization") String token, @RequestBody DateAndDuration dateAndDuration) {
         String email = utils.parsJwts(token);
         Client updatedClient = clientRepository.findClientByClientEmail(email);
         Master master = masterRepository.findByEmail(dateAndDuration.getEmail());
         if (master == null) {
-            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("From this email master was not found", HttpStatus.CONFLICT);
         }
         String dateStr = dateAndDuration.getMyCalendar().toString();
         int duration = dateAndDuration.getDuration();
@@ -88,7 +88,7 @@ public class ClientController {
 
 
 
-    @PutMapping("add_record")
+    @PutMapping("add_record") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> addRecordForDay(@RequestHeader("Authorization") String token, @RequestBody Record record) {
         String email = utils.parsJwts(token);
         Client updatedClient = clientRepository.findClientByClientEmail(email);

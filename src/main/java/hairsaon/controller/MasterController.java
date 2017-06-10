@@ -41,7 +41,7 @@ public class MasterController {
 
 
 
-    @GetMapping("services")
+    @GetMapping("services") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getMasterServices(@RequestHeader("Authorization") String token) {
         String email = utils.parsJwts(token);
 
@@ -54,7 +54,7 @@ public class MasterController {
         return new ResponseEntity<>(services, HttpStatus.OK);
     }
 
-    @PostMapping("service")
+    @PostMapping("service") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> setMasterServices(@RequestHeader("Authorization") String token, @RequestBody ArrayList<Services> services) {
         String email = utils.parsJwts(token);
 
@@ -69,7 +69,7 @@ public class MasterController {
 
     }
 
-    @PutMapping("service")
+    @PutMapping("service") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> addMasterService(@RequestHeader("Authorization") String token, @RequestBody Services service) {
         String email = utils.parsJwts(token);
 
@@ -84,7 +84,7 @@ public class MasterController {
     }
 
 
-    @GetMapping("address")
+    @GetMapping("address") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getMasterAddresses(@RequestHeader("Authorization") String token) {
         String email = utils.parsJwts(token);
 
@@ -97,7 +97,7 @@ public class MasterController {
         return new ResponseEntity<>(master.getAddressMaster().getAddress(), HttpStatus.OK);
     }
 
-    @PutMapping("address")
+    @PutMapping("address") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> setMasterAddresses(@RequestHeader("Authorization") String token, @RequestBody String addresses) {
         String email = utils.parsJwts(token);
 
@@ -105,12 +105,32 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
+        master.setAddresses(addresses);
         master.getAddressMaster().setAddress(addresses);
+        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+        String adressStr = master.getAddresses();
+
+        GeocodingResult[] results = new GeocodingResult[0];
+        if (adressStr != null) {
+            master.setAddresses(adressStr);
+            try {
+                results = GeocodingApi.geocode(context, adressStr).await();
+                Geometry geometry = results[0].geometry;
+                master.setPlaceId(results[0].placeId);
+                master.setLatitude(geometry.location.lat);
+                master.setLongitude(geometry.location.lng);
+                master.getAddressMaster().setAddress(adressStr);
+            } catch (Exception e) {
+                master.setPlaceId(null);
+                master.setLatitude(0);
+                master.setLongitude(0);
+            }
+        }
         masterRepository.save(master);
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
     }
 
-    @GetMapping("info")
+    @GetMapping("info") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getMasterInfo(@RequestHeader("Authorization") String token) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
@@ -120,7 +140,7 @@ public class MasterController {
         return new ResponseEntity<>(master, HttpStatus.OK);
     }
 
-    @PutMapping("update")
+    @PutMapping("update") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> updateMuster(@RequestHeader("Authorization") String token, @RequestBody Master master) {
         String email = utils.parsJwts(token);
         Master updatedMaster = masterRepository.findByEmail(email);
@@ -188,7 +208,7 @@ public class MasterController {
     /**
      * Добавил Лёша 04.06.2017
      */
-    @GetMapping("template")
+    @GetMapping("template") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getWeekTemplate(@RequestHeader("Authorization") String token) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
@@ -199,7 +219,7 @@ public class MasterController {
         return new ResponseEntity<>(weekTemplate, HttpStatus.OK);
     }
 
-    @PutMapping("template")
+    @PutMapping("template") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> setWeekTemplate(@RequestHeader("Authorization") String token, @RequestBody ArrayList<WeekDay> weekTemplate) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
@@ -211,7 +231,7 @@ public class MasterController {
         return new ResponseEntity<>("User week template was update", HttpStatus.OK);
     }
 
-    @PutMapping("add_day")
+    @PutMapping("add_day") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> addCalendarDay(@RequestHeader("Authorization") String token, @RequestBody CalendarDay day) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
@@ -223,7 +243,9 @@ public class MasterController {
         return new ResponseEntity<>("Calendar Day was added", HttpStatus.OK);
     }
 
-    @GetMapping("start")
+    //TODO: Нужно добавить boolean в класс Master чтоб этот метод можно было вызвать всего один раз
+
+    @GetMapping("start") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> startMasterTimetable(@RequestHeader("Authorization") String token) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
@@ -236,7 +258,7 @@ public class MasterController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @GetMapping("all_timetable")
+    @GetMapping("all_timetable") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getAllTimetable (@RequestHeader("Authorization") String token){
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
@@ -250,7 +272,7 @@ public class MasterController {
         return new ResponseEntity<>(collection, HttpStatus.OK);
     }
 
-    @PostMapping("day_records")
+    @PostMapping("day_records") /**есть в документации. дата обновления: 10.06.2017*/
     public ResponseEntity<Object> getRecordForDay(@RequestHeader("Authorization") String token, @RequestBody LightCalendar lightCalendar) {
         String email = utils.parsJwts(token);
         Master master = masterRepository.findByEmail(email);
