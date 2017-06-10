@@ -143,9 +143,16 @@ public class ClientController {
         }
         Master master = masterRepository.findByEmail(masterEmail);
         if (master == null) {
-            return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("There is no such master", HttpStatus.CONFLICT);
+        }
+        ArrayList<String> arrFavoritesMasters = client.getFavoritesMasters();
+        for (int i = 0; i < arrFavoritesMasters.size(); i++) {
+            if (arrFavoritesMasters.get(i)==masterEmail){
+                return new ResponseEntity<>("This master is already in the list of favorites", HttpStatus.CONFLICT);
+            }
         }
         client.addFavoritesMasters(master.getEmail());
+        clientRepository.save(client);
         return new ResponseEntity<>(client.getFavoritesMasters(),HttpStatus.OK);
     }
 

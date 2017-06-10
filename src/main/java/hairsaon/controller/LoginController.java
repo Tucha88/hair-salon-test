@@ -4,6 +4,7 @@ package hairsaon.controller;
 import hairsaon.models.Client;
 import hairsaon.models.Master;
 import hairsaon.models.MasterAuthType;
+import hairsaon.models.TokenAndBoolean;
 import hairsaon.repository.ClientRepository;
 import hairsaon.repository.MasterRepository;
 import hairsaon.utils.IUtils;
@@ -44,7 +45,10 @@ public class LoginController {
             if (!utils.isPasswordCorrect(authType.getPassword(), client.getClientPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
-            return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}", HttpStatus.OK);
+            TokenAndBoolean tokenAndBoolean = new TokenAndBoolean();
+            tokenAndBoolean.setToken("{\"token\":" + "\"" + utils.buildJwt(client.getClientEmail()) + "\"}");
+            tokenAndBoolean.setUser(false);
+            return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
 
 
         }else if (masterRepository.findByEmail(authType.getEmail()) != null){
@@ -54,9 +58,11 @@ public class LoginController {
             if (!utils.isPasswordCorrect(authType.getPassword(), master.getPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
+            TokenAndBoolean tokenAndBoolean = new TokenAndBoolean();
+            tokenAndBoolean.setToken("{\"token\":" + "\"" + utils.buildJwt(master.getEmail()) + "\"}");
+            tokenAndBoolean.setUser(true);
 
-
-            return new ResponseEntity<>("{\"token\":" + "\"" + utils.buildJwt(master.getEmail()) + "\"}", HttpStatus.OK);
+            return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
         }
         return new ResponseEntity<>("Please register",HttpStatus.UNAUTHORIZED);
     }
