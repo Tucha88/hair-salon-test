@@ -19,12 +19,12 @@ import java.util.ArrayList;
 @SpringBootApplication
 public class HairsalonApplication {
 
-    /*private final MasterRepository masterRepository;
+    private final MasterRepository masterRepository;
 
     @Autowired
     public HairsalonApplication(MasterRepository masterRepository) {
         this.masterRepository = masterRepository;
-    }*/
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(HairsalonApplication.class, args);
@@ -41,12 +41,16 @@ public class HairsalonApplication {
     }
 
     //@Scheduled(cron = "second, minute, hour, day of month, month, day(s) of week")
-    /*@Scheduled(cron = "* 55 13 * * *")
+    @Scheduled(cron = "* 15 15 * * *")
     public void updateCalendar(){
-        for (Master master : masterRepository.findAll()) {
+        /*for (Master master : masterRepository.findAll()) {
             master.getAddressMaster().update();
             masterRepository.save(master);
-        }
-    }*/
+        }*/
+        Master master = masterRepository.findByEmail("master5@i.ua");
+        master.getAddressMaster().update();
+        masterRepository.save(master);
+
+    }
 
 }

@@ -25,6 +25,7 @@ public class AddressMaster implements Serializable {
 
     ArrayList<WeekDay> weekTemplate;
     TreeMap<String, CalendarDay> timetableMap;
+    TreeMap <String, ArrayList<Record>> archiveRecords;
 
 
 
@@ -34,7 +35,8 @@ public class AddressMaster implements Serializable {
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
-
+        archiveRecords = new TreeMap<String,ArrayList<Record>>();
+        archiveRecords.put("test/date", new ArrayList<>());
     }
 
     public AddressMaster(String address) {
@@ -44,8 +46,16 @@ public class AddressMaster implements Serializable {
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
+        archiveRecords = new TreeMap<String,ArrayList<Record>>();
     }
 
+    public TreeMap<String, ArrayList<Record>> getArchiveRecords() {
+        return archiveRecords;
+    }
+
+    public void setArchiveRecords(TreeMap<String, ArrayList<Record>> archiveRecords) {
+        this.archiveRecords = archiveRecords;
+    }
 
     public TreeMap<String, CalendarDay> getTimetableMap() {
         return timetableMap;
@@ -144,9 +154,16 @@ public class AddressMaster implements Serializable {
 
         MyCalendar tempMyCalendar = new MyCalendar();
         tempMyCalendar.add(Calendar.DAY_OF_MONTH, -1);
-        String CalendarStr = new LightCalendar(tempMyCalendar).toString();
-        if (timetableMap.get(CalendarStr) != null) {
-            timetableMap.remove(CalendarStr);
+        String calendarStr = new LightCalendar(tempMyCalendar).toString();
+        MyCalendar archiveCalendar = new MyCalendar();
+        archiveCalendar.add(Calendar.DAY_OF_MONTH, -30);
+        String archiveCalendarStr = new LightCalendar(tempMyCalendar).toString();
+        if (archiveRecords.get(archiveCalendarStr)!=null){
+            archiveRecords.remove(archiveCalendarStr);
+        }
+        if (timetableMap.get(calendarStr) != null) {
+            archiveRecords.put(calendarStr,timetableMap.get(calendarStr).getRecords());
+            timetableMap.remove(calendarStr);
         }
         tempMyCalendar = new MyCalendar();
         tempMyCalendar.add(Calendar.DAY_OF_MONTH, 14);
