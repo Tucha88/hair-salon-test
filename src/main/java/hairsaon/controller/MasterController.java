@@ -266,8 +266,8 @@ public class MasterController {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
         Map<String,CalendarDay> map = master.getAddressMaster().getTimetableMap();
-        ArrayList<CalendarDay> arrTimetable = new ArrayList<CalendarDay>();
-        arrTimetable.containsAll(map.values());
+        /*ArrayList<CalendarDay> arrTimetable = new ArrayList<CalendarDay>();
+        arrTimetable.containsAll(map.values());*/
         Collection collection = map.values();
         return new ResponseEntity<>(collection, HttpStatus.OK);
     }

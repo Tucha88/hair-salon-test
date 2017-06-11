@@ -106,10 +106,10 @@ public class AddressMaster implements Serializable {
 
     public void startMasterTrmplatr() { /** Первое создание расписание мастера*/
 
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 14; i++) {
 
             MyCalendar tempMyCalendar = new MyCalendar();
-//            tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
+            tempMyCalendar.add(Calendar.DAY_OF_MONTH, -1);
             tempMyCalendar.add(Calendar.DAY_OF_MONTH, i);
             LightCalendar lightTemp = new LightCalendar(tempMyCalendar);
             if (timetableMap.get(lightTemp.toString()) == null) {
