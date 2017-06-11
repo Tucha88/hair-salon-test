@@ -143,7 +143,7 @@ public class AddressMaster implements Serializable {
 
 
         MyCalendar tempMyCalendar = new MyCalendar();
-        tempMyCalendar.add(Calendar.DAY_OF_MONTH, -7);
+        tempMyCalendar.add(Calendar.DAY_OF_MONTH, -1);
         String CalendarStr = new LightCalendar(tempMyCalendar).toString();
         if (timetableMap.get(CalendarStr) != null) {
             timetableMap.remove(CalendarStr);

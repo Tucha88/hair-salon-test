@@ -1,20 +1,30 @@
 package hairsaon;
 
+import hairsaon.controller.MasterController;
+import hairsaon.models.Master;
+import hairsaon.repository.MasterRepository;
 import hairsaon.security.JwtFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
-import org.apache.coyote.http11.AbstractHttp11Protocol;
-import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import java.util.ArrayList;
 
 @EnableScheduling
 @SpringBootApplication
 public class HairsalonApplication {
+
+    /*private final MasterRepository masterRepository;
+
+    @Autowired
+    public HairsalonApplication(MasterRepository masterRepository) {
+        this.masterRepository = masterRepository;
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(HairsalonApplication.class, args);
@@ -30,5 +40,13 @@ public class HairsalonApplication {
         return registrationBean;
     }
 
+    //@Scheduled(cron = "second, minute, hour, day of month, month, day(s) of week")
+    /*@Scheduled(cron = "* 0 3 * * *")
+    public void updateCalendar(){
+        for (Master master : masterRepository.findAll()) {
+            master.getAddressMaster().update();
+            masterRepository.save(master);
+        }
+    }*/
 
 }

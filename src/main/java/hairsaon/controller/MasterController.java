@@ -223,6 +223,9 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
+        if (weekTemplate.size() == 0){
+            return new ResponseEntity<>("User week template not was update", HttpStatus.CONFLICT);
+        }
         master.getAddressMaster().setWeekTemplate(weekTemplate);
         masterRepository.save(master);
         return new ResponseEntity<>("User week template was update", HttpStatus.OK);
