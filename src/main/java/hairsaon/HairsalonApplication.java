@@ -41,13 +41,13 @@ public class HairsalonApplication {
     }
 
     //@Scheduled(cron = "second, minute, hour, day of month, month, day(s) of week")
-    @Scheduled(cron = "* 15 15 * * *")
+    @Scheduled(cron = "* 30 0 * * *")
     public void updateCalendar(){
         /*for (Master master : masterRepository.findAll()) {
             master.getAddressMaster().update();
             masterRepository.save(master);
         }*/
-        Master master = masterRepository.findByEmail("master5@i.ua");
+        Master master = masterRepository.findByEmail("master6@i.ua");
         master.getAddressMaster().update();
         masterRepository.save(master);
 
