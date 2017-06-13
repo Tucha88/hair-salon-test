@@ -13,7 +13,7 @@ public class ArchiveDay {
     }
 
     public ArchiveDay(ArrayList<Record> records) {
-        this.records = records;
+        this.records = new ArrayList<>(records);
     }
 
     public ArrayList<Record> getRecords() {

@@ -25,7 +25,7 @@ public class AddressMaster implements Serializable {
 
     ArrayList<WeekDay> weekTemplate;
     TreeMap<String, CalendarDay> timetableMap;
-    TreeMap <String, ArchiveDay> archiveRecords;
+    TreeMap <String, ArrayList<Record>> archiveRecords;
 
 
 
@@ -35,15 +35,9 @@ public class AddressMaster implements Serializable {
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
-        archiveRecords = new TreeMap<String,ArchiveDay>();
+        archiveRecords = new TreeMap<String, ArrayList<Record>>();
         ArrayList<Record> arrayList = new ArrayList<Record>();
-        /*Record record1 = new Record();
-        record1.setInfo("record1");
-        Record record2 = new Record();
-        record1.setInfo("record2");
-        arrayList.add(record1);
-        arrayList.add(record2);
-        archiveRecords.put("test/date", arrayList);*/
+
     }
 
     public AddressMaster(String address) {
@@ -53,14 +47,14 @@ public class AddressMaster implements Serializable {
         for (int i = 0; i < 7; i++) {
             weekTemplate.add(new WeekDay());
         }
-        archiveRecords = new TreeMap<String, ArchiveDay>();
+        archiveRecords = new TreeMap<String,  ArrayList<Record>>();
     }
 
-    public TreeMap<String, ArchiveDay> getArchiveRecords() {
+    public TreeMap<String, ArrayList<Record>> getArchiveRecords() {
         return archiveRecords;
     }
 
-    public void setArchiveRecords(TreeMap<String, ArchiveDay> archiveRecords) {
+    public void setArchiveRecords(TreeMap<String, ArrayList<Record>> archiveRecords) {
         this.archiveRecords = archiveRecords;
     }
 
@@ -159,18 +153,22 @@ public class AddressMaster implements Serializable {
         MyCalendar tempMyCalendar = new MyCalendar();
         tempMyCalendar.add(Calendar.DAY_OF_MONTH, -1);
         String calendarStr = new LightCalendar(tempMyCalendar).toString();
+
         MyCalendar archiveCalendar = new MyCalendar();
         archiveCalendar.add(Calendar.DAY_OF_MONTH, -7);
         String archiveCalendarStr = new LightCalendar(tempMyCalendar).toString();
+
         if (archiveRecords.get(archiveCalendarStr)!=null){
             archiveRecords.remove(archiveCalendarStr);
         }
         if (timetableMap.get(calendarStr) != null) {
             ArrayList <Record> tempArray = timetableMap.get(calendarStr).getRecords();
-            if (tempArray.size() != 0){
-                archiveRecords.put(calendarStr,new ArchiveDay(tempArray));
+            System.out.println(tempArray.get(0).getCalendar() + "  " + tempArray.get(0).getStarTime());
+            if (tempArray != null) {
+                if (tempArray.size() != 0) {
+                    archiveRecords.put(calendarStr, new ArrayList<Record>(tempArray));
+                }
             }
-
             timetableMap.remove(calendarStr);
         }
         tempMyCalendar = new MyCalendar();
