@@ -102,26 +102,26 @@ public class MasterController {
         if (master == null) {
             return new ResponseEntity<>("there is no such master", HttpStatus.CONFLICT);
         }
-        master.setAddresses(addresses);
-        master.getAddressMaster().setAddress(addresses);
-        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
-        String adressStr = master.getAddresses();
-
-        GeocodingResult[] results = new GeocodingResult[0];
-        if (adressStr != null) {
-            master.setAddresses(adressStr);
+        if(addresses!= null) {
+            master.setAddresses(addresses);
+            master.getAddressMaster().setAddress(addresses);
+            GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+            GeocodingResult[] results;
+            master.setAddresses(addresses);
             try {
-                results = GeocodingApi.geocode(context, adressStr).await();
+                results = GeocodingApi.geocode(context, addresses).await();
                 Geometry geometry = results[0].geometry;
                 master.setPlaceId(results[0].placeId);
                 master.setLatitude(geometry.location.lat);
                 master.setLongitude(geometry.location.lng);
-                master.getAddressMaster().setAddress(adressStr);
             } catch (Exception e) {
+
                 master.setPlaceId(null);
                 master.setLatitude(0);
                 master.setLongitude(0);
             }
+        }else {
+            return new ResponseEntity<>("address was null", HttpStatus.CONFLICT);
         }
         masterRepository.save(master);
         return new ResponseEntity<>("User addresses were updated", HttpStatus.OK);
@@ -163,7 +163,7 @@ public class MasterController {
         /*if (master.getSerivce() != null) {
             updatedMaster.setSerivce(master.getSerivce());
         }*/
-        GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
+        /*GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyCV43DMS9LJA9XaK10nY0I_sAGSxeDetlc");
         String adressStr = master.getAddresses();
 
         GeocodingResult[] results = new GeocodingResult[0];
@@ -181,7 +181,7 @@ public class MasterController {
                 updatedMaster.setLatitude(0);
                 updatedMaster.setLongitude(0);
             }
-        }
+        }*/
 
 
         masterRepository.save(updatedMaster);
