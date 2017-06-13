@@ -48,13 +48,13 @@ public class HairsalonApplication {
     }
 
     //@Scheduled(cron = "second, minute, hour, day of month, month, day(s) of week")
-    @Scheduled(cron = "0 34 3 * * *")
+    @Scheduled(cron = "0 30 0 * * *")
     public void updateCalendar(){
         System.out.println(new MyCalendar().getTime());
         ArrayList <Master> allMasters = new ArrayList<Master>(masterRepository.findAll());
         for (Master master : allMasters) {
             master.getAddressMaster().update();
-            System.out.println(master.getEmail());
+            /*System.out.println(master.getEmail());*/
             masterRepository.save(master);
         }
 
@@ -64,16 +64,16 @@ public class HairsalonApplication {
                 RecordClient recordClient = client.getRecords().get(i);
                 LightCalendar today = new LightCalendar(new MyCalendar());
                 LightCalendar recordCalendar = recordClient.getCalendar();
-                RecordClient record = client.getRecords().get(i);
+//                RecordClient record = client.getRecords().get(i);
                 if (today.compareTo(recordCalendar)>0){
-                    System.out.println("i: " + i);
-                    System.out.println("Запись клиента " + record.getClient() + " на " + record.getCalendar() + " " + record.getStarTime() + " - удалена");
+                    /*System.out.println("i: " + i);
+                    System.out.println("Запись клиента " + record.getClient() + " на " + record.getCalendar() + " " + record.getStarTime() + " - удалена");*/
                     client.getRecords().remove(i);
 
                 }else {
-                    System.out.println("i: " + i);
-                    System.out.println("Запись клиента " + record.getClient() + " на " + record.getCalendar() + " " + record.getStarTime() + " - НЕ удалена");
-
+                    /*System.out.println("i: " + i);
+                    System.out.println("Запись клиента " + record.getClient() + " на " + record.getCalendar() + " " + record.getStarTime() + " - НЕ удалена");*/
+                    break;
                 }
             }
             clientRepository.save(client);

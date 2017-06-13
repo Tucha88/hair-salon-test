@@ -58,7 +58,8 @@ public class Client {
     }
 
     public void setRecords(ArrayList<RecordClient> records) {
-        this.records = records;
+        TreeSet <RecordClient> treeSet = new TreeSet <RecordClient>(records);
+        this.records = new ArrayList<RecordClient>(treeSet);
     }
 
     public String getClientPhoneNumber() {
